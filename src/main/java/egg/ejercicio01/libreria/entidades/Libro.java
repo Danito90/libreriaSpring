@@ -8,7 +8,7 @@ public class Libro {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private Integer Id;
+    private String Id;
     
     private Long isbn;
     
@@ -45,11 +45,11 @@ public class Libro {
         this.editorial = editorial;
     }
 
-    public Integer getId() {
+    public String getId() {
         return Id;
     }
 
-    public void setId(Integer Id) {
+    public void setId(String Id) {
         this.Id = Id;
     }
 
