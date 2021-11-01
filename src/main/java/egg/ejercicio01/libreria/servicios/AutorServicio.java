@@ -72,24 +72,5 @@ public class AutorServicio {
             throw new ErrorServicio("El alta no puede estar vacio");
         }
     }
-
-
-
-
-    
-    // public Autor findAutor(String id) {
-    //     return autorRepositorio.findById(id).get();
-    // }
-
-    // public Iterable<Autor> findAllAutores() {
-    //     return autorRepositorio.findAll();
-    // }
-    // public Iterable<Autor> findAllAutoresByAlta(Boolean alta) {
-    // return autorRepositorio.findByAlta(alta);
-    // }
-
-    // public Iterable<Autor> findAllAutoresByNombre(String nombre) {
-    // return autorRepositorio.findByNombre(nombre);
-    // }
-
+// 
 }

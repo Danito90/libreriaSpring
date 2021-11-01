@@ -61,6 +61,16 @@ public class EditorialServicio {
         }
     }
 
+    public void deleteEditorial(String id) throws ErrorServicio {
+        Optional<Editorial> respuesta = editorialRepositorio.findById(id);
+        if (respuesta.isPresent()) {
+            Editorial editorial = respuesta.get();
+            editorialRepositorio.delete(editorial);
+        } else {
+            throw new ErrorServicio("No existe la editorial con id: " + id);
+        }
+    }
+
     private void validateEditorial(String nombre, Boolean alta) throws ErrorServicio {
         if (nombre == null) {
             throw new ErrorServicio("El nombre no puede estar vacio");

@@ -1,5 +1,6 @@
 
 package egg.ejercicio01.libreria.entidades;
+
 import javax.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -9,31 +10,40 @@ public class Libro {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String Id;
-    
+
+    @Column(nullable = false)
     private Long isbn;
-    
+
+    @Column(nullable = false)
     private String titulo;
-    
+
+    @Column(nullable = false)
     private Integer anio;
-    
+
+    @Column(nullable = false)
     private Integer ejemplares;
-    
+
+    @Column(nullable = false)
     private Integer ejemplaresPrestados;
-    
+
+    @Column(nullable = false)
     private Integer ejemplaresRestantes;
-    
+
     private Boolean alta;
-    
-    @ManyToOne(cascade = CascadeType.REMOVE) //muchos libros pueden pertenecer a un autor
-    private Autor autor;
-    
+
+    @ManyToOne(cascade = CascadeType.REMOVE) // muchos libros pueden pertenecer a un autor
+    private Autor autor; // muchos libros pueden pertenecer a un autor
+    // Si trabajo unidireccional la relacion, se crea la llave foranea aca... si es
+    // bidireccional, leer la relacion en autor
+
     @ManyToOne(cascade = CascadeType.REMOVE)
     private Editorial editorial;
 
     public Libro() {
     }
 
-    public Libro(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados, Integer ejemplaresRestantes, Boolean alta, Autor autor, Editorial editorial) {
+    public Libro(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados,
+            Integer ejemplaresRestantes, Boolean alta, Autor autor, Editorial editorial) {
         this.isbn = isbn;
         this.titulo = titulo;
         this.anio = anio;
@@ -127,7 +137,9 @@ public class Libro {
 
     @Override
     public String toString() {
-        return "Libro{" + "Id=" + Id + ", isbn=" + isbn + ", titulo=" + titulo + ", anio=" + anio + ", ejemplares=" + ejemplares + ", ejemplaresPrestados=" + ejemplaresPrestados + ", ejemplaresRestantes=" + ejemplaresRestantes + ", alta=" + alta + ", autor=" + autor + ", editorial=" + editorial + '}';
+        return "Libro{" + "Id=" + Id + ", isbn=" + isbn + ", titulo=" + titulo + ", anio=" + anio + ", ejemplares="
+                + ejemplares + ", ejemplaresPrestados=" + ejemplaresPrestados + ", ejemplaresRestantes="
+                + ejemplaresRestantes + ", alta=" + alta + ", autor=" + autor + ", editorial=" + editorial + '}';
     }
 
 }

@@ -10,7 +10,11 @@ public class Editorial {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
+
+    @Column(nullable = false)
     private String nombre;
+
+    @Column(nullable = false)
     private Boolean alta;
 
     public Editorial() {
