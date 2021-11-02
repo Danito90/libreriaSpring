@@ -2,6 +2,8 @@ package egg.ejercicio01.libreria.servicios;
 
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,7 @@ public class LibroServicio {
     @Autowired
     private LibroRepositorio libroRepositorio;
 
+    @Transactional
     public void newLibro(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados,
             Integer ejemplaresRestantes, Boolean alta, Autor autor, Editorial editorial) throws ErrorServicio{
         validateLibro(isbn, titulo, anio, ejemplares, ejemplaresPrestados, ejemplaresRestantes, alta, autor, editorial);
@@ -33,6 +36,7 @@ public class LibroServicio {
         libroRepositorio.save(libro);
     }
 
+    @Transactional
     public void updateLibro(String id, Long isbn, String titulo, Integer anio, Integer ejemplares,
             Integer ejemplaresPrestados, Integer ejemplaresRestantes, Boolean alta, Autor autor, Editorial editorial)
             throws ErrorServicio {
@@ -59,6 +63,7 @@ public class LibroServicio {
         }
     }
 
+    @Transactional
     public void disableLibro(String id) throws ErrorServicio {
         Optional<Libro> respuesta = libroRepositorio.findById(id);
         if (respuesta.isPresent()) {
@@ -70,6 +75,7 @@ public class LibroServicio {
         }
     }
 
+    @Transactional
     public void enableLibro(String id) throws ErrorServicio {
         Optional<Libro> respuesta = libroRepositorio.findById(id);
         if (respuesta.isPresent()) {
@@ -81,6 +87,7 @@ public class LibroServicio {
         }
     }
 
+    @Transactional
     public void deleteLibro(String id) throws ErrorServicio {
         Optional<Libro> respuesta = libroRepositorio.findById(id);
         if (respuesta.isPresent()) {

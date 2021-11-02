@@ -42,19 +42,6 @@ public class Libro {
     public Libro() {
     }
 
-    public Libro(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados,
-            Integer ejemplaresRestantes, Boolean alta, Autor autor, Editorial editorial) {
-        this.isbn = isbn;
-        this.titulo = titulo;
-        this.anio = anio;
-        this.ejemplares = ejemplares;
-        this.ejemplaresPrestados = ejemplaresPrestados;
-        this.ejemplaresRestantes = ejemplaresRestantes;
-        this.alta = alta;
-        this.autor = autor;
-        this.editorial = editorial;
-    }
-
     public String getId() {
         return Id;
     }

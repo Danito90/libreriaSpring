@@ -2,6 +2,8 @@ package egg.ejercicio01.libreria.servicios;
 
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,8 @@ public class AutorServicio {
     @Autowired // Spring inicializa automaticamente
     private AutorRepositorio autorRepositorio;
 
+    // esta anotacion hace commit automatico si esta todo en orden, caso contrario
+    @Transactional              // hace roollback
     public void newAutor(String nombre, Boolean alta) throws ErrorServicio {
         // si no pasa las siguientes verificaciones no se sigue con el codigo
         validateAutor(nombre, alta);
@@ -24,6 +28,7 @@ public class AutorServicio {
         autorRepositorio.save(autor); // este save crea un nuevo id
     }
 
+    @Transactional
     public void updateAutor(String id, String nombre, Boolean alta) throws ErrorServicio {
         // si no pasa las siguientes verificaciones no se sigue con el codigo
         validateAutor(nombre, alta);
@@ -39,6 +44,7 @@ public class AutorServicio {
         }
     }
 
+    @Transactional
     public void deleteAutor(String id) {
         Optional<Autor> respuesta = autorRepositorio.findById(id);
         if (respuesta.isPresent()) { // si encuentra un usuario con ese id entonces modifica su info
@@ -46,6 +52,7 @@ public class AutorServicio {
         }
     }
 
+    @Transactional
     public void disableAutor(String id) {
         Optional<Autor> respuesta = autorRepositorio.findById(id);
         if (respuesta.isPresent()) { // si encuentra un usuario con ese id entonces modifica su info
@@ -55,6 +62,7 @@ public class AutorServicio {
         }
     }
 
+    @Transactional
     public void enableAutor(String id) {
         Optional<Autor> respuesta = autorRepositorio.findById(id);
         if (respuesta.isPresent()) { // si encuentra un usuario con ese id entonces modifica su info
@@ -72,5 +80,5 @@ public class AutorServicio {
             throw new ErrorServicio("El alta no puede estar vacio");
         }
     }
-// 
+    //
 }

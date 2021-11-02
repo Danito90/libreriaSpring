@@ -20,12 +20,6 @@ public class Editorial {
     public Editorial() {
     }
 
-    public Editorial(String id, String nombre, Boolean alta) {
-        this.id = id;
-        this.nombre = nombre;
-        this.alta = alta;
-    }
-
     public String getId() {
         return id;
     }

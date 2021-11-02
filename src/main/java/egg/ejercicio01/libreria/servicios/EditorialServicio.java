@@ -2,6 +2,8 @@ package egg.ejercicio01.libreria.servicios;
 
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,7 @@ public class EditorialServicio {
     @Autowired
     private EditorialRepositorio editorialRepositorio;
 
+    @Transactional
     public void newEditorial(String nombre, Boolean alta) throws ErrorServicio {
         // si no pasa las siguientes verificaciones no se sigue con el codigo
         validateEditorial(nombre, alta);
@@ -25,6 +28,7 @@ public class EditorialServicio {
         editorialRepositorio.save(editorial);
     }
 
+    @Transactional
     public void updateEditorial(String id, String nombre, Boolean alta) throws ErrorServicio {
         validateEditorial(nombre, alta);
 
@@ -39,6 +43,7 @@ public class EditorialServicio {
         }
     }
 
+    @Transactional
     public void disableEditorial(String id) throws ErrorServicio {
         Optional<Editorial> respuesta = editorialRepositorio.findById(id);
         if (respuesta.isPresent()) {
@@ -50,6 +55,7 @@ public class EditorialServicio {
         }
     }
 
+    @Transactional
     public void enableEditorial(String id) throws ErrorServicio {
         Optional<Editorial> respuesta = editorialRepositorio.findById(id);
         if (respuesta.isPresent()) {
@@ -61,6 +67,7 @@ public class EditorialServicio {
         }
     }
 
+    @Transactional
     public void deleteEditorial(String id) throws ErrorServicio {
         Optional<Editorial> respuesta = editorialRepositorio.findById(id);
         if (respuesta.isPresent()) {
