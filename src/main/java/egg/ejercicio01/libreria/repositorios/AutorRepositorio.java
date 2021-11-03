@@ -11,4 +11,6 @@ public interface AutorRepositorio extends JpaRepository<Autor, String> {
 
     @Query("select a from Autor a")
     public List<Autor> findAll();
+
+    
 }

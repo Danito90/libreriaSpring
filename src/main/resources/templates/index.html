@@ -1,16 +1,25 @@
 <!DOCTYPE html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <title>Inicio</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/styles.css"> <!-- se toma la raiz desde static -->
+    <link rel="stylesheet" href="/src/main/resources/static/css/styles.css"> <!-- se toma la raiz desde static -->
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
-    <div>Bienvenido</div>
+    <div class="imgini">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyG8_Q1AzUmsOruJRjpRnOhMTucQ8mqhq0aQ&usqp=CAU"
+            alt="imagen tienda">
+    </div>
+
+    <header th:replace="layout/plantilla"></header>
+
+
+    <p style="padding-bottom: 2000px;"></p>
 </body>
 
 </html>

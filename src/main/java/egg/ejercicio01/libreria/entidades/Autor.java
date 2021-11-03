@@ -22,7 +22,7 @@ public class Autor {
     // se crea una llave foranea en la otra tabla (libro), pero nose genera una
     // tablantermedia
     // el mappedBy va donde no queremos que se genere la llave foranea
-    @OneToMany(mappedBy = "autor") // un autor puede tener muchos libros
+    @OneToMany(mappedBy = "autor")// un autor puede tener muchos libros
     private List<Libro> libro; // si no coloco el mappedby, se crea la tabla intermedia se llama libro_autor
     // dos columnas, libro_id y autor_id
 
