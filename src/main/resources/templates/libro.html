@@ -1,48 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es-AR" xmlns:th="https://www.thymeleaf.org">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/styles.css">
+<title>Libro</title>
 
-    <title>Libro</title>
-</head>
+<head th:replace="layout/head"></head>
 
-<body>
-    <header th:replace="layout/plantilla"></header>
-    <h1>Listado de libros</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>ISBN</th>
-                <th>Titulo</th>
-                <th>Año</th>
-                <th>Ejemplares</th>
-                <th>Ejemplares Prestados</th>
-                <th>Ejemplares Disponibles</th>
-                <th>Autor</th>
-                <th>Editorial</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td> 1</td>
-                <td> 1254521</td>
-                <td> Prueba</td>
-                <td> Prueba</td>
-                <td> Prueba</td>
-                <td> Prueba</td>
-                <td> Prueba</td>
-                <td> Prueba</td>
-                <td> Prueba</td>
-            </tr>
-        </tbody>
+<header th:replace="layout/barra"></header>
+<h1>Listado de libros</h1>
 
-    </table>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>ISBN</th>
+            <th>Titulo</th>
+            <th>Año</th>
+            <th>Ejemplares</th>
+            <th>Ejemplares Prestados</th>
+            <th>Ejemplares Disponibles</th>
+            <th>Autor</th>
+            <th>Editorial</th>
+            <th>Modificar</th>
+            <Th>Eliminar</Th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each=" l,iterator: ${libros}">
+            <td th:text="${iterator.index+1}"> 1</td>
+            <td th:text="${l.isbn}"></td>
+            <td th:text="${l.titulo}"></td>
+            <td th:text="${l.anio}"></td>
+            <td> Prueba</td>
+            <td> Prueba</td>
+            <td> Prueba</td>
+            <td> Prueba</td>
+            <td> Prueba</td>
+            <td>
+                <a href="">Modificar</a>
+            </td>
+            <td>
+                <a href="">Eliminar</a>
+            </td>
+        </tr>
+    </tbody>
+
+</table>
 
 
 

@@ -1,14 +1,8 @@
 <!DOCTYPE html>
+<html lang="es-AR" xmlns:th="https://www.thymeleaf.org">
+<title>Inicio</title>
 
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-
-<head>
-    <title>Inicio</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/src/main/resources/static/css/styles.css"> <!-- se toma la raiz desde static -->
-    <link rel="stylesheet" href="css/styles.css">
-</head>
+<head th:replace="layout/head"></head>
 
 <body>
     <div class="imgini">
@@ -16,7 +10,7 @@
             alt="imagen tienda">
     </div>
 
-    <header th:replace="layout/plantilla"></header>
+    <header th:replace="layout/barra"></header>
 
 
     <p style="padding-bottom: 2000px;"></p>

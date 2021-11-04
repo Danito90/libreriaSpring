@@ -1,0 +1,37 @@
+<header th:fragment="header">
+    <div class="container">
+        <!-- <div class="header"> -->
+        <!-- <h1><code>Bienvenido</code></h1> -->
+        <!-- </div> -->
+        <div class="main">
+            <div class="header">
+                <ul class="nav">
+                    <li><a href="/">Inicio</a></li>
+
+                    <li><a th:href="@{/libro/lista}">Libro</a>
+                        <ul>
+                            <li><a th:href="@{/libro/lista}">Listar</a></li>
+                            <li><a href="@{/libro/form}">Agregar</a></li>
+                            <li><a href="#">Modificaciones</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Autor</a>
+                        <ul>
+                            <li><a href="#">Listar</a></li>
+                            <li><a href="#">Agregar</a></li>
+                            <li><a href="#">Modificaciones</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Editorial</a>
+                        <ul>
+                            <li><a href="#">Listar</a></li>
+                            <li><a href="#">Agregar</a></li>
+                            <li><a href="#">Modificaciones</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a href="/registro.html">Registro</a></li>
+                </ul>
+            </div>
+
+</header>

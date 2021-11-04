@@ -1,5 +1,6 @@
 package egg.ejercicio01.libreria.servicios;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -18,6 +19,11 @@ public class LibroServicio {
 
     @Autowired
     private LibroRepositorio libroRepositorio;
+
+    @Transactional
+    public List<Libro> findAll(){
+        return libroRepositorio.findAll();
+    }
 
     @Transactional
     public void newLibro(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados,
