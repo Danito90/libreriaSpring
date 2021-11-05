@@ -25,6 +25,15 @@ public class LibroServicio {
         return libroRepositorio.findAll();
     }
 
+    public Optional<Libro> findById(String id){
+        return libroRepositorio.findById(id);
+    }
+
+    @Transactional
+    public Libro save(Libro libro){
+        return libroRepositorio.save(libro);
+    }
+
     @Transactional
     public void newLibro(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados,
             Integer ejemplaresRestantes, Boolean alta, Autor autor, Editorial editorial) throws ErrorServicio{
@@ -133,4 +142,5 @@ public class LibroServicio {
             throw new ErrorServicio("La editorial no puede ser nulo");
         }
     }
+
 }

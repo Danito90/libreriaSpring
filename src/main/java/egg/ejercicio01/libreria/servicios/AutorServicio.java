@@ -1,5 +1,6 @@
 package egg.ejercicio01.libreria.servicios;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -17,7 +18,7 @@ public class AutorServicio {
     private AutorRepositorio autorRepositorio;
 
     // esta anotacion hace commit automatico si esta todo en orden, caso contrario
-    @Transactional              // hace roollback
+    @Transactional // hace roollback
     public void newAutor(String nombre, Boolean alta) throws ErrorServicio {
         // si no pasa las siguientes verificaciones no se sigue con el codigo
         validateAutor(nombre, alta);
@@ -80,5 +81,8 @@ public class AutorServicio {
             throw new ErrorServicio("El alta no puede estar vacio");
         }
     }
-    //
+
+    public List<Autor> findAll() {
+        return autorRepositorio.findAll();
+    }
 }

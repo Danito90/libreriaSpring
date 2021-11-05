@@ -3,10 +3,80 @@
 <title>Agregar Libro</title>
 
 <head th:replace="layout/head"></head>
+<link rel="stylesheet" href="/src/main/resources/static/css/styles.css">
 
 <body>
     <header th:replace="layout/barra"></header>
+    <form method="post" th:object="${libro}" th:action="@{/libro/save}">
+        <!-- th:object="${libro}" para actualizar, traer los datos-->
+        <fieldset>
+            <legend>Agregar Libro</legend>
+            <div class="casillero">
+                <!-- <label for="id">Id</label> -->
+                <input hidden th:field="*{id}">
+            </div>
+            <div class="casillero">
+                <label for="isbn">Isbn:</label>
+                <input type="text" name="isbn" id="isbn" th:field="*{isbn}" required>
+            </div>
+            <div class="casillero">
+                <label for="titulo">Titulo:</label>
+                <input type="text" name="titulo" id="titulo" th:field="*{titulo}" required>
+            </div>
+            <div class="casillero">
+                <label for="anio">A&ntildeo:</label>
+                <input type="number" id="anio" name="anio" th:field="*{anio}" required>
+            </div>
+            <div class="casillero">
+                <label for="ejemplares">Ejemplares:</label>
+                <input type="number" id="ejemplares" name="ejemplares" th:field="*{ejemplares}" required>
+            </div>
+            <div class="casillero">
+                <label for="ejemplaresPrestados">Ejemplares Prestados:</label>
+                <input type="number" id="ejemplaresPrestados" name="ejemplaresPrestados"
+                    th:field="*{ejemplaresPrestados}" required>
+            </div>
+            <div class="casillero">
+                <label for="ejemplaresRestantes">Ejemplares Restantes:</label>
+                <input type="number" id="ejemplaresRestantes" name="ejemplaresRestantes"
+                    th:field="*{ejemplaresRestantes}" required>
+            </div>
+            <div class="casillero">
+                <label for="alta">Estado: </label>
+                <!-- name debe ser igual para selecciona solo una opcion, value es el valor q se envia -->
+                <div>
+                    <input type="radio" id="alta" name="alta" value="true" checked="checked">
+                    <label for="femenino">Alta:</label>
+                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                    <input type="radio" id="baja" name="alta" value="false">
+                    <label for="masculino">Baja</label>
+                </div>
 
+
+            </div>
+            <div class="casillero">
+                <label for="editorial">Editorial:</label>
+                <select th:field="*{editorial.id}" id="editorial">
+
+                    <option th:each="e : ${editoriales}" th:text="${e.nombre}" th:value="${e.id}"></option>
+                </select>
+            </div>
+            <div class="casillero">
+                <label for="autor">Autor:</label>
+                <select th:field="*{autor.id}" id="autor">
+
+                    <option th:each="a : ${autores}" th:text="${a.nombre}" th:value="${a.id}"></option>
+                </select>
+            </div>
+
+            <div class="casillero">
+                <input type="submit" value="Guardar" class="submit">
+            </div>
+
+        </fieldset>
+
+    </form>
+    <footer th:replace="layout/footer"></footer>
 </body>
 
 </html>

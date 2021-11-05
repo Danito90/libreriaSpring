@@ -1,5 +1,6 @@
 package egg.ejercicio01.libreria.servicios;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -16,6 +17,11 @@ public class EditorialServicio {
 
     @Autowired
     private EditorialRepositorio editorialRepositorio;
+
+    @Transactional
+    public List<Editorial> findAll() {
+        return editorialRepositorio.findAll();
+    }
 
     @Transactional
     public void newEditorial(String nombre, Boolean alta) throws ErrorServicio {
@@ -78,6 +84,8 @@ public class EditorialServicio {
         }
     }
 
+    
+
     private void validateEditorial(String nombre, Boolean alta) throws ErrorServicio {
         if (nombre == null) {
             throw new ErrorServicio("El nombre no puede estar vacio");
@@ -86,5 +94,7 @@ public class EditorialServicio {
             throw new ErrorServicio("El alta no puede estar vacio");
         }
     }
+
+    
 
 }
