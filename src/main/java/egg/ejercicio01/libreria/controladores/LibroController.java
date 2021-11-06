@@ -2,9 +2,14 @@ package egg.ejercicio01.libreria.controladores;
 
 import java.util.Optional;
 
+import javax.validation.Valid;
+
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import egg.ejercicio01.libreria.entidades.Autor;
+import egg.ejercicio01.libreria.entidades.Editorial;
 import egg.ejercicio01.libreria.entidades.Libro;
+import egg.ejercicio01.libreria.errores.ErrorServicio;
 import egg.ejercicio01.libreria.servicios.AutorServicio;
 import egg.ejercicio01.libreria.servicios.EditorialServicio;
 import egg.ejercicio01.libreria.servicios.LibroServicio;
@@ -57,9 +65,13 @@ public class LibroController {
         return "libro-form";
     }
 
-    @PostMapping("/save")
-    public String guardar(Model model, RedirectAttributes redirectAttributes, @ModelAttribute Libro libro) {
+    @PostMapping("/save") // valida cada item
+    public String guardar(Model model, RedirectAttributes redirectAttributes, @ModelAttribute @Valid Libro libro,
+            BindingResult bindingResult) {
         try {
+            if (bindingResult.hasErrors()) {
+                return "libro-form";
+            }
             libroServicio.save(libro);
             redirectAttributes.addFlashAttribute("exito", "Libro guardado con exito");
         } catch (Exception e) {
@@ -68,6 +80,22 @@ public class LibroController {
         return "redirect:/libro/lista";
     }
 
+    // @PostMapping("/save") //solucionar no valida (copiado de tinder mascotas)
+    // public String guardar(ModelMap modelo,@RequestParam Long isbn,@RequestParam
+    // String titulo,@RequestParam Integer anio,@RequestParam Integer
+    // ejemplares,@RequestParam Integer ejemplaresPrestados,
+    // @RequestParam Integer ejemplaresRestantes,@RequestParam Boolean
+    // alta,@RequestParam Autor autor,@RequestParam Editorial editorial) {
+    // try {
+    // libroServicio.newLibro(isbn, titulo, anio, ejemplares, ejemplaresPrestados,
+    // ejemplaresRestantes, alta, autor, editorial);
+
+    // } catch (ErrorServicio e) {
+    // modelo.put("errorPuntual", e.getMessage());
+    // return "libro-form.html";
+    // }
+    // return "libro-form.html";
+    // }
 
     @GetMapping("/editar")
     public String editar() {

@@ -115,31 +115,31 @@ public class LibroServicio {
     public void validateLibro(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados,
             Integer ejemplaresRestantes, Boolean alta, Autor autor, Editorial editorial) throws ErrorServicio {
         if (isbn == null) {
-            throw new ErrorServicio("El isbn no puede ser nulo");
+            throw new ErrorServicio("El isbn no puede estar vacio");
         }
         if (titulo == null) {
-            throw new ErrorServicio("El titulo no puede ser nulo");
+            throw new ErrorServicio("El titulo no puede estar vacio");
         }
         if (anio == null) {
-            throw new ErrorServicio("El año no puede ser nulo");
+            throw new ErrorServicio("El año no puede estar vacio");
         }
         if (ejemplares == null) {
-            throw new ErrorServicio("El ejemplar no puede ser nulo");
+            throw new ErrorServicio("El ejemplar no puede estar vacio");
         }
         if (ejemplaresPrestados == null) {
-            throw new ErrorServicio("El ejemplar prestado no puede ser nulo");
+            throw new ErrorServicio("El ejemplar prestado no puede estar vacio");
         }
         if (ejemplaresRestantes == null) {
-            throw new ErrorServicio("El ejemplar restante no puede ser nulo");
+            throw new ErrorServicio("El ejemplar restante no puede estar vacio");
         }
         if (alta == null) {
-            throw new ErrorServicio("El alta no puede ser nulo");
+            throw new ErrorServicio("El alta no puede estar vacio");
         }
         if (autor == null) {
-            throw new ErrorServicio("El autor no puede ser nulo");
+            throw new ErrorServicio("El autor no puede estar vacio");
         }
         if (editorial == null) {
-            throw new ErrorServicio("La editorial no puede ser nulo");
+            throw new ErrorServicio("La editorial no puede estar vacia");
         }
     }
 

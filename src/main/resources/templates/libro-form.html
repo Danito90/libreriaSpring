@@ -7,40 +7,57 @@
 
 <body>
     <header th:replace="layout/barra"></header>
+
     <form method="post" th:object="${libro}" th:action="@{/libro/save}">
         <!-- th:object="${libro}" para actualizar, traer los datos-->
         <fieldset>
             <legend>Agregar Libro</legend>
+
             <div class="casillero">
                 <!-- <label for="id">Id</label> -->
                 <input hidden th:field="*{id}">
             </div>
+
             <div class="casillero">
                 <label for="isbn">Isbn:</label>
-                <input type="text" name="isbn" id="isbn" th:field="*{isbn}" required>
+                <input type="text" name="isbn" id="isbn" th:field="*{isbn}">
             </div>
+            <div class="errores" th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}">Error Nombre</div>
+
             <div class="casillero">
                 <label for="titulo">Titulo:</label>
-                <input type="text" name="titulo" id="titulo" th:field="*{titulo}" required>
+                <input type="text" name="titulo" id="titulo" th:field="*{titulo}">
             </div>
+            <div class="errores" th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}">Error Nombre</div>
+
             <div class="casillero">
                 <label for="anio">A&ntildeo:</label>
-                <input type="number" id="anio" name="anio" th:field="*{anio}" required>
+                <input type="number" id="anio" name="anio" th:field="*{anio}">
             </div>
+            <div class="errores" th:if="${#fields.hasErrors('anio')}" th:errors="*{anio}">Error Nombre</div>
+
+
             <div class="casillero">
                 <label for="ejemplares">Ejemplares:</label>
-                <input type="number" id="ejemplares" name="ejemplares" th:field="*{ejemplares}" required>
+                <input type="number" id="ejemplares" name="ejemplares" th:field="*{ejemplares}">
             </div>
+            <div class="errores" th:if="${#fields.hasErrors('ejemplares')}" th:errors="*{ejemplares}">Error Nombre</div>
+
             <div class="casillero">
                 <label for="ejemplaresPrestados">Ejemplares Prestados:</label>
                 <input type="number" id="ejemplaresPrestados" name="ejemplaresPrestados"
-                    th:field="*{ejemplaresPrestados}" required>
+                    th:field="*{ejemplaresPrestados}">
             </div>
+            <div class="errores" th:if="${#fields.hasErrors('ejemplaresPrestados')}" th:errors="*{ejemplaresPrestados}"></div>
+
             <div class="casillero">
                 <label for="ejemplaresRestantes">Ejemplares Restantes:</label>
                 <input type="number" id="ejemplaresRestantes" name="ejemplaresRestantes"
-                    th:field="*{ejemplaresRestantes}" required>
+                    th:field="*{ejemplaresRestantes}">
+
             </div>
+            <div class="errores" th:if="${#fields.hasErrors('ejemplaresRestantes')}" th:errors="*{ejemplaresRestantes}"></div>
+
             <div class="casillero">
                 <label for="alta">Estado: </label>
                 <!-- name debe ser igual para selecciona solo una opcion, value es el valor q se envia -->
@@ -51,9 +68,8 @@
                     <input type="radio" id="baja" name="alta" value="false">
                     <label for="masculino">Baja</label>
                 </div>
-
-
             </div>
+
             <div class="casillero">
                 <label for="editorial">Editorial:</label>
                 <select th:field="*{editorial.id}" id="editorial">
@@ -61,21 +77,23 @@
                     <option th:each="e : ${editoriales}" th:text="${e.nombre}" th:value="${e.id}"></option>
                 </select>
             </div>
+
             <div class="casillero">
                 <label for="autor">Autor:</label>
                 <select th:field="*{autor.id}" id="autor">
-
+                    <option value="Sin autor" selected>Sin autor</option>
                     <option th:each="a : ${autores}" th:text="${a.nombre}" th:value="${a.id}"></option>
                 </select>
             </div>
-
+         
             <div class="casillero">
                 <input type="submit" value="Guardar" class="submit">
             </div>
 
         </fieldset>
-
     </form>
+
+
     <footer th:replace="layout/footer"></footer>
 </body>
 

@@ -164,7 +164,6 @@ th,
 td {
   padding: 4px;
   border: 2px solid #000;
-  text-align: center;
 }
 
 /* ============ Formularios ============ */
@@ -182,6 +181,13 @@ fieldset .casillero {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
+}
+
+fieldset div.errores{
+  text-align: right;
+  color:white;
+  font-size: 12px;
+  margin-right: 15px;
 }
 
 .casillero select{

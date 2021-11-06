@@ -2,6 +2,10 @@
 package egg.ejercicio01.libreria.entidades;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -11,23 +15,31 @@ public class Libro {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String Id;
 
+    
+    @NotNull(message = "Debes especificar el isbn")
     @Column(nullable = false)
     private Long isbn;
 
+    @NotEmpty(message="Debes especificar el titulo")
     @Column(nullable = false)
     private String titulo;
 
+    @NotNull(message = "Debes especificar el año")
     @Column(nullable = false)
     private Integer anio;
 
+    @NotNull(message = "Debes especificar la cantidad de ejemplares")
     @Column(nullable = false)
     private Integer ejemplares;
 
+    @NotNull(message = "Debes especificar la cantidad de ejemplares prestados")
     @Column(nullable = false)
     private Integer ejemplaresPrestados;
 
+    @NotNull(message = "Debes especificar la cantidad de ejemplares restantes")
     @Column(nullable = false)
     private Integer ejemplaresRestantes;
+
 
     private Boolean alta;
 

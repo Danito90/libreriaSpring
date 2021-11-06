@@ -85,4 +85,8 @@ public class AutorServicio {
     public List<Autor> findAll() {
         return autorRepositorio.findAll();
     }
+
+    public Optional<Autor> findById(String id) {
+        return autorRepositorio.findById(id);
+    }
 }
