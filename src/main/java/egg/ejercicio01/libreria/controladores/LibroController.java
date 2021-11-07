@@ -69,13 +69,17 @@ public class LibroController {
     public String guardar(Model model, RedirectAttributes redirectAttributes, @ModelAttribute @Valid Libro libro,
             BindingResult bindingResult) {
         try {
-            if (bindingResult.hasErrors()) {
-                return "libro-form";
-            }
             libroServicio.save(libro);
             redirectAttributes.addFlashAttribute("exito", "Libro guardado con exito");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Error al guardar el libro: " + e.getMessage());
+            model.addAttribute("autores", autorServicio.findAll());
+            model.addAttribute("editoriales", editorialServicio.findAll());
+
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            //  if (bindingResult.hasErrors()) {
+            //     return "libro-form";
+            // }
+            return "libro-form";
         }
         return "redirect:/libro/lista";
     }

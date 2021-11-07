@@ -5,6 +5,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -15,11 +16,12 @@ public class Libro {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String Id;
 
-    
+        
     @NotNull(message = "Debes especificar el isbn")
     @Column(nullable = false)
     private Long isbn;
 
+    @Size(min = 1, max = 100,message = "Debe tener de 1 a 100 caracteres")
     @NotEmpty(message="Debes especificar el titulo")
     @Column(nullable = false)
     private String titulo;
@@ -43,6 +45,8 @@ public class Libro {
 
     private Boolean alta;
 
+    
+    @NotNull(message = "Debes especificar el autor")
     @ManyToOne(cascade = CascadeType.REMOVE) // muchos libros pueden pertenecer a un autor
     private Autor autor; // muchos libros pueden pertenecer a un autor
     // Si trabajo unidireccional la relacion, se crea la llave foranea aca... si es

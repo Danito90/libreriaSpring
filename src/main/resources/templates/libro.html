@@ -8,6 +8,7 @@
 
 <header th:replace="layout/barra"></header>
 <h1>Listado de libros</h1>
+<div class="exito" th:if="${exito}" th:text="${exito}"></div>
 
 <table>
     <thead>
@@ -27,7 +28,7 @@
     </thead>
     <tbody>
         <tr th:each=" l,iterator: ${libros}">
-            <td th:text="${iterator.index+1}"> 1</td>
+            <td th:text="${iterator.index+1}"> 1</td> <!-- no es el id real el que muestra, es un un indicador de posicion -->
             <td th:text="${l.isbn}"></td>
             <td th:text="${l.titulo}"></td>
             <td th:text="${l.anio}"></td>

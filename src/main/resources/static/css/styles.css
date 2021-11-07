@@ -12,10 +12,10 @@ body {
 
 .imgini img {
   width: 100%;
-  max-height: 200px;
+  max-height: 300px;
 }
 
-.header {
+header {
   position: sticky;
   position: -webkit-sticky;
   top: 0px;
@@ -160,10 +160,18 @@ table {
 }
 
 tr,
-th,
 td {
   padding: 4px;
   border: 2px solid #000;
+  text-align: center;
+}
+
+th{
+  padding: 4px;
+  border: 2px solid #000;
+  text-align: center;
+  color: rgb(255, 255, 255);
+  background-color: rgb(0, 0, 0);
 }
 
 /* ============ Formularios ============ */
@@ -185,7 +193,7 @@ fieldset .casillero {
 
 fieldset div.errores{
   text-align: right;
-  color:white;
+  color:rgb(161, 0, 0);
   font-size: 12px;
   margin-right: 15px;
 }
@@ -207,4 +215,13 @@ input.submit{
   border: 2px solid #000;
   border-radius: 10px;
   margin: 10px auto;
+}
+
+div.exito{
+  background-color: #085e0b;
+  color: rgb(255, 255, 255);
+  padding: 5px;
+  border-radius: 10px;
+  text-align: center;
+  width: 30%;
 }

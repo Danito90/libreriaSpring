@@ -30,7 +30,8 @@ public class LibroServicio {
     }
 
     @Transactional
-    public Libro save(Libro libro){
+    public Libro save(Libro libro) throws ErrorServicio{
+        validate2(libro);
         return libroRepositorio.save(libro);
     }
 
@@ -139,6 +140,36 @@ public class LibroServicio {
             throw new ErrorServicio("El autor no puede estar vacio");
         }
         if (editorial == null) {
+            throw new ErrorServicio("La editorial no puede estar vacia");
+        }
+    }
+
+    public void validate2(Libro libro) throws ErrorServicio {
+        if (libro.getIsbn() == null) {
+            throw new ErrorServicio("El isbn no puede estar vacio");
+        }
+        if (libro.getTitulo() == null) {
+            throw new ErrorServicio("El titulo no puede estar vacio");
+        }
+        if (libro.getAnio() == null) {
+            throw new ErrorServicio("El año no puede estar vacio");
+        }
+        if (libro.getEjemplares() == null) {
+            throw new ErrorServicio("El ejemplar no puede estar vacio");
+        }
+        if (libro.getEjemplaresPrestados() == null) {
+            throw new ErrorServicio("El ejemplar prestado no puede estar vacio");
+        }
+        if (libro.getEjemplaresRestantes() == null) {
+            throw new ErrorServicio("El ejemplar restante no puede estar vacio");
+        }
+        if (libro.getAlta() == null) {
+            throw new ErrorServicio("El alta no puede estar vacio");
+        }
+        if (libro.getAutor() == null) {
+            throw new ErrorServicio("El autor no puede estar vacio");
+        }
+        if (libro.getEditorial() == null) {
             throw new ErrorServicio("La editorial no puede estar vacia");
         }
     }
