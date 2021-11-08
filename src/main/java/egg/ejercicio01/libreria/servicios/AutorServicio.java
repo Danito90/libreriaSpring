@@ -72,9 +72,9 @@ public class AutorServicio {
             autorRepositorio.save(autor); // este save no crea id, actualiza
         }
     }
-
+    
     public void validateAutor(String nombre, Boolean alta) throws ErrorServicio {
-        if (nombre == null) {
+        if (nombre == null || nombre.isEmpty()) {
             throw new ErrorServicio("El nombre no puede estar vacio");
         }
         if (alta == null) {
@@ -82,11 +82,21 @@ public class AutorServicio {
         }
     }
 
+    @Transactional
     public List<Autor> findAll() {
         return autorRepositorio.findAll();
     }
-
+    @Transactional
     public Optional<Autor> findById(String id) {
         return autorRepositorio.findById(id);
     }
+
+    @Transactional
+    public Autor findById(Autor autor) {
+        Optional<Autor> optional = autorRepositorio.findById(autor.getId());
+        if (optional.isPresent()) {
+          autor = optional.get();
+        }
+        return autor;
+      }
 }

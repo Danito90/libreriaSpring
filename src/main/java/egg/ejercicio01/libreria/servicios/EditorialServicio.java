@@ -85,9 +85,8 @@ public class EditorialServicio {
     }
 
     
-
     private void validateEditorial(String nombre, Boolean alta) throws ErrorServicio {
-        if (nombre == null) {
+        if (nombre == null || nombre.isEmpty()) {
             throw new ErrorServicio("El nombre no puede estar vacio");
         }
         if (alta == null) {
@@ -95,6 +94,20 @@ public class EditorialServicio {
         }
     }
 
+    @Transactional
+    public Editorial findById(Editorial editorial) {
+        Optional<Editorial> respuesta = editorialRepositorio.findById(editorial.getId());
+        if (respuesta.isPresent()) {
+            editorial = respuesta.get();
+        }
+        return editorial;
+    }
+
+    @Transactional
+    public Optional<Editorial> findById(String id){
+        return editorialRepositorio.findById(id);
+    }
     
+
 
 }

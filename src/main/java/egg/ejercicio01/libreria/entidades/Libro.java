@@ -2,6 +2,8 @@
 package egg.ejercicio01.libreria.entidades;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -15,8 +17,9 @@ public class Libro {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String Id;
-
-        
+   
+    @Min(1)
+    @Max(99999999) 
     @NotNull(message = "Debes especificar el isbn")
     @Column(nullable = false)
     private Long isbn;
@@ -26,6 +29,8 @@ public class Libro {
     @Column(nullable = false)
     private String titulo;
 
+    @Min(1900)
+    @Max(2099) 
     @NotNull(message = "Debes especificar el año")
     @Column(nullable = false)
     private Integer anio;
@@ -47,7 +52,7 @@ public class Libro {
 
     
     @NotNull(message = "Debes especificar el autor")
-    @ManyToOne(cascade = CascadeType.REMOVE) // muchos libros pueden pertenecer a un autor
+    @ManyToOne(cascade = CascadeType.REMOVE) 
     private Autor autor; // muchos libros pueden pertenecer a un autor
     // Si trabajo unidireccional la relacion, se crea la llave foranea aca... si es
     // bidireccional, leer la relacion en autor

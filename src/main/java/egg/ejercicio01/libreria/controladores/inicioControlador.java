@@ -27,4 +27,8 @@ public class inicioControlador {
         return "editorial.html";
     }
 
+    @GetMapping("/registro") // responde a una peticion get
+    public String registro() {
+        return "registro.html";
+    }
 }

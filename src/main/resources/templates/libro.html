@@ -5,10 +5,12 @@
 
 <head th:replace="layout/head"></head>
 
+<body>
 
 <header th:replace="layout/barra"></header>
 <h1>Listado de libros</h1>
 <div class="exito" th:if="${exito}" th:text="${exito}"></div>
+<div class="error" th:if="${error}" th:text="${error}"></div>
 
 <table>
     <thead>
@@ -38,7 +40,7 @@
             <td th:text="${l.autor.nombre}"></td>
             <td th:text="${l.editorial.nombre}"></td>
             <td>
-                <a href="">Modificar</a>
+                <a th:href="@{/libro/form}">Modificar</a>
             </td>
             <td>
                 <a href="">Eliminar</a>
@@ -49,7 +51,7 @@
 </table>
 
 
-
+<footer th:replace="layout/footer"></footer>
 </body>
 
 </html>

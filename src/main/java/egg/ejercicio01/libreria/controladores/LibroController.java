@@ -66,19 +66,29 @@ public class LibroController {
     }
 
     @PostMapping("/save") // valida cada item
-    public String guardar(Model model, RedirectAttributes redirectAttributes, @ModelAttribute @Valid Libro libro,
+    public String guardar(Model model,ModelMap modelo, RedirectAttributes redirectAttributes, @ModelAttribute @Valid Libro libro,
             BindingResult bindingResult) {
         try {
+            if (bindingResult.hasErrors()) {
+                model.addAttribute("autores", autorServicio.findAll());
+                model.addAttribute("editoriales", editorialServicio.findAll());
+                return "libro-form";
+            }
+
             libroServicio.save(libro);
             redirectAttributes.addFlashAttribute("exito", "Libro guardado con exito");
-        } catch (Exception e) {
+        } catch (ErrorServicio e) {
             model.addAttribute("autores", autorServicio.findAll());
             model.addAttribute("editoriales", editorialServicio.findAll());
+            if(e.getMessage().equals("La editorial no puede estar vacia")){
+                modelo.put("editorialError", e.getMessage());
+            }else{
+                modelo.put("autorError", e.getMessage());
+            }
+           
 
             redirectAttributes.addFlashAttribute("error", e.getMessage());
-            //  if (bindingResult.hasErrors()) {
-            //     return "libro-form";
-            // }
+
             return "libro-form";
         }
         return "redirect:/libro/lista";

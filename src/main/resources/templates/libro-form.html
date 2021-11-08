@@ -13,6 +13,13 @@
         <fieldset>
             <legend>Agregar Libro</legend>
 
+            <!-- <div th:if="${#fields.hasAnyErrors()}">
+                <ul>
+                    <li th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+                </ul>
+            </div> -->
+
+
             <div class="casillero">
                 <!-- <label for="id">Id</label> -->
                 <input hidden th:field="*{id}">
@@ -20,13 +27,13 @@
 
             <div class="casillero">
                 <label for="isbn">Isbn:</label>
-                <input type="text" name="isbn" id="isbn" th:field="*{isbn}">
+                <input type="text" name="isbn" id="isbn" th:field="*{isbn}" maxlength="8">
             </div>
             <div class="errores" th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}">Error Nombre</div>
 
             <div class="casillero">
                 <label for="titulo">Titulo:</label>
-                <input type="text" name="titulo" id="titulo" th:field="*{titulo}">
+                <input type="text" name="titulo" id="titulo" th:field="*{titulo}" maxlength="25">
             </div>
             <div class="errores" th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}">Error Nombre</div>
 
@@ -74,19 +81,22 @@
 
             <div class="casillero">
                 <label for="editorial">Editorial:</label>
-                <select th:field="*{editorial.id}" id="editorial" name="editorial" required>
+                <select th:field="*{editorial.id}" id="editorial" name="editorial" >
                     <option value="" selected>Elegir editorial</option>
                     <option th:each="e : ${editoriales}" th:text="${e.nombre}" th:value="${e.id}"></option>
                 </select>
             </div>
+            <div class="errores"th:text="${editorialError}"></div> <!-- para autor y editorial -->
+            
 
             <div class="casillero">
                 <label for="autor">Autor:</label>
-                <select th:field="*{autor.id}" id="autor" name="autor" required>
+                <select th:field="*{autor.id}" id="autor" name="autor" >
                     <option value="" selected>Elegir autor</option>
                     <option th:each="a : ${autores}" th:text="${a.nombre}" th:value="${a.id}"></option>
                 </select>
             </div>
+            <div class="errores" th:text="${autorError}"></div>
             
             <div class="casillero">
                 <input type="submit" value="Guardar" class="submit">
