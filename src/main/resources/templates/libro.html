@@ -40,10 +40,10 @@
             <td th:text="${l.autor.nombre}"></td>
             <td th:text="${l.editorial.nombre}"></td>
             <td>
-                <a th:href="@{/libro/form}">Modificar</a>
+                <a th:href="@{/libro/form}+'?id='+${l.id}">Modificar</a>
             </td>
             <td>
-                <a href="">Eliminar</a>
+                <a th:href="@{/libro/delete}+'?id='+${l.id}">Eliminar</a>
             </td>
         </tr>
     </tbody>

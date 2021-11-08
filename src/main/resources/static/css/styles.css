@@ -239,8 +239,8 @@ div.error{
   width: 90%;
 }
 
-
-/* form input:valid{
+/* 
+ form input:valid{
   border: 2px solid rgb(0, 39, 0);
   background-color: rgb(123, 199, 123);
 }
@@ -248,7 +248,13 @@ div.error{
 form input:invalid{
   border: 2px solid rgb(199, 0, 0);
   background-color: rgb(192, 83, 83);
-} */
+}  */
+
+form input:focus-visible{
+  border: 2px solid rgb(0, 11, 71);
+  background-color: rgb(78, 113, 189);
+color: rgb(255, 255, 255);
+}
 
 
 /* =============== footer ==================== */
@@ -258,4 +264,17 @@ div.footer{
   text-align: center;
   padding: 30px;
   margin-top: 50px;
+}
+
+div.footer i{
+  border: 2px solid rgb(255, 255, 255);
+  color: rgb(255, 255, 255);
+  border-radius: 10px;
+  padding: 15px;
+  margin: 10px;
+  width: 26px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
 }

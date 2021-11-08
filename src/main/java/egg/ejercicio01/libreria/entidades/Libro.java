@@ -52,12 +52,12 @@ public class Libro {
 
     
     @NotNull(message = "Debes especificar el autor")
-    @ManyToOne(cascade = CascadeType.REMOVE) 
+    @ManyToOne
     private Autor autor; // muchos libros pueden pertenecer a un autor
     // Si trabajo unidireccional la relacion, se crea la llave foranea aca... si es
     // bidireccional, leer la relacion en autor
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     private Editorial editorial;
 
     public Libro() {

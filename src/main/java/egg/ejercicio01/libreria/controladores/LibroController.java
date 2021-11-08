@@ -48,12 +48,12 @@ public class LibroController {
     }
 
     @GetMapping("/form")
-    public String nuevo(Model model, @RequestParam(required = false) String id) { // RequestParam oblicatorio,
+    public String nuevo(Model model, @RequestParam(required = false) String id) { // RequestParam obligatorio,
                                                                                   // required= false opcional
         if (id != null) {
-            Optional<Libro> optional = libroServicio.findById(id);
-            if (optional.isPresent()) {
-                model.addAttribute("libro", optional.get());
+            Optional<Libro> resultado = libroServicio.findById(id);
+            if (resultado.isPresent()) {
+                model.addAttribute("libro", resultado.get());
             } else {
                 return "redirect:/libro/lista";
             }
@@ -76,9 +76,9 @@ public class LibroController {
             }
 
             libroServicio.save(libro);
-            redirectAttributes.addFlashAttribute("exito", "Libro guardado con exito");
+            redirectAttributes.addFlashAttribute("exito", "El libro ''" + libro.getTitulo() + "'' se ha guardado con exito");
         } catch (ErrorServicio e) {
-            model.addAttribute("autores", autorServicio.findAll());
+            model.addAttribute("autores", autorServicio.findAll()); // vuelve a cargar select
             model.addAttribute("editoriales", editorialServicio.findAll());
             if(e.getMessage().equals("La editorial no puede estar vacia")){
                 modelo.put("editorialError", e.getMessage());
@@ -86,7 +86,6 @@ public class LibroController {
                 modelo.put("autorError", e.getMessage());
             }
            
-
             redirectAttributes.addFlashAttribute("error", e.getMessage());
 
             return "libro-form";
@@ -111,14 +110,21 @@ public class LibroController {
     // return "libro-form.html";
     // }
 
-    @GetMapping("/editar")
-    public String editar() {
-        return "libro/editar";
-    }
-
-    @GetMapping("/eliminar")
-    public String eliminar() {
-        return "libro/eliminar";
+    @GetMapping("/delete")
+    public String eliminar(@RequestParam(required = true) String id,RedirectAttributes redirectAttributes) {
+        Optional<Libro> resultado = libroServicio.findById(id);
+        Libro libro=new Libro();
+        if (resultado.isPresent()) {
+           libro= resultado.get();
+            redirectAttributes.addFlashAttribute("exito", "Libro eliminado con exito");
+        } 
+        try {
+            libroServicio.deleteLibro(id);
+            redirectAttributes.addFlashAttribute("exito", "El Libro ''" + libro.getTitulo() +"'' ha sido eliminado con exito");
+        } catch (ErrorServicio e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+        return "redirect:/libro/lista";
     }
 
 }

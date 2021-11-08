@@ -33,7 +33,7 @@
 
             <div class="casillero">
                 <label for="titulo">Titulo:</label>
-                <input type="text" name="titulo" id="titulo" th:field="*{titulo}" maxlength="25">
+                <input type="text" name="titulo" id="titulo" th:field="*{titulo}" maxlength="75">
             </div>
             <div class="errores" th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}">Error Nombre</div>
 
