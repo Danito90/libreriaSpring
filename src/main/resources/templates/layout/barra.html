@@ -8,7 +8,7 @@
                 <ul class="nav">
                     <li><a href="/">Inicio</a></li>
 
-                    <li><a th:href="@{/libro/lista}">Libro</a>
+                    <li><a href="#">Libro</a>
                         <ul>
                             <li><a th:href="@{/libro/lista}">Listar</a></li>
                             <li><a th:href="@{/libro/form}">Agregar</a></li>
@@ -24,9 +24,9 @@
                     </li>
                     <li><a href="#">Editorial</a>
                         <ul>
-                            <li><a href="#">Listar</a></li>
-                            <li><a href="#">Agregar</a></li>
-                            <li><a href="#">Modificaciones</a></li>
+                            <li><a th:href="@{/editorial/lista}">Listar</a></li>
+                            <li><a th:href="@{/editorial/form}">Agregar</a></li>
+                            <li><a th:href="@{/editorial/lista}">Modificaciones</a></li>
                         </ul>
                     </li>
 

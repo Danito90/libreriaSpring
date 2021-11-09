@@ -8,10 +8,10 @@
 <body>
     <header th:replace="layout/barra"></header>
 
-    <form method="post" th:object="${autor}" th:action="@{/autor/save}">
+    <form method="post" th:object="${editorial}" th:action="@{/editorial/save}">
         <!-- th:object="${libro}" para actualizar, traer los datos-->
         <fieldset>
-            <legend>Agregar Autor</legend>
+            <legend>Agregar Editorial</legend>
 
             <!-- <div th:if="${#fields.hasAnyErrors()}">
                 <ul>
