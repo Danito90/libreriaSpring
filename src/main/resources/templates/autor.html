@@ -8,8 +8,8 @@
 <body>
     <header th:replace="layout/barra"></header>
     <h1>Listado de autores</h1>
-    <div class="exito" th:if="${exitoAutor}" th:text="${exito}"></div>
-    <div class="error" th:if="${errorAutor}" th:text="${error}"></div>
+    <div class="desaparecer exito" th:if="${exitoAutor}" th:text="${exitoAutor}"></div>
+    <div class="desaparecer error" th:if="${errorAutor}" th:text="${errorAutor}"></div>
 
     <table>
         <thead>
@@ -26,13 +26,15 @@
                 <td th:text="${iterator.index+1}"> 1</td>
                 <td th:text="${l.nombre}"></td>
                 <td th:text="${l.alta}"></td>
-                <td><a href="#"> Modificar</a></td>
-                <td><a href="#">Eliminar</a></td>
+                <td><a th:href="@{/autor/form}+ '?id=' + ${l.id}"> Modificar</a></td>
+                <td><a th:href="@{/autor/delete} + '?id=' + ${l.id}">Eliminar</a></td>
             </tr>
         </tbody>
     </table>
 
 
+    <!-- Javascript desaparecer -->
+    <script type="text/javascript" src="js/desaparecer.js"></script>
 
 </body>
 

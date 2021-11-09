@@ -30,14 +30,13 @@ public class AutorController {
         return "autor";
     }
 
-
     @GetMapping("/form")
     public String nuevo(Model model, @RequestParam(required = false) String id) {
         if (id != null) {
-            Optional<Autor> autor = autorServicio.findById(id);
-            if (autor.isPresent()) {
-                model.addAttribute("autor", autor.get());
-            }else{
+            Optional<Autor> resultado = autorServicio.findById(id);
+            if (resultado.isPresent()) {
+                model.addAttribute("autor", resultado.get());
+            } else {
                 return "redirect:/autor/lista";
             }
         } else {
@@ -46,21 +45,41 @@ public class AutorController {
         return "autor-form";
     }
 
-
     @PostMapping("/save")
-    public String save(@ModelAttribute @Valid Autor autor, ModelMap modelo, RedirectAttributes redirectAttributes,
-            BindingResult bindingResult) {
+    public String guardar(Model model, @ModelAttribute @Valid Autor autor, BindingResult bindingResult, ModelMap modelo,
+            RedirectAttributes redirectAttributes) {
         try {
             if (bindingResult.hasErrors()) {
                 return "autor-form";
             }
             autorServicio.save(autor);
-            redirectAttributes.addFlashAttribute("exitoAutor", "Autor guardado con exito");
+            redirectAttributes.addFlashAttribute("exitoAutor",
+                    "El autor ''" + autor.getNombre() + "'' se ha guardado con exito");
             return "redirect:/autor/lista";
         } catch (ErrorServicio e) {
-            redirectAttributes.addFlashAttribute("errorAutor", "Error al guardar el autor");
-            return "redirect:/autor/lista";
+            modelo.addAttribute("errorServicio", e.getMessage());
+            redirectAttributes.addFlashAttribute("errorAutor",
+                    "Error al guardar el autor ''" + autor.getNombre() + "''");
+            return "autor-form";
         }
     }
 
+    @GetMapping("/delete")
+    public String eliminar(RedirectAttributes redirectAttributes, @RequestParam(required = true) String id) {
+
+        try {
+            Optional<Autor> resultado = autorServicio.findById(id);
+            Autor autor = new Autor();
+            if (resultado.isPresent()) {
+                autor = resultado.get();
+            }
+            autorServicio.deleteAutor(id);
+            redirectAttributes.addFlashAttribute("exitoAutor",
+                    "El autor ''" + autor.getNombre() + "'' se ha eliminado con exito");
+        } catch (ErrorServicio e) {
+            redirectAttributes.addFlashAttribute("errorAutor", e.getMessage());
+        }
+        return "redirect:/autor/lista";
+
+    }
 }

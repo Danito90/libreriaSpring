@@ -9,8 +9,8 @@
 
     <header th:replace="layout/barra"></header>
     <h1>Listado de libros</h1>
-    <div class="exito" th:if="${exito}" th:text="${exito}"></div>
-    <div class="error" th:if="${error}" th:text="${error}"></div>
+    <div class="exito desaparecer" th:if="${exito}" th:text="${exito}"></div>
+    <div class="error desaparecer" th:if="${error}" th:text="${error}"></div>
 
     <table>
         <thead>

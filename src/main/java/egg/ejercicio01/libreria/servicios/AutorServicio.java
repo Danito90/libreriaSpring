@@ -52,10 +52,12 @@ public class AutorServicio {
     }
 
     @Transactional
-    public void deleteAutor(String id) {
+    public void deleteAutor(String id) throws ErrorServicio {
         Optional<Autor> respuesta = autorRepositorio.findById(id);
         if (respuesta.isPresent()) { // si encuentra un usuario con ese id entonces modifica su info
             autorRepositorio.deleteById(id);
+        }else {
+            throw new ErrorServicio("No existe el autor con id: " + id);
         }
     }
 

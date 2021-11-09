@@ -1,12 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editorial</title>
-</head>
+<html lang="es-AR" xmlns:th="https://www.thymeleaf.org">
+
+<head th:replace="layout/head.html"></head>
+
+<title>Autor</title>
+
 <body>
-    <p>Editorial</p>
+    <header th:replace="layout/barra"></header>
+    <h1>Listado de Editoriales</h1>
+    <div class="desaparecer exito" th:if="${exitoEditorial}" th:text="${exitoEditorial}"></div>
+    <div class="desaparecer error" th:if="${errorEditorial}" th:text="${errorEditorial}"></div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Alta</th>
+                <th>Modificar</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="l,iterator: ${editorial}">
+                <td th:text="${iterator.index+1}"> 1</td>
+                <td th:text="${l.nombre}"></td>
+                <td th:text="${l.alta}"></td>
+                <td><a th:href="@{/editorial/form}+ '?id=' + ${l.id}"> Modificar</a></td>
+                <td><a th:href="@{/editorial/delete} + '?id=' + ${l.id}">Eliminar</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <!-- Javascript desaparecer -->
+    <script type="text/javascript" src="js/desaparecer.js"></script>
+
 </body>
+
 </html>
