@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es-AR" xmlns:th="https://www.thymeleaf.org">
+
+<head th:replace="layout/head.html"></head>
+
+<title>Autor</title>
+
+<body>
+    <header th:replace="layout/barra"></header>
+    <h1>Listado de autores</h1>
+    <div class="desaparecer exito" th:if="${exitoAutor}" th:text="${exitoAutor}"></div>
+    <div class="desaparecer error" th:if="${errorAutor}" th:text="${errorAutor}"></div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Alta</th>
+                <th>Modificar</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="l,iterator: ${autor}">
+                <td th:text="${iterator.index+1}"> 1</td>
+                <td th:text="${l.nombre}"></td>
+                <td th:text="${l.alta}"></td>
+                <td><a th:href="@{/autor/form}+ '?id=' + ${l.id}"> Modificar</a></td>
+                <td><a th:href="@{/autor/delete} + '?id=' + ${l.id}">Eliminar</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <!-- Javascript desaparecer -->
+    <script type="text/javascript" src="js/desaparecer.js"></script>
+
+</body>
+
+</html>

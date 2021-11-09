@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es-AR" xmlns:th="https://www.thymeleaf.org">
+<title>Agregar Libro</title>
+
+<head th:replace="layout/head"></head>
+<link rel="stylesheet" href="/src/main/resources/static/css/styles.css">
+
+<body>
+    <header th:replace="layout/barra"></header>
+
+    <form method="post" th:object="${autor}" th:action="@{/autor/save}">
+        <!-- th:object="${libro}" para actualizar, traer los datos-->
+        <fieldset>
+            <legend>Agregar Autor</legend>
+
+            <!-- <div th:if="${#fields.hasAnyErrors()}">
+                <ul>
+                    <li th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+                </ul>
+            </div> -->
+
+            <div class="casillero">
+                <!-- <label for="id">Id</label> -->
+                <input hidden th:field="*{id}">
+            </div>
+
+            <div class="casillero">
+                <label for="nombre">Nombre:</label>
+                <input type="text" name="nombre" id="nombre" th:field="*{nombre}">
+            </div>
+            <div class="errores" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error Nombre</div>
+
+            <div class="casillero">
+                <label for="alta">Estado: </label>
+                <!-- name debe ser igual para selecciona solo una opcion, value es el valor q se envia -->
+                <div>
+                    <input type="radio" id="alta" name="alta" value="true" checked="checked">
+                    <label for="alta">Alta</label>
+                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                    <input type="radio" id="baja" name="alta" value="false" >
+                    <label for="baja">Baja</label>
+                </div>
+            </div>
+            <div class="errores" th:if="${#fields.hasErrors('alta')}" th:errors="*{alta}">Error alta</div>
+           
+            <div class="casillero">
+                <input type="submit" value="Guardar" class="submit">
+            </div>
+
+        </fieldset>
+    </form>
+
+
+    <footer th:replace="layout/footer"></footer>
+</body>
+
+</html>

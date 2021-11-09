@@ -5,7 +5,6 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
 import org.springframework.ui.Model;
@@ -17,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import egg.ejercicio01.libreria.entidades.Autor;
-import egg.ejercicio01.libreria.entidades.Editorial;
 import egg.ejercicio01.libreria.entidades.Libro;
 import egg.ejercicio01.libreria.errores.ErrorServicio;
 import egg.ejercicio01.libreria.servicios.AutorServicio;
@@ -44,16 +41,16 @@ public class LibroController {
                           // server. Renderiza vistas
     public String listar(Model model) {
         model.addAttribute("libros", libroServicio.findAll());
-        return "libro"; // Siempre string para devolver la url de la vista
+        return "libro/libro"; // Siempre string para devolver la url de la vista
     }
 
     @GetMapping("/form")
-    public String nuevo(Model model, @RequestParam(required = false) String id) { // RequestParam oblicatorio,
+    public String nuevo(Model model, @RequestParam(required = false) String id) { // RequestParam obligatorio,
                                                                                   // required= false opcional
         if (id != null) {
-            Optional<Libro> optional = libroServicio.findById(id);
-            if (optional.isPresent()) {
-                model.addAttribute("libro", optional.get());
+            Optional<Libro> resultado = libroServicio.findById(id);
+            if (resultado.isPresent()) {
+                model.addAttribute("libro", resultado.get());
             } else {
                 return "redirect:/libro/lista";
             }
@@ -62,36 +59,38 @@ public class LibroController {
         }
         model.addAttribute("autores", autorServicio.findAll());
         model.addAttribute("editoriales", editorialServicio.findAll());
-        return "libro-form";
+        return "libro/libro-form";
     }
 
     @PostMapping("/save") // valida cada item
-    public String guardar(Model model,ModelMap modelo, RedirectAttributes redirectAttributes, @ModelAttribute @Valid Libro libro,
-            BindingResult bindingResult) {
+    public String guardar(Model model, ModelMap modelo, RedirectAttributes redirectAttributes,
+            @ModelAttribute @Valid Libro libro, BindingResult bindingResult) { //Es indispensable que BindingResult bindingResult se pase
+                                                                               // justo despues de la Entidad(clase) si no no funciona
         try {
             if (bindingResult.hasErrors()) {
                 model.addAttribute("autores", autorServicio.findAll());
                 model.addAttribute("editoriales", editorialServicio.findAll());
-                return "libro-form";
+                return "libro/libro-form";
             }
 
             libroServicio.save(libro);
-            redirectAttributes.addFlashAttribute("exito", "Libro guardado con exito");
+            redirectAttributes.addFlashAttribute("exito",
+                    "El libro ''" + libro.getTitulo() + "'' se ha guardado con exito");
+            return "redirect:/libro/lista";
         } catch (ErrorServicio e) {
-            model.addAttribute("autores", autorServicio.findAll());
+            model.addAttribute("autores", autorServicio.findAll()); // vuelve a cargar select
             model.addAttribute("editoriales", editorialServicio.findAll());
-            if(e.getMessage().equals("La editorial no puede estar vacia")){
+            if (e.getMessage().equals("La editorial no puede estar vacia")) {
                 modelo.put("editorialError", e.getMessage());
-            }else{
+            } else {
                 modelo.put("autorError", e.getMessage());
             }
-           
 
             redirectAttributes.addFlashAttribute("error", e.getMessage());
 
-            return "libro-form";
+            return "libro/libro-form";
         }
-        return "redirect:/libro/lista";
+
     }
 
     // @PostMapping("/save") //solucionar no valida (copiado de tinder mascotas)
@@ -111,14 +110,22 @@ public class LibroController {
     // return "libro-form.html";
     // }
 
-    @GetMapping("/editar")
-    public String editar() {
-        return "libro/editar";
-    }
+    @GetMapping("/delete")
+    public String eliminar(@RequestParam(required = true) String id, RedirectAttributes redirectAttributes) {
 
-    @GetMapping("/eliminar")
-    public String eliminar() {
-        return "libro/eliminar";
+        try {
+            Optional<Libro> resultado = libroServicio.findById(id);
+            Libro libro = new Libro();
+            if (resultado.isPresent()) {
+                libro = resultado.get();
+            }
+            libroServicio.deleteLibro(id);
+            redirectAttributes.addFlashAttribute("exito",
+                    "El Libro ''" + libro.getTitulo() + "'' ha sido eliminado con exito");
+        } catch (ErrorServicio e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+        return "redirect:/libro/lista";
     }
 
 }

@@ -8,8 +8,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import egg.ejercicio01.libreria.entidades.Autor;
-import egg.ejercicio01.libreria.entidades.Editorial;
 import egg.ejercicio01.libreria.entidades.Libro;
 import egg.ejercicio01.libreria.errores.ErrorServicio;
 import egg.ejercicio01.libreria.repositorios.LibroRepositorio;

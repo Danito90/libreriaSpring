@@ -5,6 +5,8 @@
 <head th:replace="layout/head"></head>
 <link rel="stylesheet" href="/src/main/resources/static/css/styles.css">
 
+
+
 <body>
     <header th:replace="layout/barra"></header>
 
@@ -13,7 +15,8 @@
         <fieldset>
             <legend>Agregar Libro</legend>
 
-            <!-- <div th:if="${#fields.hasAnyErrors()}">
+            <!-- Pila de errores completa -->
+            <!-- <div th:if="${#fields.hasAnyErrors()}"> 
                 <ul>
                     <li th:each="err : ${#fields.allErrors()}" th:text="${err}" />
                 </ul>
@@ -28,12 +31,13 @@
             <div class="casillero">
                 <label for="isbn">Isbn:</label>
                 <input type="text" name="isbn" id="isbn" th:field="*{isbn}" maxlength="8">
+                <!-- con tl th:field es donde vinculamos el input al controller -->
             </div>
             <div class="errores" th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}">Error Nombre</div>
 
             <div class="casillero">
                 <label for="titulo">Titulo:</label>
-                <input type="text" name="titulo" id="titulo" th:field="*{titulo}" maxlength="25">
+                <input type="text" name="titulo" id="titulo" th:field="*{titulo}" maxlength="75">
             </div>
             <div class="errores" th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}">Error Nombre</div>
 
@@ -72,15 +76,15 @@
                 <!-- name debe ser igual para selecciona solo una opcion, value es el valor q se envia -->
                 <div>
                     <input type="radio" id="alta" name="alta" value="true" checked="checked">
-                    <label for="femenino">Alta:</label>
+                    <label for="alta">Alta</label>
                     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                     <input type="radio" id="baja" name="alta" value="false" >
-                    <label for="masculino">Baja</label>
+                    <label for="baja">Baja</label>
                 </div>
             </div>
 
             <div class="casillero">
-                <label for="editorial">Editorial:</label>
+                <label for="editorial"><a th:href="@{/editorial/form}"><i class="fa fa-plus-square fa-lg"></i></a> Editorial:</label>
                 <select th:field="*{editorial.id}" id="editorial" name="editorial" >
                     <option value="" selected>Elegir editorial</option>
                     <option th:each="e : ${editoriales}" th:text="${e.nombre}" th:value="${e.id}"></option>
@@ -90,7 +94,7 @@
             
 
             <div class="casillero">
-                <label for="autor">Autor:</label>
+                <label for="autor"><a th:href="@{/autor/form}"><i class="fa fa-plus-square fa-lg"></i></a> Autor:</label>
                 <select th:field="*{autor.id}" id="autor" name="autor" >
                     <option value="" selected>Elegir autor</option>
                     <option th:each="a : ${autores}" th:text="${a.nombre}" th:value="${a.id}"></option>

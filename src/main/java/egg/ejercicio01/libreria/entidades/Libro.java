@@ -4,7 +4,6 @@ package egg.ejercicio01.libreria.entidades;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -47,17 +46,17 @@ public class Libro {
     @Column(nullable = false)
     private Integer ejemplaresRestantes;
 
-
+    @Column(nullable = false)
     private Boolean alta;
 
     
     @NotNull(message = "Debes especificar el autor")
-    @ManyToOne(cascade = CascadeType.REMOVE) 
+    @ManyToOne
     private Autor autor; // muchos libros pueden pertenecer a un autor
     // Si trabajo unidireccional la relacion, se crea la llave foranea aca... si es
     // bidireccional, leer la relacion en autor
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     private Editorial editorial;
 
     public Libro() {

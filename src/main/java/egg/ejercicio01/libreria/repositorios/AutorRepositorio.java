@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AutorRepositorio extends JpaRepository<Autor, String> {
 
-    @Query("select a from Autor a")
-    public List<Autor> findAll();
+    @Query("SELECT a FROM Autor a WHERE a.nombre LIKE %?1%")
+    List<Autor> buscarPorNombre(String nombre);
 
     
 }
