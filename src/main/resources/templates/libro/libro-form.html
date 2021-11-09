@@ -84,7 +84,7 @@
             </div>
 
             <div class="casillero">
-                <label for="editorial"><a th:href="@{/autor/form}"><i class="fa fa-plus-square fa-lg"></i></a> Editorial:</label>
+                <label for="editorial"><a th:href="@{/editorial/form}"><i class="fa fa-plus-square fa-lg"></i></a> Editorial:</label>
                 <select th:field="*{editorial.id}" id="editorial" name="editorial" >
                     <option value="" selected>Elegir editorial</option>
                     <option th:each="e : ${editoriales}" th:text="${e.nombre}" th:value="${e.id}"></option>

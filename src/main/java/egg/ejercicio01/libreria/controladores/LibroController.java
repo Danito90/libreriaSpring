@@ -5,7 +5,6 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
 import org.springframework.ui.Model;
@@ -17,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import egg.ejercicio01.libreria.entidades.Autor;
-import egg.ejercicio01.libreria.entidades.Editorial;
 import egg.ejercicio01.libreria.entidades.Libro;
 import egg.ejercicio01.libreria.errores.ErrorServicio;
 import egg.ejercicio01.libreria.servicios.AutorServicio;
@@ -44,7 +41,7 @@ public class LibroController {
                           // server. Renderiza vistas
     public String listar(Model model) {
         model.addAttribute("libros", libroServicio.findAll());
-        return "libro"; // Siempre string para devolver la url de la vista
+        return "libro/libro"; // Siempre string para devolver la url de la vista
     }
 
     @GetMapping("/form")
@@ -62,7 +59,7 @@ public class LibroController {
         }
         model.addAttribute("autores", autorServicio.findAll());
         model.addAttribute("editoriales", editorialServicio.findAll());
-        return "libro-form";
+        return "libro/libro-form";
     }
 
     @PostMapping("/save") // valida cada item
@@ -73,7 +70,7 @@ public class LibroController {
             if (bindingResult.hasErrors()) {
                 model.addAttribute("autores", autorServicio.findAll());
                 model.addAttribute("editoriales", editorialServicio.findAll());
-                return "libro-form";
+                return "libro/libro-form";
             }
 
             libroServicio.save(libro);
@@ -91,7 +88,7 @@ public class LibroController {
 
             redirectAttributes.addFlashAttribute("error", e.getMessage());
 
-            return "libro-form";
+            return "libro/libro-form";
         }
 
     }

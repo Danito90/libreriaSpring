@@ -27,7 +27,7 @@ public class EditorialController {
     @GetMapping("/lista")
     public String lista(Model model) {
         model.addAttribute("editorial", editorialServicio.findAll());
-        return "editorial";
+        return "editorial/editorial";
     }
 
     @GetMapping("/form")
@@ -42,7 +42,7 @@ public class EditorialController {
         } else {
             model.addAttribute("editorial", new Editorial());
         }
-        return "editorial-form";
+        return "editorial/editorial-form";
     }
 
     @PostMapping("/save")
@@ -50,7 +50,7 @@ public class EditorialController {
             RedirectAttributes redirectAttributes) {
         try {
             if (bindingResult.hasErrors()) {
-                return "editorial-form";
+                return "editorial/editorial-form";
             }
             editorialServicio.save(editorial);
             redirectAttributes.addFlashAttribute("exitoEditorial",
@@ -60,7 +60,7 @@ public class EditorialController {
             modelo.addAttribute("errorServicio", e.getMessage());
             redirectAttributes.addFlashAttribute("errorEditorial",
                     "Error al guardar el editorial ''" + editorial.getNombre() + "''");
-            return "editorial-form";
+            return "editorial/editorial-form";
         }
     }
 

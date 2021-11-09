@@ -26,7 +26,7 @@ public class AutorController {
     @GetMapping("/lista")
     public String lista(Model model) {
         model.addAttribute("autor", autorServicio.findAll());
-        return "autor";
+        return "autor/autor";
     }
 
     @GetMapping("/form")
@@ -41,7 +41,7 @@ public class AutorController {
         } else {
             model.addAttribute("autor", new Autor());
         }
-        return "autor-form";
+        return "autor/autor-form";
     }
 
     @PostMapping("/save")
@@ -49,7 +49,7 @@ public class AutorController {
             RedirectAttributes redirectAttributes) {
         try {
             if (bindingResult.hasErrors()) {
-                return "autor-form";
+                return "autor/autor-form";
             }
             autorServicio.save(autor);
             redirectAttributes.addFlashAttribute("exitoAutor",
@@ -59,7 +59,7 @@ public class AutorController {
             modelo.addAttribute("errorServicio", e.getMessage());
             redirectAttributes.addFlashAttribute("errorAutor",
                     "Error al guardar el autor ''" + autor.getNombre() + "''");
-            return "autor-form";
+            return "autor/autor-form";
         }
     }
 
