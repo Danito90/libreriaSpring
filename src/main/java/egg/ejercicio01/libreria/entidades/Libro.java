@@ -47,7 +47,7 @@ public class Libro {
     @Column(nullable = false)
     private Integer ejemplaresRestantes;
 
-
+    @Column(nullable = false)
     private Boolean alta;
 
     

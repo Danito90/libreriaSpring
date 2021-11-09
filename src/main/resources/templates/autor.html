@@ -1,10 +1,39 @@
 <!DOCTYPE html>
-<html lang="en" lang="es-AR" xmlns:th="https://www.thymeleaf.org">
-<head th:replace></head>
+<html lang="es-AR" xmlns:th="https://www.thymeleaf.org">
 
-    <title>Autor</title>
+<head th:replace="layout/head.html"></head>
+
+<title>Autor</title>
 
 <body>
-    <p>Autor</p>
+    <header th:replace="layout/barra"></header>
+    <h1>Listado de autores</h1>
+    <div class="exito" th:if="${exitoAutor}" th:text="${exito}"></div>
+    <div class="error" th:if="${errorAutor}" th:text="${error}"></div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Alta</th>
+                <th>Modificar</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="l,iterator: ${autor}">
+                <td th:text="${iterator.index+1}"> 1</td>
+                <td th:text="${l.nombre}"></td>
+                <td th:text="${l.alta}"></td>
+                <td><a href="#"> Modificar</a></td>
+                <td><a href="#">Eliminar</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
 </body>
+
 </html>

@@ -13,7 +13,8 @@
         <fieldset>
             <legend>Agregar Libro</legend>
 
-            <!-- <div th:if="${#fields.hasAnyErrors()}">
+            <!-- Pila de errores completa -->
+            <!-- <div th:if="${#fields.hasAnyErrors()}"> 
                 <ul>
                     <li th:each="err : ${#fields.allErrors()}" th:text="${err}" />
                 </ul>
@@ -28,6 +29,7 @@
             <div class="casillero">
                 <label for="isbn">Isbn:</label>
                 <input type="text" name="isbn" id="isbn" th:field="*{isbn}" maxlength="8">
+                <!-- con tl th:field es donde vinculamos el input al controller -->
             </div>
             <div class="errores" th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}">Error Nombre</div>
 
@@ -72,10 +74,10 @@
                 <!-- name debe ser igual para selecciona solo una opcion, value es el valor q se envia -->
                 <div>
                     <input type="radio" id="alta" name="alta" value="true" checked="checked">
-                    <label for="femenino">Alta:</label>
+                    <label for="alta">Alta</label>
                     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                     <input type="radio" id="baja" name="alta" value="false" >
-                    <label for="masculino">Baja</label>
+                    <label for="baja">Baja</label>
                 </div>
             </div>
 

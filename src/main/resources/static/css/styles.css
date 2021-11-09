@@ -256,6 +256,12 @@ form input:focus-visible{
 color: rgb(255, 255, 255);
 }
 
+form select:focus-visible{
+  border: 2px solid rgb(0, 11, 71);
+  background-color: rgb(78, 113, 189);
+color: rgb(255, 255, 255);
+}
+
 
 /* =============== footer ==================== */
 div.footer{
@@ -263,7 +269,7 @@ div.footer{
   background-color: rgb(0, 0, 0);
   text-align: center;
   padding: 30px;
-  margin-top: 50px;
+  margin-top: 105px;
 }
 
 div.footer i{
@@ -271,7 +277,7 @@ div.footer i{
   color: rgb(255, 255, 255);
   border-radius: 10px;
   padding: 15px;
-  margin: 10px;
+  margin: 20px;
   width: 26px;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;

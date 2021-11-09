@@ -30,6 +30,12 @@ public class AutorServicio {
     }
 
     @Transactional
+    public Autor save(Autor autor) throws ErrorServicio {
+        validate2(autor);
+        return autorRepositorio.save(autor);
+    }
+
+    @Transactional
     public void updateAutor(String id, String nombre, Boolean alta) throws ErrorServicio {
         // si no pasa las siguientes verificaciones no se sigue con el codigo
         validateAutor(nombre, alta);
@@ -72,8 +78,8 @@ public class AutorServicio {
             autorRepositorio.save(autor); // este save no crea id, actualiza
         }
     }
-    
-    public void validateAutor(String nombre, Boolean alta) throws ErrorServicio {
+
+    private void validateAutor(String nombre, Boolean alta) throws ErrorServicio {
         if (nombre == null || nombre.isEmpty()) {
             throw new ErrorServicio("El nombre no puede estar vacio");
         }
@@ -82,10 +88,20 @@ public class AutorServicio {
         }
     }
 
+    private void validate2(Autor autor) throws ErrorServicio {
+        if (autor.getNombre() == null || autor.getNombre().isEmpty()) {
+            throw new ErrorServicio("El nombre no puede estar vacio");
+        }
+        if (autor.getAlta() == null) {
+            throw new ErrorServicio("El alta no puede estar vacio");
+        }
+    }
+
     @Transactional
     public List<Autor> findAll() {
         return autorRepositorio.findAll();
     }
+
     @Transactional
     public Optional<Autor> findById(String id) {
         return autorRepositorio.findById(id);
@@ -95,8 +111,8 @@ public class AutorServicio {
     public Autor findById(Autor autor) {
         Optional<Autor> optional = autorRepositorio.findById(autor.getId());
         if (optional.isPresent()) {
-          autor = optional.get();
+            autor = optional.get();
         }
         return autor;
-      }
+    }
 }
