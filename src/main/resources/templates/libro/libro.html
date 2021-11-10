@@ -24,6 +24,7 @@
                 <th>Ejemplares Disponibles</th>
                 <th>Autor</th>
                 <th>Editorial</th>
+                <th>Alta</th>
                 <th>Modificar</th>
                 <Th>Eliminar</Th>
             </tr>
@@ -40,6 +41,10 @@
                 <td th:text="${l.ejemplaresRestantes}"></td>
                 <td th:text="${l.autor.nombre}"></td>
                 <td th:text="${l.editorial.nombre}"></td>
+                <td>
+                    <i th:if="${l.alta}" class="fa fa-circle verde"></i>
+                    <i th:unless="${l.alta}"   class="fa fa-circle rojo"></i>
+                </td>
                 <td>
                     <a th:href="@{/libro/form}+'?id='+${l.id}">Modificar</a>
                 </td>

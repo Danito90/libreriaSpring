@@ -38,11 +38,11 @@ public class Libro {
     @Column(nullable = false)
     private Integer ejemplares;
 
-    @NotNull(message = "Debes especificar la cantidad de ejemplares prestados")
+    // @NotNull(message = "Debes especificar la cantidad de ejemplares prestados")
     @Column(nullable = false)
     private Integer ejemplaresPrestados;
 
-    @NotNull(message = "Debes especificar la cantidad de ejemplares restantes")
+    // @NotNull(message = "Debes especificar la cantidad de ejemplares restantes")
     @Column(nullable = false)
     private Integer ejemplaresRestantes;
 

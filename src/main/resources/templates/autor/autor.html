@@ -23,12 +23,15 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="l,iterator: ${autor}">
+            <tr th:each="a,iterator: ${autor}">
                 <td th:text="${iterator.index+1}"> 1</td>
-                <td th:text="${l.nombre}"></td>
-                <td th:text="${l.alta}"></td>
-                <td><a th:href="@{/autor/form}+ '?id=' + ${l.id}"> Modificar</a></td>
-                <td><a th:href="@{/autor/delete} + '?id=' + ${l.id}">Eliminar</a></td>
+                <td th:text="${a.nombre}"></td>
+                <td>
+                    <i th:if="${a.alta}" class="fa fa-circle verde"></i>
+                    <i th:unless="${a.alta}"   class="fa fa-circle rojo"></i>
+                </td>
+                <td><a th:href="@{/autor/form}+ '?id=' + ${a.id}"> Modificar</a></td>
+                <td><a th:href="@{/autor/delete} + '?id=' + ${a.id}">Eliminar</a></td>
             </tr>
         </tbody>
     </table>

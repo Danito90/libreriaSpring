@@ -54,7 +54,7 @@ public class AutorServicio {
     @Transactional
     public void deleteAutor(String id) throws ErrorServicio {
         Optional<Autor> respuesta = autorRepositorio.findById(id);
-        if (respuesta.isPresent()) { // si encuentra un usuario con ese id entonces modifica su info
+        if (respuesta.isPresent()) {
             autorRepositorio.deleteById(id);
         }else {
             throw new ErrorServicio("No existe el autor con id: " + id);
@@ -64,7 +64,7 @@ public class AutorServicio {
     @Transactional
     public void disableAutor(String id) {
         Optional<Autor> respuesta = autorRepositorio.findById(id);
-        if (respuesta.isPresent()) { // si encuentra un usuario con ese id entonces modifica su info
+        if (respuesta.isPresent()) { 
             Autor autor = respuesta.get();
             autor.setAlta(false);
             autorRepositorio.save(autor); // este save no crea id, actualiza

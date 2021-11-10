@@ -10,7 +10,7 @@
 <body>
     <header th:replace="layout/barra"></header>
 
-    <form method="post" th:object="${libro}" th:action="@{/libro/save}">
+    <form method="post" th:object="${libro}" th:action="@{/libro/save}" autocomplete="off">
         <!-- th:object="${libro}" para actualizar, traer los datos-->
         <fieldset>
             <legend>Agregar Libro</legend>
@@ -54,7 +54,7 @@
             </div>
             <div class="errores" th:if="${#fields.hasErrors('ejemplares')}" th:errors="*{ejemplares}">Error Nombre</div>
 
-            <div class="casillero">
+            <!-- <div class="casillero">
                 <label for="ejemplaresPrestados">Ejemplares Prestados:</label>
                 <input type="number" id="ejemplaresPrestados" name="ejemplaresPrestados"
                     th:field="*{ejemplaresPrestados}">
@@ -69,7 +69,7 @@
 
             </div>
             <div class="errores" th:if="${#fields.hasErrors('ejemplaresRestantes')}" th:errors="*{ejemplaresRestantes}">
-            </div>
+            </div> -->
 
             <div class="casillero">
                 <label for="alta">Estado: </label>
@@ -108,7 +108,7 @@
 
         </fieldset>
     </form>
-
+    
 
     <footer th:replace="layout/footer"></footer>
 </body>

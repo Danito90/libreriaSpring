@@ -37,6 +37,8 @@ public class LibroServicio {
     @Transactional
     public Libro save(Libro libro) throws ErrorServicio{
         validate2(libro);
+        libro.setEjemplaresPrestados(0);
+        libro.setEjemplaresRestantes(libro.getEjemplares());
         return libroRepositorio.save(libro);
     }
 

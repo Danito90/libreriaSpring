@@ -286,6 +286,14 @@ div.casillero label a i:hover {
   padding: 5px;
 }
 
+td i.verde {
+  color: rgb(1, 80, 12);
+}
+
+td i.rojo {
+  color: rgb(80, 1, 1);
+}
+
 /* =============== footer ==================== */
 div.footer {
   color: rgb(255, 255, 255);
