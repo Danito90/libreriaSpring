@@ -9,13 +9,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import egg.ejercicio01.libreria.entidades.Editorial;
+import egg.ejercicio01.libreria.entidades.Libro;
 import egg.ejercicio01.libreria.errores.ErrorServicio;
 import egg.ejercicio01.libreria.repositorios.EditorialRepositorio;
+import egg.ejercicio01.libreria.repositorios.LibroRepositorio;
 
 @Service
 public class EditorialServicio {
     @Autowired // Spring inicializa automaticamente
     private EditorialRepositorio editorialRepositorio;
+
+    @Autowired
+    private LibroRepositorio libroRepositorio;
 
     // esta anotacion hace commit automatico si esta todo en orden, caso contrario
     @Transactional // hace roollback
@@ -53,11 +58,27 @@ public class EditorialServicio {
 
     @Transactional
     public void deleteEditorial(String id) throws ErrorServicio {
-        Optional<Editorial> respuesta = editorialRepositorio.findById(id);
-        if (respuesta.isPresent()) { // si encuentra un usuario con ese id entonces modifica su info
-            editorialRepositorio.deleteById(id);
-        }else {
-            throw new ErrorServicio("No existe el editorial con id: " + id);
+        String librosAsociados = "";
+        int count = 0;
+        for (Libro l : libroRepositorio.findAll()) {
+            if (l.getEditorial().getId().equals(id)) {
+                count += 1;
+                librosAsociados += l.getTitulo() + ", ";
+            }
+        }
+
+        if (count > 0) {
+            librosAsociados = librosAsociados.substring(0, librosAsociados.length() - 2) + ".";
+            throw new ErrorServicio(
+                    "No se puede eliminar la editorial porque tiene libros asociados: " + librosAsociados);
+        } else {
+
+            Optional<Editorial> respuesta = editorialRepositorio.findById(id);
+            if (respuesta.isPresent()) { // si encuentra un usuario con ese id entonces modifica su info
+                editorialRepositorio.deleteById(id);
+            } else {
+                throw new ErrorServicio("No existe el editorial con id: " + id);
+            }
         }
     }
 

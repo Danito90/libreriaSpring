@@ -10,7 +10,7 @@
     <header th:replace="layout/barra"></header>
     <h1>Listado de autores</h1>
     <div class="desaparecer exito" th:if="${exitoAutor}" th:text="${exitoAutor}"></div>
-    <div class="desaparecer error" th:if="${errorAutor}" th:text="${errorAutor}"></div>
+    <div class="desaparecerLento error" th:if="${errorAutor}" th:text="${errorAutor}"></div>
 
     <table>
         <thead>
