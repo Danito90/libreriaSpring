@@ -22,17 +22,17 @@ public class EditorialServicio {
     @Autowired
     private LibroRepositorio libroRepositorio;
 
-    // esta anotacion hace commit automatico si esta todo en orden, caso contrario
-    @Transactional // hace roollback
-    public void newEditorial(String nombre, Boolean alta) throws ErrorServicio {
-        // si no pasa las siguientes verificaciones no se sigue con el codigo
-        validateEditorial(nombre, alta);
+    // // esta anotacion hace commit automatico si esta todo en orden, caso contrario
+    // @Transactional // hace roollback
+    // public void newEditorial(String nombre, Boolean alta) throws ErrorServicio {
+    //     // si no pasa las siguientes verificaciones no se sigue con el codigo
+    //     validateEditorial(nombre, alta);
 
-        Editorial editorial = new Editorial();
-        editorial.setNombre(nombre);
-        editorial.setAlta(alta);
-        editorialRepositorio.save(editorial); // este save crea un nuevo id
-    }
+    //     Editorial editorial = new Editorial();
+    //     editorial.setNombre(nombre);
+    //     editorial.setAlta(alta);
+    //     editorialRepositorio.save(editorial); // este save crea un nuevo id
+    // }
 
     @Transactional
     public Editorial save(Editorial editorial) throws ErrorServicio {
@@ -40,21 +40,21 @@ public class EditorialServicio {
         return editorialRepositorio.save(editorial);
     }
 
-    @Transactional
-    public void updateEditorial(String id, String nombre, Boolean alta) throws ErrorServicio {
-        // si no pasa las siguientes verificaciones no se sigue con el codigo
-        validateEditorial(nombre, alta);
+    // @Transactional
+    // public void updateEditorial(String id, String nombre, Boolean alta) throws ErrorServicio {
+    //     // si no pasa las siguientes verificaciones no se sigue con el codigo
+    //     validateEditorial(nombre, alta);
 
-        Optional<Editorial> respuesta = editorialRepositorio.findById(id);
-        if (respuesta.isPresent()) { // si encuentra un usuario con ese id entonces modifica su info
-            Editorial editorial = respuesta.get();
-            editorial.setNombre(nombre);
-            editorial.setAlta(alta);
-            editorialRepositorio.save(editorial); // este save no crea id, actualiza
-        } else {
-            throw new ErrorServicio("No existe el editorial con id: " + id);
-        }
-    }
+    //     Optional<Editorial> respuesta = editorialRepositorio.findById(id);
+    //     if (respuesta.isPresent()) { // si encuentra un usuario con ese id entonces modifica su info
+    //         Editorial editorial = respuesta.get();
+    //         editorial.setNombre(nombre);
+    //         editorial.setAlta(alta);
+    //         editorialRepositorio.save(editorial); // este save no crea id, actualiza
+    //     } else {
+    //         throw new ErrorServicio("No existe el editorial con id: " + id);
+    //     }
+    // }
 
     @Transactional
     public void deleteEditorial(String id) throws ErrorServicio {
@@ -102,14 +102,14 @@ public class EditorialServicio {
         }
     }
 
-    private void validateEditorial(String nombre, Boolean alta) throws ErrorServicio {
-        if (nombre == null || nombre.isEmpty()) {
-            throw new ErrorServicio("El nombre no puede estar vacio");
-        }
-        if (alta == null) {
-            throw new ErrorServicio("El alta no puede estar vacio");
-        }
-    }
+    // private void validateEditorial(String nombre, Boolean alta) throws ErrorServicio {
+    //     if (nombre == null || nombre.isEmpty()) {
+    //         throw new ErrorServicio("El nombre no puede estar vacio");
+    //     }
+    //     if (alta == null) {
+    //         throw new ErrorServicio("El alta no puede estar vacio");
+    //     }
+    // }
 
     private void validate2(Editorial editorial) throws ErrorServicio {
         if (editorial.getNombre() == null || editorial.getNombre().isEmpty()) {

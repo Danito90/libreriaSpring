@@ -1,5 +1,7 @@
 package egg.ejercicio01.libreria.entidades;
 
+import java.util.List;
+
 import javax.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -16,6 +18,9 @@ public class Editorial {
 
     @Column(nullable = false)
     private Boolean alta;
+
+    @OneToMany(mappedBy = "editorial") // un autor puede tener muchos libros
+    private List<Libro> libro;
 
     public Editorial() {
     }
@@ -42,6 +47,14 @@ public class Editorial {
 
     public void setAlta(Boolean alta) {
         this.alta = alta;
+    }
+
+    public List<Libro> getLibro() {
+        return libro;
+    }
+
+    public void setLibro(List<Libro> libro) {
+        this.libro = libro;
     }
 
     @Override

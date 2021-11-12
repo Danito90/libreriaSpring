@@ -22,17 +22,17 @@ public class AutorServicio {
     @Autowired
     private LibroRepositorio libroRepositorio;
 
-    // esta anotacion hace commit automatico si esta todo en orden, caso contrario
-    @Transactional // hace roollback
-    public void newAutor(String nombre, Boolean alta) throws ErrorServicio {
-        // si no pasa las siguientes verificaciones no se sigue con el codigo
-        validateAutor(nombre, alta);
+    // // esta anotacion hace commit automatico si esta todo en orden, caso contrario
+    // @Transactional // hace roollback
+    // public void newAutor(String nombre, Boolean alta) throws ErrorServicio {
+    //     // si no pasa las siguientes verificaciones no se sigue con el codigo
+    //     validateAutor(nombre, alta);
 
-        Autor autor = new Autor();
-        autor.setNombre(nombre);
-        autor.setAlta(alta);
-        autorRepositorio.save(autor); // este save crea un nuevo id
-    }
+    //     Autor autor = new Autor();
+    //     autor.setNombre(nombre);
+    //     autor.setAlta(alta);
+    //     autorRepositorio.save(autor); // este save crea un nuevo id
+    // }
 
     @Transactional
     public Autor save(Autor autor) throws ErrorServicio {
@@ -40,21 +40,21 @@ public class AutorServicio {
         return autorRepositorio.save(autor);
     }
 
-    @Transactional
-    public void updateAutor(String id, String nombre, Boolean alta) throws ErrorServicio {
-        // si no pasa las siguientes verificaciones no se sigue con el codigo
-        validateAutor(nombre, alta);
+    // @Transactional
+    // public void updateAutor(String id, String nombre, Boolean alta) throws ErrorServicio {
+    //     // si no pasa las siguientes verificaciones no se sigue con el codigo
+    //     validateAutor(nombre, alta);
 
-        Optional<Autor> respuesta = autorRepositorio.findById(id);
-        if (respuesta.isPresent()) { // si encuentra un usuario con ese id entonces modifica su info
-            Autor autor = respuesta.get();
-            autor.setNombre(nombre);
-            autor.setAlta(alta);
-            autorRepositorio.save(autor); // este save no crea id, actualiza
-        } else {
-            throw new ErrorServicio("No existe el autor con id: " + id);
-        }
-    }
+    //     Optional<Autor> respuesta = autorRepositorio.findById(id);
+    //     if (respuesta.isPresent()) { // si encuentra un usuario con ese id entonces modifica su info
+    //         Autor autor = respuesta.get();
+    //         autor.setNombre(nombre);
+    //         autor.setAlta(alta);
+    //         autorRepositorio.save(autor); // este save no crea id, actualiza
+    //     } else {
+    //         throw new ErrorServicio("No existe el autor con id: " + id);
+    //     }
+    // }
 
     @Transactional
     public void deleteAutor(String id) throws ErrorServicio {
@@ -102,14 +102,14 @@ public class AutorServicio {
         }
     }
 
-    private void validateAutor(String nombre, Boolean alta) throws ErrorServicio {
-        if (nombre == null || nombre.isEmpty()) {
-            throw new ErrorServicio("El nombre no puede estar vacio");
-        }
-        if (alta == null) {
-            throw new ErrorServicio("El alta no puede estar vacio");
-        }
-    }
+    // private void validateAutor(String nombre, Boolean alta) throws ErrorServicio {
+    //     if (nombre == null || nombre.isEmpty()) {
+    //         throw new ErrorServicio("El nombre no puede estar vacio");
+    //     }
+    //     if (alta == null) {
+    //         throw new ErrorServicio("El alta no puede estar vacio");
+    //     }
+    // }
 
     private void validate2(Autor autor) throws ErrorServicio {
         if (autor.getNombre() == null || autor.getNombre().isEmpty()) {

@@ -30,8 +30,10 @@
                     <i th:if="${a.alta}" class="fa fa-circle verde"></i>
                     <i th:unless="${a.alta}"   class="fa fa-circle rojo"></i>
                 </td>
-                <td><a th:href="@{/autor/form}+ '?id=' + ${a.id}"> Modificar</a></td>
-                <td><a th:href="@{/autor/delete} + '?id=' + ${a.id}">Eliminar</a></td>
+                <td><a th:href="@{/autor/form}+ '?id=' + ${a.id}"><i
+                    class="fas fa-pencil-alt"></a></td>
+                <td><a th:href="@{/autor/delete} + '?id=' + ${a.id}"><i
+                    class="fas fa-trash-alt"></a></td>
             </tr>
         </tbody>
     </table>

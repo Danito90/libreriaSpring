@@ -35,10 +35,20 @@ public class LibroServicio {
     }
 
     @Transactional
+    public Libro findById(Libro libro){
+       Optional<Libro> respuesta = libroRepositorio.findById(libro.getId());
+       if(respuesta.isPresent()){
+            libro= respuesta.get();
+       }
+        return libro;
+    }
+
+    @Transactional
     public Libro save(Libro libro) throws ErrorServicio{
         validate2(libro);
-        libro.setEjemplaresPrestados(0);
-        libro.setEjemplaresRestantes(libro.getEjemplares());
+        // libro.setEjemplaresPrestados(0);
+        // libro.setEjemplaresRestantes(libro.getEjemplares());
+        libro.setEjemplaresRestantes(libro.getEjemplares()-libro.getEjemplaresPrestados());
         return libroRepositorio.save(libro);
     }
 
@@ -59,11 +69,12 @@ public class LibroServicio {
     //     libroRepositorio.save(libro);
     // }
 
-    @Transactional
-    public void update(Libro libro) throws ErrorServicio{
-        validate2(libro);
-        libroRepositorio.save(libro);
-    }
+    // @Transactional
+    // public void update(Libro libro) throws ErrorServicio{
+    //     validate2(libro);
+    //     libro.setEjemplaresRestantes(libro.getEjemplares()-libro.getEjemplaresPrestados());
+    //     libroRepositorio.save(libro);
+    // }
 
 
     // @Transactional
@@ -182,12 +193,12 @@ public class LibroServicio {
         //     throw new ErrorServicio("El alta no puede estar vacio");
         // }
         if (libro.getAutor().getId() == null || libro.getAutor().getId().isEmpty()) {
-            throw new ErrorServicio("El autor no puede estar vacio");
+            throw new ErrorServicio("El Autor no puede estar vacio");
         }else {
             libro.setAutor(autorServicio.findById(libro.getAutor()));
           }
         if (libro.getEditorial().getId() == null || libro.getEditorial().getId().isEmpty()) {
-            throw new ErrorServicio("La editorial no puede estar vacia");
+            throw new ErrorServicio("La Editorial no puede estar vacia");
         }else {
             libro.setEditorial(editorialServicio.findById(libro.getEditorial()));
           }

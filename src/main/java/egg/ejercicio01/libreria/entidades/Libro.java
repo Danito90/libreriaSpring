@@ -49,8 +49,7 @@ public class Libro {
     @Column(nullable = false)
     private Boolean alta;
 
-    
-    @NotNull(message = "Debes especificar el autor")
+ 
     @ManyToOne
     private Autor autor; // muchos libros pueden pertenecer a un autor
     // Si trabajo unidireccional la relacion, se crea la llave foranea aca... si es
