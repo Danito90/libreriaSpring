@@ -27,13 +27,13 @@
                 <td th:text="${iterator.index+1}"> 1</td>
                 <td th:text="${a.nombre}"></td>
                 <td>
-                    <i th:if="${a.alta}" class="fa fa-circle verde"></i>
-                    <i th:unless="${a.alta}"   class="fa fa-circle rojo"></i>
+                    <a th:href="@{/autor/enable}+ '?id=' + ${a.id}">
+                        <i th:if="${a.alta}" class="fa fa-circle verde"></i>
+                        <i th:unless="${a.alta}" class="fa fa-circle rojo"></i>
+                    </a>
                 </td>
-                <td><a th:href="@{/autor/form}+ '?id=' + ${a.id}"><i
-                    class="fas fa-pencil-alt"></a></td>
-                <td><a th:href="@{/autor/delete} + '?id=' + ${a.id}"><i
-                    class="fas fa-trash-alt"></a></td>
+                <td><a th:href="@{/autor/form}+ '?id=' + ${a.id}"><i class="fas fa-pencil-alt"></a></td>
+                <td><a th:href="@{/autor/delete} + '?id=' + ${a.id}"><i class="fas fa-trash-alt"></a></td>
             </tr>
         </tbody>
     </table>

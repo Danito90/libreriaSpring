@@ -93,6 +93,23 @@ public class LibroController {
 
     }
 
+    @GetMapping("/enable")
+    public String activar(@RequestParam String id) throws ErrorServicio {
+        Optional<Libro> respuesta = libroServicio.findById(id);
+        Libro libro = new Libro();
+        if (respuesta.isPresent()) {
+            libro = respuesta.get();
+            if (libro.getAlta() == true) {
+                libro.setAlta(false);
+            } else {
+                libro.setAlta(true);
+            }
+            libroServicio.save(libro);
+        }
+
+        return "redirect:/libro/lista";
+    }
+
     // @PostMapping("/save") //solucionar no valida (copiado de tinder mascotas)
     // public String guardar(ModelMap modelo,@RequestParam Long isbn,@RequestParam
     // String titulo,@RequestParam Integer anio,@RequestParam Integer

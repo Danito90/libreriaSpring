@@ -30,6 +30,7 @@
             </tr>
         </thead>
         <tbody>
+            <!-- <tr th:each=" l,iterator: ${libros}" th:if="${l.alta}==true"></tr>   Para ver solo los activos-->
             <tr th:each=" l,iterator: ${libros}">
                 <td th:text="${iterator.index+1}"> 1</td>
                 <!-- no es el id real el que muestra, es un un indicador de posicion -->
@@ -42,8 +43,10 @@
                 <td th:text="${l.autor.nombre}"></td>
                 <td th:text="${l.editorial.nombre}"></td>
                 <td>
-                    <i th:if="${l.alta}" class="fa fa-circle verde"></i>
-                    <i th:unless="${l.alta}" class="fa fa-circle rojo"></i>
+                    <a th:href="@{/libro/enable}+ '?id=' + ${l.id}">
+                        <i th:if="${l.alta}" class="fa fa-circle verde"></i>
+                        <i th:unless="${l.alta}" class="fa fa-circle rojo"></i>
+                    </a>
                 </td>
                 <td>
                     <a th:href="@{/libro/form}+'?id='+${l.id}"><i class="fas fa-pencil-alt"></i></a>
@@ -57,7 +60,7 @@
     </table>
 
     <footer th:replace="layout/footer"></footer>
-    
+
     <!-- Javascript desaparecer -->
     <script type="text/javascript" src="/js/desaparecer.js"></script>
 </body>

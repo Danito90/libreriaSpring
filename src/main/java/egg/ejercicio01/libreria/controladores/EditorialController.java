@@ -64,6 +64,23 @@ public class EditorialController {
         }
     }
 
+    @GetMapping("/enable")
+    public String activar(@RequestParam String id) throws ErrorServicio {
+        Optional<Editorial> respuesta = editorialServicio.findById(id);
+        Editorial editorial = new Editorial();
+        if (respuesta.isPresent()) {
+            editorial = respuesta.get();
+            if (editorial.getAlta() == true) {
+                editorial.setAlta(false);
+            } else {
+                editorial.setAlta(true);
+            }
+            editorialServicio.save(editorial);
+        }
+
+        return "redirect:/editorial/lista";
+    }
+
     @GetMapping("/delete")
     public String eliminar(RedirectAttributes redirectAttributes, @RequestParam(required = true) String id) {
 

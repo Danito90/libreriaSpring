@@ -63,6 +63,23 @@ public class AutorController {
         }
     }
 
+    @GetMapping("/enable")
+    public String activar(@RequestParam String id) throws ErrorServicio {
+        Optional<Autor> respuesta = autorServicio.findById(id);
+        Autor autor = new Autor();
+        if (respuesta.isPresent()) {
+            autor = respuesta.get();
+            if (autor.getAlta() == true) {
+                autor.setAlta(false);
+            } else {
+                autor.setAlta(true);
+            }
+            autorServicio.save(autor);
+        }
+
+        return "redirect:/autor/lista";
+    }
+
     @GetMapping("/delete")
     public String eliminar(RedirectAttributes redirectAttributes, @RequestParam(required = true) String id) {
 

@@ -75,10 +75,10 @@
                 <label for="alta">Estado: </label>
                 <!-- name debe ser igual para selecciona solo una opcion, value es el valor q se envia -->
                 <div>
-                    <input type="radio" id="alta" name="alta" value="true" checked="checked">
+                    <input type="radio" id="alta" name="alta" value="true" th:checked="${libro.alta}==true">
                     <label for="alta">Alta</label>
                     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                    <input type="radio" id="baja" name="alta" value="false" >
+                    <input type="radio" id="baja" name="alta" value="false" th:checked="${libro.alta}==false">
                     <label for="baja">Baja</label>
                 </div>
             </div>
@@ -87,7 +87,7 @@
                 <label for="editorial"><a th:href="@{/editorial/form}"><i class="fa fa-plus-square fa-lg"></i></a> Editorial:</label>
                 <select th:field="*{editorial.id}" id="editorial" name="editorial" >
                     <option value="" selected>Elegir editorial</option>
-                    <option th:each="e : ${editoriales}" th:text="${e.nombre}" th:value="${e.id}"></option>
+                    <option th:each="e : ${editoriales}" th:if="${e.alta}==true" th:text="${e.nombre}" th:value="${e.id}"></option>
                 </select>
             </div>
             <div class="errores"th:text="${editorialError}"></div> <!-- para autor y editorial -->
@@ -97,7 +97,7 @@
                 <label for="autor"><a th:href="@{/autor/form}"><i class="fa fa-plus-square fa-lg"></i></a> Autor:</label>
                 <select th:field="*{autor.id}" id="autor" name="autor" >
                     <option value="" selected>Elegir autor</option>
-                    <option th:each="a : ${autores}" th:text="${a.nombre}" th:value="${a.id}"></option>
+                    <option th:each="a : ${autores}" th:if="${a.alta}==true" th:text="${a.nombre}" th:value="${a.id}"></option>
                 </select>
             </div>
             <div class="errores" th:text="${autorError}"></div>
