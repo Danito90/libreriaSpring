@@ -179,19 +179,23 @@ th {
   background-color: rgb(0, 0, 0);
 }
 
-table td a:link{
+table td a:link {
   color: rgb(3, 13, 160);
 }
 
-table td a:hover{
+table td a:hover {
   color: rgb(3, 13, 160);
 }
 
-table td a:visited{
+table td a:visited {
   color: rgb(3, 13, 160);
 }
 
 /* ============ Formularios ============ */
+
+/* form{
+  min-height: calc(100vh - 100px);
+} */
 
 fieldset {
   border: 2px solid #000;
@@ -313,7 +317,7 @@ td i.rojo {
 /* =============== footer ==================== */
 div.footer {
   position:absolute;
-  bottom: 0%;
+  bottom:-15vh;
   width: 100%;
   color: rgb(255, 255, 255);
   background-color: rgb(0, 0, 0);

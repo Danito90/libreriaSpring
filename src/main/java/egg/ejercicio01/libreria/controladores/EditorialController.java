@@ -52,20 +52,25 @@ public class EditorialController {
                 return "editorial/editorial-form";
             }
             editorialServicio.save(editorial);
-            redirectAttributes.addFlashAttribute("exitoEditorial",
+            redirectAttributes.addFlashAttribute("exito",
                     "La editorial ''" + editorial.getNombre() + "'' se ha guardado con exito");
             return "redirect:/editorial/lista";
         } catch (ErrorServicio e) {
             modelo.addAttribute("errorServicio", e.getMessage());
-            redirectAttributes.addFlashAttribute("errorEditorial",
+            redirectAttributes.addFlashAttribute("error",
                     "Error al guardar el editorial ''" + editorial.getNombre() + "''");
             return "editorial/editorial-form";
         }
     }
 
     @GetMapping("/enable")
-    public String activar(@RequestParam String id) throws ErrorServicio {
-        editorialServicio.disableEnable(id);
+    public String activar(@RequestParam String id, RedirectAttributes redirectAttributes) throws ErrorServicio {
+        Editorial editorial = editorialServicio.disableEnable(id);
+        if (editorial.getAlta()) {
+            redirectAttributes.addFlashAttribute("exito", "Se dio de alta a la editorial '" + editorial.getNombre() + "'");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Se dio de baja a la editorial '" + editorial.getNombre() + "'");
+        }
         return "redirect:/editorial/lista";
     }
 
@@ -76,12 +81,12 @@ public class EditorialController {
             Optional<Editorial> resultado = editorialServicio.findById(id);
             if (resultado.isPresent()) {
                 editorialServicio.deleteEditorial(id);
-                redirectAttributes.addFlashAttribute("exitoEditorial",
+                redirectAttributes.addFlashAttribute("exito",
                         "La editorial ''" + resultado.get().getNombre() + "'' se ha eliminado con exito");
             }
 
         } catch (ErrorServicio e) {
-            redirectAttributes.addFlashAttribute("errorEditorial", e.getMessage());
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
         return "redirect:/editorial/lista";
 

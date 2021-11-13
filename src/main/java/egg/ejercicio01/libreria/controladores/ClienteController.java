@@ -24,8 +24,9 @@ public class ClienteController {
     private ClienteServicio clienteServicio;
 
     @GetMapping("/lista")
-    public List<Cliente> listar(Model model) {
-        return clienteServicio.findAll();
+    public String listar(Model model) {
+        model.addAttribute("cliente", clienteServicio.findAll());
+        return "cliente/cliente";
     }
 
     @GetMapping("/form")
@@ -52,11 +53,11 @@ public class ClienteController {
                 return "cliente/cliente-form";
             }
             clienteServicio.save(cliente);
-            redirectAttributes.addFlashAttribute("exitoCliente",
-                    "El cliente ''" + cliente.getNombre() + " " + cliente.getApellido() + "''  guardado con éxito");
+            redirectAttributes.addFlashAttribute("exito", "El cliente ''" + cliente.getNombre() + " "
+                    + cliente.getApellido() + "'' se ha guardado con éxito");
             return "redirect:/cliente/lista";
         } catch (ErrorServicio e) {
-            redirectAttributes.addFlashAttribute("errorCliente",
+            redirectAttributes.addFlashAttribute("error",
                     "Error al guardar el cliente  ''" + cliente.getNombre() + " " + cliente.getApellido());
             return "cliente/cliente-form";
         }
@@ -64,23 +65,31 @@ public class ClienteController {
     }
 
     @GetMapping("/enable")
-    public String activar(@RequestParam String id, Model model) throws ErrorServicio {
-        clienteServicio.disableEnable(id);
+    public String activar(@RequestParam String id, RedirectAttributes redirectAttributes) throws ErrorServicio {
+        Cliente cliente = clienteServicio.disableEnable(id);
+        if (cliente.getAlta()) {
+            redirectAttributes.addFlashAttribute("exito",
+                    "Se dio de alta al cliente '" + cliente.getNombre() + cliente.getApellido() + "'");
+        } else {
+            redirectAttributes.addFlashAttribute("error",
+                    "Se dio de baja al cliente '" + cliente.getNombre() + cliente.getApellido() + "'");
+        }
         return "redirect:/cliente/lista";
     }
 
     @GetMapping("/delete")
-    public String delete(Model model, @RequestParam(required = false) String id) {
+    public String delete(Model model, RedirectAttributes redirectAttributes,
+            @RequestParam(required = false) String id) {
 
         try {
             Optional<Cliente> respuesta = clienteServicio.findById(id);
             if (respuesta.isPresent()) {
                 clienteServicio.delete(respuesta.get());
-                model.addAttribute("exitoCliente", "El cliente ''" + respuesta.get().getNombre() + " "
+                redirectAttributes.addFlashAttribute("exito", "El cliente ''" + respuesta.get().getNombre() + " "
                         + respuesta.get().getApellido() + "''  fue eliminado con exito");
             }
         } catch (Exception e) {
-            model.addAttribute("errorCliente", e.getMessage());
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
         return "redirect:/cliente/lista";
     }

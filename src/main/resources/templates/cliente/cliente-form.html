@@ -12,37 +12,57 @@
         <!-- th:object="${libro}" para actualizar, traer los datos-->
         <fieldset>
             <legend>Agregar Cliente</legend>
-
-            <!-- <div th:if="${#fields.hasAnyErrors()}">
-                <ul>
-                    <li th:each="err : ${#fields.allErrors()}" th:text="${err}" />
-                </ul>
-            </div> -->
-
             <div class="casillero">
                 <!-- <label for="id">Id</label> -->
                 <input hidden th:field="*{id}">
             </div>
 
             <div class="casillero">
-                <label for="nombre">Nombre:</label>
-                <input type="text" name="nombre" id="nombre" th:field="*{nombre}">
+                <label for="documento">Documento:</label>
+                <input type="text" name="documento" id="documento" th:field="*{documento}" maxlength="8">
             </div>
             <div class="errores" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error Nombre</div>
 
             <div class="casillero">
+                <label for="nombre">Nombre:</label>
+                <input type="text" name="nombre" id="nombre" th:field="*{nombre}" maxlength="60">
+            </div>
+            <div class="errores" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error Nombre</div>
+
+            <div class="casillero">
+                <label for="apellido">Apellido:</label>
+                <input type="text" name="apellido" id="apellido" th:field="*{apellido}" maxlength="60">
+            </div>
+            <div class="errores" th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}">Error Nombre</div>
+
+            <div class="casillero">
+                <label for="telefono">Telefono:</label>
+                <input type="text" name="telefono" id="telefono" th:field="*{telefono}" maxlength="10">
+            </div>
+            <div class="errores" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}">Error Nombre</div>
+
+            <div class="casillero">
                 <label for="alta">Estado: </label>
                 <!-- name debe ser igual para selecciona solo una opcion, value es el valor q se envia -->
-                <div>
-                    <input type="radio" id="alta" name="alta" value="true" th:checked="${cliente.alta}==true">
-                    <label for="alta">Alta</label>
-                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                    <input type="radio" id="baja" name="alta" value="false" th:checked="${cliente.alta}==false">
-                    <label for="baja">Baja</label>
+                <div th:switch="${cliente.id}">
+                    <div th:case="null">
+                        <input type="radio" id="alta" name="alta" value="true" checked>
+                        <label for="alta">Alta</label>
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                        <input type="radio" id="baja" name="alta" value="false">
+                        <label for="baja">Baja</label>
+                    </div>
+                    <div th:case="*">
+                        <input type="radio" id="alta" name="alta" value="true" th:checked="${cliente.alta}==true">
+                        <label for="alta">Alta</label>
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                        <input type="radio" id="baja" name="alta" value="false" th:checked="${cliente.alta}==false">
+                        <label for="baja">Baja</label>
+                    </div>
                 </div>
             </div>
             <div class="errores" th:if="${#fields.hasErrors('alta')}" th:errors="*{alta}">Error alta</div>
-           
+
             <div class="casillero">
                 <input type="submit" value="Guardar" class="submit">
             </div>

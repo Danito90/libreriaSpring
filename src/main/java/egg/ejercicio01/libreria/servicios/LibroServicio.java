@@ -110,7 +110,7 @@ public class LibroServicio {
     // }
 
     @Transactional
-    public void disableEnable(String id) {
+    public Libro disableEnable(String id) {
         Optional<Libro> respuesta = libroRepositorio.findById(id);
         if (respuesta.isPresent()) {
             if (respuesta.get().getAlta() == true) {
@@ -120,6 +120,7 @@ public class LibroServicio {
             }
             libroRepositorio.save(respuesta.get());
         }
+        return respuesta.get();
     }
 
     @Transactional

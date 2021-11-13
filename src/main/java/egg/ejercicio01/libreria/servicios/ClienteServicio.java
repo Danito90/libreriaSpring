@@ -73,7 +73,7 @@ public class ClienteServicio {
     }
 
     @Transactional
-    public void disableEnable(String id) {
+    public Cliente disableEnable(String id) {
         Optional<Cliente> respuesta = clienteRepositorio.findById(id);
         if (respuesta.isPresent()) {
             if (respuesta.get().getAlta() == true) {
@@ -83,6 +83,7 @@ public class ClienteServicio {
             }
             clienteRepositorio.save(respuesta.get());
         }
+        return respuesta.get();
     }
 
 }

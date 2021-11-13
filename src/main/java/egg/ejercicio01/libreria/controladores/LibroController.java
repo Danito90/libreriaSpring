@@ -75,6 +75,14 @@ public class LibroController {
                 return "libro/libro-form";
             }
 
+            if (libro.getEjemplares() < libro.getEjemplaresPrestados()) {
+                bindingResult.rejectValue("ejemplares", "error.libro",
+                        "El numero de ejemplares no puede ser menor al numero de ejemplares prestados");
+                model.addAttribute("autores", autorServicio.findAll());
+                model.addAttribute("editoriales", editorialServicio.findAll());
+                return "libro/libro-form";
+            }
+
             libroServicio.save(libro);
             redirectAttributes.addFlashAttribute("exito",
                     "El libro ''" + libro.getTitulo() + "'' se ha guardado con exito");
@@ -96,8 +104,13 @@ public class LibroController {
     }
 
     @GetMapping("/enable")
-    public String activar(@RequestParam String id) throws ErrorServicio {
-        libroServicio.disableEnable(id);
+    public String activar(@RequestParam String id, RedirectAttributes redirectAttributes) throws ErrorServicio {
+        Libro libro = libroServicio.disableEnable(id);
+        if (libro.getAlta()) {
+            redirectAttributes.addFlashAttribute("exito", "Se dio de alta al libro '" + libro.getTitulo() + "'");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Se dio de baja al libro '" + libro.getTitulo() + "'");
+        }
         return "redirect:/libro/lista";
     }
 

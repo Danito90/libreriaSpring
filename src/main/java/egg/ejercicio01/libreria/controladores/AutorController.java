@@ -52,19 +52,24 @@ public class AutorController {
                 return "autor/autor-form";
             }
             autorServicio.save(autor);
-            redirectAttributes.addFlashAttribute("exitoAutor",
+            redirectAttributes.addFlashAttribute("exito",
                     "El autor ''" + autor.getNombre() + "'' se ha guardado con exito");
             return "redirect:/autor/lista";
         } catch (ErrorServicio e) {
             modelo.addAttribute("errorServicio", e.getMessage());
-            redirectAttributes.addFlashAttribute("errorAutor", "Error al guardar el autor ''" + autor.getNombre());
+            redirectAttributes.addFlashAttribute("error", "Error al guardar el autor ''" + autor.getNombre());
             return "autor/autor-form";
         }
     }
 
     @GetMapping("/enable")
-    public String activar(@RequestParam String id) throws ErrorServicio {
-        autorServicio.disableEnable(id);
+    public String activar(@RequestParam String id, RedirectAttributes redirectAttributes) throws ErrorServicio {
+        Autor autor = autorServicio.disableEnable(id);
+        if (autor.getAlta()) {
+            redirectAttributes.addFlashAttribute("exito", "Se dio de alta al autor '" + autor.getNombre() + "'");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Se dio de baja al autor '" + autor.getNombre() + "'");
+        }
         return "redirect:/autor/lista";
     }
 
@@ -75,12 +80,12 @@ public class AutorController {
             Optional<Autor> resultado = autorServicio.findById(id);
             if (resultado.isPresent()) {
                 autorServicio.deleteAutor(id);
-                redirectAttributes.addFlashAttribute("exitoAutor",
+                redirectAttributes.addFlashAttribute("exito",
                         "El autor ''" + resultado.get().getNombre() + "'' se ha eliminado con exito");
             }
 
         } catch (ErrorServicio e) {
-            redirectAttributes.addFlashAttribute("errorAutor", e.getMessage());
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
         return "redirect:/autor/lista";
 

@@ -3,13 +3,13 @@
 
 <head th:replace="layout/head.html"></head>
 
-<title>Autor</title>
+<title>Editoriales</title>
 
 <body>
     <header th:replace="layout/barra"></header>
     <h1>Listado de Editoriales</h1>
-    <div class="desaparecer exito" th:if="${exitoEditorial}" th:text="${exitoEditorial}"></div>
-    <div class="desaparecerLento error" th:if="${errorEditorial}" th:text="${errorEditorial}"></div>
+    <div class="desaparecer exito" th:if="${exito}" th:text="${exito}"></div>
+    <div class="desaparecerLento error" th:if="${error}" th:text="${error}"></div>
 
     <table>
         <thead>

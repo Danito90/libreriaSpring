@@ -83,7 +83,7 @@ public class AutorServicio {
     }
 
     @Transactional
-    public void disableEnable(String id) {
+    public Autor disableEnable(String id) {
         Optional<Autor> respuesta = autorRepositorio.findById(id);
         if (respuesta.isPresent()) {
             if (respuesta.get().getAlta() == true) {
@@ -93,7 +93,7 @@ public class AutorServicio {
             }
             autorRepositorio.save(respuesta.get());
         }
-
+        return respuesta.get();
     }
 
     // private void validateAutor(String nombre, Boolean alta) throws ErrorServicio {

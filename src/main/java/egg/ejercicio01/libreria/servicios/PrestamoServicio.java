@@ -82,7 +82,12 @@ public class PrestamoServicio {
     }
 
     @Transactional
-    public void disableEnable(String id) {
+    public Optional<Prestamo> findById(String id) throws ErrorServicio {
+        return prestamoRepositorio.findById(id);
+    }
+
+    @Transactional
+    public Prestamo disableEnable(String id) {
         Optional<Prestamo> respuesta = prestamoRepositorio.findById(id);
         if (respuesta.isPresent()) {
             if (respuesta.get().getAlta() == true) {
@@ -92,6 +97,6 @@ public class PrestamoServicio {
             }
             prestamoRepositorio.save(respuesta.get());
         }
-
+        return respuesta.get();
     }
 }

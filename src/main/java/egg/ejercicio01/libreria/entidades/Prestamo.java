@@ -3,6 +3,7 @@ package egg.ejercicio01.libreria.entidades;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -10,7 +11,7 @@ import javax.persistence.*;
 
 @Entity
 public class Prestamo {
-    
+
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
@@ -24,6 +25,7 @@ public class Prestamo {
     @Temporal(TemporalType.DATE)
     private Date fechaDevolucion;
 
+    @NotNull(message = "Debes especificar el estado")
     @Column(nullable = false)
     private Boolean alta;
 
@@ -83,9 +85,8 @@ public class Prestamo {
 
     @Override
     public String toString() {
-        return "Prestamo{" + "id=" + id + ", fechaPrestamo=" + fechaPrestamo + ", fechaDevolucion=" + fechaDevolucion + ", alta=" + alta + ", libro=" + libro + ", cliente=" + cliente + '}';
+        return "Prestamo{" + "id=" + id + ", fechaPrestamo=" + fechaPrestamo + ", fechaDevolucion=" + fechaDevolucion
+                + ", alta=" + alta + ", libro=" + libro + ", cliente=" + cliente + '}';
     }
 
-    
-    
 }

@@ -3,14 +3,14 @@
 
 <head th:replace="layout/head.html"></head>
 
-<title>Autor</title>
+<title>Autores</title>
 
 
 <body>
     <header th:replace="layout/barra"></header>
     <h1>Listado de autores</h1>
-    <div class="desaparecer exito" th:if="${exitoAutor}" th:text="${exitoAutor}"></div>
-    <div class="desaparecerLento error" th:if="${errorAutor}" th:text="${errorAutor}"></div>
+    <div class="desaparecer exito" th:if="${exito}" th:text="${exito}"></div>
+    <div class="desaparecerLento error" th:if="${error}" th:text="${error}"></div>
 
     <table>
         <thead>

@@ -20,12 +20,12 @@ public class Cliente {
     @Column(nullable = false)
     private String documento;
 
-    @Size(min = 1, max = 70, message = "Debe tener de 1 a 70 caracteres")
+    @Size(min = 1, max = 60, message = "Debe tener de 1 a 60 caracteres")
     @NotEmpty(message = "Debes especificar el nombre")
     @Column(nullable = false)
     private String nombre;
 
-    @Size(min = 1, max = 70, message = "Debe tener de 1 a 70 caracteres")
+    @Size(min = 1, max = 60, message = "Debe tener de 1 a 60 caracteres")
     @NotEmpty(message = "Debes especificar el apellido")
     @Column(nullable = false)
     private String apellido;
@@ -35,6 +35,7 @@ public class Cliente {
     @Column(nullable = false)
     private String telefono;
 
+    @NotNull(message = "Debes especificar el estado")
     @Column(nullable = false)
     private Boolean alta;
 

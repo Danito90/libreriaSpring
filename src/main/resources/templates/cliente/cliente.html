@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es-AR" xmlns:th="https://www.thymeleaf.org">
+
+<head th:replace="layout/head.html"></head>
+
+<title>Clientes</title>
+
+<body>
+    <header th:replace="layout/barra"></header>
+    <h1>Listado de Clientes</h1>
+    <div class="desaparecer exito" th:if="${exito}" th:text="${exito}"></div>
+    <div class="desaparecerLento error" th:if="${error}" th:text="${error}"></div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Documento</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Telefono</th>
+                <th>Alta</th>
+                <th>Modificar</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="c,iterator: ${cliente}">
+                <td th:text="${iterator.index+1}"> 1</td>
+                <td th:text="${c.documento}"></td>
+                <td th:text="${c.nombre}"></td>
+                <td th:text="${c.apellido}"></td>
+                <td th:text="${c.telefono}"></td>
+                <td>
+                    <a th:href="@{/cliente/enable}+ '?id=' + ${c.id}">
+                        <i th:if="${c.alta}" class="fa fa-circle verde"></i>
+                        <i th:unless="${c.alta}" class="fa fa-circle rojo"></i>
+                    </a>
+                </td>
+                <td><a th:href="@{/cliente/form}+ '?id=' + ${c.id}"> <i class="fas fa-pencil-alt"></a></td>
+                <td><a th:href="@{/cliente/delete} + '?id=' + ${c.id}"><i class="fas fa-trash-alt"></a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <footer th:replace="layout/footer"></footer>
+    <!-- Javascript desaparecer -->
+    <script type="text/javascript" src="/js/desaparecer.js"></script>
+
+</body>
+
+</html>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es-AR" xmlns:th="https://www.thymeleaf.org">
-<title>Agregar Libro</title>
+<title>Agregar Autor</title>
 
 <head th:replace="layout/head"></head>
 <link rel="stylesheet" href="/src/main/resources/static/css/styles.css">
@@ -26,7 +26,7 @@
 
             <div class="casillero">
                 <label for="nombre">Nombre:</label>
-                <input type="text" name="nombre" id="nombre" th:field="*{nombre}">
+                <input type="text" name="nombre" id="nombre" th:field="*{nombre}" maxlength="60">
             </div>
             <div class="errores" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error Nombre</div>
 
@@ -58,7 +58,6 @@
 
         </fieldset>
     </form>
-
 
     <footer th:replace="layout/footer"></footer>
 </body>

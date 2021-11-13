@@ -16,20 +16,20 @@ public class Libro {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String Id;
-   
+
     @Min(1)
-    @Max(99999999) 
+    @Max(99999999)
     @NotNull(message = "Debes especificar el isbn")
     @Column(nullable = false)
     private Long isbn;
 
-    @Size(min = 1, max = 100,message = "Debe tener de 1 a 100 caracteres")
-    @NotEmpty(message="Debes especificar el titulo")
+    @Size(min = 1, max = 100, message = "Debe tener de 1 a 100 caracteres")
+    @NotEmpty(message = "Debes especificar el titulo")
     @Column(nullable = false)
     private String titulo;
 
     @Min(1900)
-    @Max(2099) 
+    @Max(2099)
     @NotNull(message = "Debes especificar el año")
     @Column(nullable = false)
     private Integer anio;
@@ -38,7 +38,7 @@ public class Libro {
     @Column(nullable = false)
     private Integer ejemplares;
 
-    // @NotNull(message = "Debes especificar la cantidad de ejemplares prestados")
+    @NotNull(message = "Debes especificar la cantidad de ejemplares prestados")
     @Column(nullable = false)
     private Integer ejemplaresPrestados;
 
@@ -46,10 +46,10 @@ public class Libro {
     @Column(nullable = false)
     private Integer ejemplaresRestantes;
 
+    @NotNull(message = "Debes especificar el estado")
     @Column(nullable = false)
     private Boolean alta;
 
- 
     @ManyToOne
     private Autor autor; // muchos libros pueden pertenecer a un autor
     // Si trabajo unidireccional la relacion, se crea la llave foranea aca... si es
