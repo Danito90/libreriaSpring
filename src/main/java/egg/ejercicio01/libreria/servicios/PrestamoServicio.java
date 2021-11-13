@@ -82,22 +82,16 @@ public class PrestamoServicio {
     }
 
     @Transactional
-    public void enable(Prestamo prestamo){
-        Optional<Prestamo> respuesta= prestamoRepositorio.findById(prestamo.getId());
-        if(respuesta.isPresent()){
-            prestamo=respuesta.get();
-            prestamo.setAlta(true);
-            prestamoRepositorio.save(prestamo);
+    public void disableEnable(String id) {
+        Optional<Prestamo> respuesta = prestamoRepositorio.findById(id);
+        if (respuesta.isPresent()) {
+            if (respuesta.get().getAlta() == true) {
+                respuesta.get().setAlta(false);
+            } else {
+                respuesta.get().setAlta(true);
+            }
+            prestamoRepositorio.save(respuesta.get());
         }
-    }
 
-    @Transactional
-    public void disable(Prestamo prestamo){
-        Optional<Prestamo> respuesta= prestamoRepositorio.findById(prestamo.getId());
-        if(respuesta.isPresent()){
-            prestamo=respuesta.get();
-            prestamo.setAlta(false);
-            prestamoRepositorio.save(prestamo);
-        }
     }
 }

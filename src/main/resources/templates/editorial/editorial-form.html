@@ -8,7 +8,7 @@
 <body>
     <header th:replace="layout/barra"></header>
 
-    <form method="post" th:object="${editorial}" th:action="@{/editorial/save}"  autocomplete="off">
+    <form method="post" th:object="${editorial}" th:action="@{/editorial/save}" autocomplete="off">
         <!-- th:object="${libro}" para actualizar, traer los datos-->
         <fieldset>
             <legend>Agregar Editorial</legend>
@@ -33,16 +33,25 @@
             <div class="casillero">
                 <label for="alta">Estado: </label>
                 <!-- name debe ser igual para selecciona solo una opcion, value es el valor q se envia -->
-                <div>
-                    <input type="radio" id="alta" name="alta" value="true" checked>
-                    <label for="alta">Alta</label>
-                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                    <input type="radio" id="baja" name="alta" value="false" >
-                    <label for="baja">Baja</label>
+                <div th:switch="${editorial.id}">
+                    <div th:case="null">
+                        <input type="radio" id="alta" name="alta" value="true" checked>
+                        <label for="alta">Alta</label>
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                        <input type="radio" id="baja" name="alta" value="false">
+                        <label for="baja">Baja</label>
+                    </div>
+                    <div th:case="*">
+                        <input type="radio" id="alta" name="alta" value="true" th:checked="${editorial.alta}==true">
+                        <label for="alta">Alta</label>
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                        <input type="radio" id="baja" name="alta" value="false" th:checked="${editorial.alta}==false">
+                        <label for="baja">Baja</label>
+                    </div>
                 </div>
             </div>
             <div class="errores" th:if="${#fields.hasErrors('alta')}" th:errors="*{alta}">Error alta</div>
-           
+
             <div class="casillero">
                 <input type="submit" value="Guardar" class="submit">
             </div>

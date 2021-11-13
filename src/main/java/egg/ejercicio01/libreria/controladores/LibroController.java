@@ -64,8 +64,10 @@ public class LibroController {
 
     @PostMapping("/save") // valida cada item
     public String guardar(Model model, ModelMap modelo, RedirectAttributes redirectAttributes,
-            @ModelAttribute @Valid Libro libro, BindingResult bindingResult) { //Es indispensable que BindingResult bindingResult se pase
-                                                                               // justo despues de la Entidad(clase) si no no funciona
+            @ModelAttribute @Valid Libro libro, BindingResult bindingResult) { // Es indispensable que BindingResult
+                                                                               // bindingResult se pase
+                                                                               // justo despues de la Entidad(clase) si
+                                                                               // no no funciona
         try {
             if (bindingResult.hasErrors()) {
                 model.addAttribute("autores", autorServicio.findAll());
@@ -95,18 +97,7 @@ public class LibroController {
 
     @GetMapping("/enable")
     public String activar(@RequestParam String id) throws ErrorServicio {
-        Optional<Libro> respuesta = libroServicio.findById(id);
-        Libro libro = new Libro();
-        if (respuesta.isPresent()) {
-            libro = respuesta.get();
-            if (libro.getAlta() == true) {
-                libro.setAlta(false);
-            } else {
-                libro.setAlta(true);
-            }
-            libroServicio.save(libro);
-        }
-
+        libroServicio.disableEnable(id);
         return "redirect:/libro/lista";
     }
 
@@ -132,13 +123,12 @@ public class LibroController {
 
         try {
             Optional<Libro> resultado = libroServicio.findById(id);
-            Libro libro = new Libro();
             if (resultado.isPresent()) {
-                libro = resultado.get();
+                libroServicio.deleteLibro(id);
+                redirectAttributes.addFlashAttribute("exito",
+                        "El Libro ''" + resultado.get().getTitulo() + "'' ha sido eliminado con exito");
             }
-            libroServicio.deleteLibro(id);
-            redirectAttributes.addFlashAttribute("exito",
-                    "El Libro ''" + libro.getTitulo() + "'' ha sido eliminado con exito");
+
         } catch (ErrorServicio e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }

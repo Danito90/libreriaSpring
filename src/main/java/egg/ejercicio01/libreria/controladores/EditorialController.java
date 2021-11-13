@@ -16,7 +16,6 @@ import egg.ejercicio01.libreria.entidades.Editorial;
 import egg.ejercicio01.libreria.errores.ErrorServicio;
 import egg.ejercicio01.libreria.servicios.EditorialServicio;
 
-
 @Controller
 @RequestMapping("/editorial")
 public class EditorialController {
@@ -46,8 +45,8 @@ public class EditorialController {
     }
 
     @PostMapping("/save")
-    public String guardar(Model model, @ModelAttribute @Valid Editorial editorial, BindingResult bindingResult, ModelMap modelo,
-            RedirectAttributes redirectAttributes) {
+    public String guardar(Model model, @ModelAttribute @Valid Editorial editorial, BindingResult bindingResult,
+            ModelMap modelo, RedirectAttributes redirectAttributes) {
         try {
             if (bindingResult.hasErrors()) {
                 return "editorial/editorial-form";
@@ -66,18 +65,7 @@ public class EditorialController {
 
     @GetMapping("/enable")
     public String activar(@RequestParam String id) throws ErrorServicio {
-        Optional<Editorial> respuesta = editorialServicio.findById(id);
-        Editorial editorial = new Editorial();
-        if (respuesta.isPresent()) {
-            editorial = respuesta.get();
-            if (editorial.getAlta() == true) {
-                editorial.setAlta(false);
-            } else {
-                editorial.setAlta(true);
-            }
-            editorialServicio.save(editorial);
-        }
-
+        editorialServicio.disableEnable(id);
         return "redirect:/editorial/lista";
     }
 
@@ -86,13 +74,12 @@ public class EditorialController {
 
         try {
             Optional<Editorial> resultado = editorialServicio.findById(id);
-            Editorial editorial = new Editorial();
             if (resultado.isPresent()) {
-                editorial = resultado.get();
+                editorialServicio.deleteEditorial(id);
+                redirectAttributes.addFlashAttribute("exitoEditorial",
+                        "La editorial ''" + resultado.get().getNombre() + "'' se ha eliminado con exito");
             }
-            editorialServicio.deleteEditorial(id);
-            redirectAttributes.addFlashAttribute("exitoEditorial",
-                    "La editorial ''" + editorial.getNombre() + "'' se ha eliminado con exito");
+
         } catch (ErrorServicio e) {
             redirectAttributes.addFlashAttribute("errorEditorial", e.getMessage());
         }

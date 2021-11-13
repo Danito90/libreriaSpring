@@ -83,23 +83,17 @@ public class EditorialServicio {
     }
 
     @Transactional
-    public void disableEditorial(String id) {
+    public void disableEnable(String id) {
         Optional<Editorial> respuesta = editorialRepositorio.findById(id);
-        if (respuesta.isPresent()) { // si encuentra un usuario con ese id entonces modifica su info
-            Editorial editorial = respuesta.get();
-            editorial.setAlta(false);
-            editorialRepositorio.save(editorial); // este save no crea id, actualiza
+        if (respuesta.isPresent()) {
+            if (respuesta.get().getAlta() == true) {
+                respuesta.get().setAlta(false);
+            } else {
+                respuesta.get().setAlta(true);
+            }
+            editorialRepositorio.save(respuesta.get());
         }
-    }
 
-    @Transactional
-    public void enableEditorial(String id) {
-        Optional<Editorial> respuesta = editorialRepositorio.findById(id);
-        if (respuesta.isPresent()) { // si encuentra un usuario con ese id entonces modifica su info
-            Editorial editorial = respuesta.get();
-            editorial.setAlta(true);
-            editorialRepositorio.save(editorial); // este save no crea id, actualiza
-        }
     }
 
     // private void validateEditorial(String nombre, Boolean alta) throws ErrorServicio {

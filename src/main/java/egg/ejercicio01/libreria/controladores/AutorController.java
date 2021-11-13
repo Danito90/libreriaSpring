@@ -57,26 +57,14 @@ public class AutorController {
             return "redirect:/autor/lista";
         } catch (ErrorServicio e) {
             modelo.addAttribute("errorServicio", e.getMessage());
-            redirectAttributes.addFlashAttribute("errorAutor",
-                    "Error al guardar el autor ''" + autor.getNombre() + "''");
+            redirectAttributes.addFlashAttribute("errorAutor", "Error al guardar el autor ''" + autor.getNombre());
             return "autor/autor-form";
         }
     }
 
     @GetMapping("/enable")
     public String activar(@RequestParam String id) throws ErrorServicio {
-        Optional<Autor> respuesta = autorServicio.findById(id);
-        Autor autor = new Autor();
-        if (respuesta.isPresent()) {
-            autor = respuesta.get();
-            if (autor.getAlta() == true) {
-                autor.setAlta(false);
-            } else {
-                autor.setAlta(true);
-            }
-            autorServicio.save(autor);
-        }
-
+        autorServicio.disableEnable(id);
         return "redirect:/autor/lista";
     }
 
@@ -85,13 +73,12 @@ public class AutorController {
 
         try {
             Optional<Autor> resultado = autorServicio.findById(id);
-            Autor autor = new Autor();
             if (resultado.isPresent()) {
-                autor = resultado.get();
+                autorServicio.deleteAutor(id);
+                redirectAttributes.addFlashAttribute("exitoAutor",
+                        "El autor ''" + resultado.get().getNombre() + "'' se ha eliminado con exito");
             }
-            autorServicio.deleteAutor(id);
-            redirectAttributes.addFlashAttribute("exitoAutor",
-                    "El autor ''" + autor.getNombre() + "'' se ha eliminado con exito");
+
         } catch (ErrorServicio e) {
             redirectAttributes.addFlashAttribute("errorAutor", e.getMessage());
         }

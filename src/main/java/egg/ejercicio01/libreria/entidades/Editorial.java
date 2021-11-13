@@ -3,6 +3,9 @@ package egg.ejercicio01.libreria.entidades;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -13,6 +16,8 @@ public class Editorial {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
+    @Size(min = 1, max = 60, message = "Debe tener de 1 a 60 caracteres")
+    @NotEmpty(message = "Debes especificar el nombre")
     @Column(nullable = false)
     private String nombre;
 

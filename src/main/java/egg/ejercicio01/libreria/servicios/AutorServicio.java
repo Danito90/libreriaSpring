@@ -83,23 +83,17 @@ public class AutorServicio {
     }
 
     @Transactional
-    public void disableAutor(String id) {
+    public void disableEnable(String id) {
         Optional<Autor> respuesta = autorRepositorio.findById(id);
         if (respuesta.isPresent()) {
-            Autor autor = respuesta.get();
-            autor.setAlta(false);
-            autorRepositorio.save(autor); // este save no crea id, actualiza
+            if (respuesta.get().getAlta() == true) {
+                respuesta.get().setAlta(false);
+            } else {
+                respuesta.get().setAlta(true);
+            }
+            autorRepositorio.save(respuesta.get());
         }
-    }
 
-    @Transactional
-    public void enableAutor(String id) {
-        Optional<Autor> respuesta = autorRepositorio.findById(id);
-        if (respuesta.isPresent()) { // si encuentra un usuario con ese id entonces modifica su info
-            Autor autor = respuesta.get();
-            autor.setAlta(true);
-            autorRepositorio.save(autor); // este save no crea id, actualiza
-        }
     }
 
     // private void validateAutor(String nombre, Boolean alta) throws ErrorServicio {
