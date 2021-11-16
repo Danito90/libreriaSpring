@@ -1,6 +1,5 @@
 package egg.ejercicio01.libreria.controladores;
 
-import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -58,7 +57,7 @@ public class ClienteController {
             return "redirect:/cliente/lista";
         } catch (ErrorServicio e) {
             redirectAttributes.addFlashAttribute("error",
-                    "Error al guardar el cliente  ''" + cliente.getNombre() + " " + cliente.getApellido());
+                    "Error al guardar el cliente  ''" + cliente.getNombre() + " " + cliente.getApellido() + "''");
             return "cliente/cliente-form";
         }
 
@@ -69,10 +68,10 @@ public class ClienteController {
         Cliente cliente = clienteServicio.disableEnable(id);
         if (cliente.getAlta()) {
             redirectAttributes.addFlashAttribute("exito",
-                    "Se dio de alta al cliente '" + cliente.getNombre() + cliente.getApellido() + "'");
+                    "Se dio de alta al cliente ''" + cliente.getNombre() + cliente.getApellido() + "''");
         } else {
             redirectAttributes.addFlashAttribute("error",
-                    "Se dio de baja al cliente '" + cliente.getNombre() + cliente.getApellido() + "'");
+                    "Se dio de baja al cliente ''" + cliente.getNombre() + cliente.getApellido() + "''");
         }
         return "redirect:/cliente/lista";
     }

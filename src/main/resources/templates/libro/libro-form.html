@@ -76,7 +76,7 @@
                 <!-- name debe ser igual para selecciona solo una opcion, value es el valor q se envia -->
                 <div th:switch="${libro.id}">
                     <div th:case="null">
-                        <input type="radio" id="alta" name="alta" value="true">
+                        <input type="radio" id="alta" name="alta" value="true" checked>
                         <label for="alta">Alta</label>
                         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                         <input type="radio" id="baja" name="alta" value="false">

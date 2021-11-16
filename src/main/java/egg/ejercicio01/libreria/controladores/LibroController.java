@@ -107,9 +107,9 @@ public class LibroController {
     public String activar(@RequestParam String id, RedirectAttributes redirectAttributes) throws ErrorServicio {
         Libro libro = libroServicio.disableEnable(id);
         if (libro.getAlta()) {
-            redirectAttributes.addFlashAttribute("exito", "Se dio de alta al libro '" + libro.getTitulo() + "'");
+            redirectAttributes.addFlashAttribute("exito", "Se dio de alta al libro ''" + libro.getTitulo() + "''");
         } else {
-            redirectAttributes.addFlashAttribute("error", "Se dio de baja al libro '" + libro.getTitulo() + "'");
+            redirectAttributes.addFlashAttribute("error", "Se dio de baja al libro ''" + libro.getTitulo() + "''");
         }
         return "redirect:/libro/lista";
     }

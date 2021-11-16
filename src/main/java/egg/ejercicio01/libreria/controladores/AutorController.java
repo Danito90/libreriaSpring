@@ -57,7 +57,7 @@ public class AutorController {
             return "redirect:/autor/lista";
         } catch (ErrorServicio e) {
             modelo.addAttribute("errorServicio", e.getMessage());
-            redirectAttributes.addFlashAttribute("error", "Error al guardar el autor ''" + autor.getNombre());
+            redirectAttributes.addFlashAttribute("error", "Error al guardar el autor ''" + autor.getNombre() + "''");
             return "autor/autor-form";
         }
     }
@@ -66,9 +66,9 @@ public class AutorController {
     public String activar(@RequestParam String id, RedirectAttributes redirectAttributes) throws ErrorServicio {
         Autor autor = autorServicio.disableEnable(id);
         if (autor.getAlta()) {
-            redirectAttributes.addFlashAttribute("exito", "Se dio de alta al autor '" + autor.getNombre() + "'");
+            redirectAttributes.addFlashAttribute("exito", "Se dio de alta al autor ''" + autor.getNombre() + "''");
         } else {
-            redirectAttributes.addFlashAttribute("error", "Se dio de baja al autor '" + autor.getNombre() + "'");
+            redirectAttributes.addFlashAttribute("error", "Se dio de baja al autor ''" + autor.getNombre() + "''");
         }
         return "redirect:/autor/lista";
     }

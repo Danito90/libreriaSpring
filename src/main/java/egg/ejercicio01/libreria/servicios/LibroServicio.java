@@ -124,6 +124,24 @@ public class LibroServicio {
     }
 
     @Transactional
+    public void prestar(Libro libro) throws ErrorServicio {
+            if (libro.getEjemplaresRestantes() == 0) {
+                throw new ErrorServicio("No hay ejemplares del libro disponibles");
+            } else {
+                libro.setEjemplaresPrestados(libro.getEjemplaresPrestados() + 1);
+                libro.setEjemplaresRestantes(libro.getEjemplares() - libro.getEjemplaresPrestados());
+                libroRepositorio.save(libro);
+            }
+    }
+
+    @Transactional
+    public void devolver(Libro libro) throws ErrorServicio {
+        libro.setEjemplaresPrestados(libro.getEjemplaresPrestados() - 1);
+        libro.setEjemplaresRestantes(libro.getEjemplares() - libro.getEjemplaresPrestados());
+        libroRepositorio.save(libro);
+    }
+
+    @Transactional
     public void deleteLibro(String id) throws ErrorServicio {
         Optional<Libro> respuesta = libroRepositorio.findById(id);
         if (respuesta.isPresent()) {

@@ -67,9 +67,9 @@ public class EditorialController {
     public String activar(@RequestParam String id, RedirectAttributes redirectAttributes) throws ErrorServicio {
         Editorial editorial = editorialServicio.disableEnable(id);
         if (editorial.getAlta()) {
-            redirectAttributes.addFlashAttribute("exito", "Se dio de alta a la editorial '" + editorial.getNombre() + "'");
+            redirectAttributes.addFlashAttribute("exito", "Se dio de alta a la editorial ''" + editorial.getNombre() + "''");
         } else {
-            redirectAttributes.addFlashAttribute("error", "Se dio de baja a la editorial '" + editorial.getNombre() + "'");
+            redirectAttributes.addFlashAttribute("error", "Se dio de baja a la editorial ''" + editorial.getNombre() + "''");
         }
         return "redirect:/editorial/lista";
     }

@@ -27,6 +27,7 @@ public class PrestamoServicio {
     @Transactional
     public Prestamo save(Prestamo prestamo) throws ErrorServicio {
         validate(prestamo);
+        libroServicio.prestar(prestamo.getLibro());
         return prestamoRepositorio.save(prestamo);
     }
 
@@ -67,7 +68,7 @@ public class PrestamoServicio {
     }
 
     @Transactional
-    public List<Prestamo> findALL(String id) {
+    public List<Prestamo> findAll() {
         return prestamoRepositorio.findAll();
     }
 
