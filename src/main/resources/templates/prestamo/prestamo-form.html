@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es-AR" xmlns:th="https://www.thymeleaf.org" xmlns:form=http://www.springframework.org/tags/form>
+<html lang="es-AR" xmlns:th="https://www.thymeleaf.org">
 <title>Agregar Prestamo</title>
 
 <head th:replace="layout/head"></head>
@@ -10,7 +10,7 @@
 <body>
     <header th:replace="layout/barra"></header>
 
-    <form method="Get" th:object="${prestamo}" th:action="@{/prestamo/save}" autocomplete="off">
+    <form method="post" th:object="${prestamo}" th:action="@{/prestamo/save}" autocomplete="off">
         <!-- th:object="${libro}" para actualizar, traer los datos-->
         <fieldset>
             <legend>Agregar Prestamo</legend>
@@ -20,13 +20,25 @@
                 <input hidden th:field="*{id}">
             </div>
 
-            <div class="casillero">
-                <label for="fechapr">Fecha de prestamo:</label>
-                <input type="date" name="fechapr" id="fechapr" th:field="*{fechaPrestamo}">
-                <!-- con tl th:field es donde vinculamos el input al controller -->
+
+
+                <div class="casillero">
+                    <label for="fechapr">Fecha de prestamo:</label>
+    <input type="date" th:if="${prestamo.id}!=null or ${prestamo.id}==''" name="fechapr" id="fechapr" 
+                        th:field="*{fechaPrestamo}"> 
+                    <input type="date" th:unless="${prestamo.id}!=null or ${prestamo.id}==''" name="fechapr" id="fechapr"
+                        th:value="${#dates.format(actual, 'yyyy-MM-dd')}">
+                    <!-- th:value="${#dates.format(actual, 'yyyy-MM-dd')}" para traer la fecha actual -->
+                    <!-- con tl th:field es donde vinculamos el input al controller -->
+                    <div class="derecha errores" th:if="${#fields.hasErrors('fechaPrestamo')}"
+                        th:errors="*{fechaPrestamo}">Error
+                        Nombre
+                    </div>
+                </div>
             </div>
-            <div class="errores" th:if="${#fields.hasErrors('fechaPrestamo')}" th:errors="*{fechaPrestamo}">Error Nombre
-            </div>
+
+
+
 
             <div class="casillero">
                 <label for="prestamoDev">Fecha Devolucion:</label>

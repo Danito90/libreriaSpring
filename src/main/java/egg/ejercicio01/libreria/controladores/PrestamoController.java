@@ -1,5 +1,6 @@
 package egg.ejercicio01.libreria.controladores;
 
+import java.util.Date;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -49,26 +50,31 @@ public class PrestamoController {
         } else {
             model.addAttribute("prestamo", new Prestamo());
         }
-        model.addAttribute("libros", libroServicio.findAll());
-        model.addAttribute("clientes", clienteServicio.findAll());
+        carga(model);
         return "prestamo/prestamo-form";
     }
 
-    @GetMapping("/save")
+    @PostMapping("/save")
     public String guardar(ModelMap modelo, RedirectAttributes redirectAttributes, Model model,
             @ModelAttribute @Valid Prestamo prestamo, BindingResult bindingResult) throws ErrorServicio {
         try {
             if (bindingResult.hasErrors()) {
-                model.addAttribute("libros", libroServicio.findAll());
-                model.addAttribute("clientes", clienteServicio.findAll());
+                carga(model);
                 return "prestamo/prestamo-form";
             }
-            prestamoServicio.save(prestamo);
-            redirectAttributes.addFlashAttribute("exito", "Prestamo guardado con éxito");
+
+            if (prestamo.getId() == null || prestamo.getId().isEmpty()) {
+                prestamoServicio.save(prestamo);
+            } else {
+                prestamoServicio.update(prestamo);
+            }
+
+            redirectAttributes.addFlashAttribute("exito", "El prestamo del libro ''" + prestamo.getLibro().getTitulo() + "'', del cliente ''"
+            + prestamo.getCliente().getNombre() + " "
+            + prestamo.getCliente().getApellido() + "'' se guardo con éxito");
             return "redirect:/prestamo/lista";
         } catch (ErrorServicio e) {
-            model.addAttribute("libros", libroServicio.findAll());
-            model.addAttribute("clientes", clienteServicio.findAll());
+            carga(model);
             if (e.getMessage().equals("El Libro no puede estar vacio")) {
                 modelo.put("libroError", e.getMessage()); // viene de la validacion
             } else {
@@ -83,9 +89,13 @@ public class PrestamoController {
     public String activar(@RequestParam String id, RedirectAttributes redirectAttributes) throws ErrorServicio {
         Prestamo prestamo = prestamoServicio.disableEnable(id);
         if (prestamo.getAlta()) {
-            redirectAttributes.addFlashAttribute("exito", "Se dio de alta el prestamo");
+            redirectAttributes.addFlashAttribute("exito", "Se dio de alta el prestamo del libro ''"+ prestamo.getLibro().getTitulo() + "'', del cliente ''"
+            + prestamo.getCliente().getNombre() + " "
+            + prestamo.getCliente().getApellido() );
         } else {
-            redirectAttributes.addFlashAttribute("error", "Se dio de baja al prestamo");
+            redirectAttributes.addFlashAttribute("error", "Se dio de baja al prestamo del libro ''"+ prestamo.getLibro().getTitulo() + "'', del cliente ''"
+            + prestamo.getCliente().getNombre() + " "
+            + prestamo.getCliente().getApellido()+ "''") ;
         }
         return "redirect:/prestamo/lista";
     }
@@ -97,12 +107,21 @@ public class PrestamoController {
         try {
             Optional<Prestamo> respuesta = prestamoServicio.findById(id);
             if (respuesta.isPresent()) {
-                prestamoServicio.delete(respuesta.get());
-                redirectAttributes.addFlashAttribute("exito", "El prestamo fue eliminado con exito");
+                prestamoServicio.delete(respuesta.get().getId());
+                redirectAttributes.addFlashAttribute("exito",
+                        "El prestamo del libro ''" + respuesta.get().getLibro().getTitulo() + "'', del cliente ''"
+                                + respuesta.get().getCliente().getNombre() + " "
+                                + respuesta.get().getCliente().getApellido() + "'' fue eliminado con exito");
             }
-        } catch (Exception e) {
+        } catch (ErrorServicio e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
         return "redirect:/prestamo/lista";
+    }
+
+    public void carga(Model model){
+        model.addAttribute("libros", libroServicio.findAll());
+        model.addAttribute("clientes", clienteServicio.findAll());
+        model.addAttribute("actual", new Date());
     }
 }

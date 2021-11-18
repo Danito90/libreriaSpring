@@ -32,10 +32,17 @@ public class PrestamoServicio {
     }
 
     @Transactional
-    public void delete(Prestamo prestamo) throws ErrorServicio {
-        Optional<Prestamo> respuesta = prestamoRepositorio.findById(prestamo.getId());
+    public Prestamo update(Prestamo prestamo) throws ErrorServicio {
+        validate(prestamo);
+        return prestamoRepositorio.save(prestamo);
+    }
+
+    @Transactional
+    public void delete(String id) throws ErrorServicio {
+        Optional<Prestamo> respuesta = prestamoRepositorio.findById(id);
         if (respuesta.isPresent()) {
-            prestamoRepositorio.delete(respuesta.get());
+            libroServicio.devolver(respuesta.get().getLibro());
+            prestamoRepositorio.deleteById(id);
         } else {
             throw new ErrorServicio("No existe el cliente");
         }
@@ -88,12 +95,14 @@ public class PrestamoServicio {
     }
 
     @Transactional
-    public Prestamo disableEnable(String id) {
+    public Prestamo disableEnable(String id) throws ErrorServicio {
         Optional<Prestamo> respuesta = prestamoRepositorio.findById(id);
         if (respuesta.isPresent()) {
             if (respuesta.get().getAlta() == true) {
+                libroServicio.prestar(respuesta.get().getLibro());
                 respuesta.get().setAlta(false);
             } else {
+                libroServicio.devolver(respuesta.get().getLibro());
                 respuesta.get().setAlta(true);
             }
             prestamoRepositorio.save(respuesta.get());

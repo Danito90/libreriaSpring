@@ -19,13 +19,9 @@ public class Prestamo {
 
     // @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     // @DateTimeFormat(iso=ISO.DATE)
-    @NotNull(message = "Debes especificar la fecha del prestamo")
-    @Column(nullable = false)
     @Temporal(TemporalType.DATE)
     private Date fechaPrestamo;
 
-    @NotNull(message = "Debes especificar la fecha de devolucion")
-    @Column(nullable = false)
     @Temporal(TemporalType.DATE)
     private Date fechaDevolucion;
 

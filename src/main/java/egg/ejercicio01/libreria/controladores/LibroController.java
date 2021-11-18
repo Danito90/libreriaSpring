@@ -57,8 +57,7 @@ public class LibroController {
         } else {
             model.addAttribute("libro", new Libro());
         }
-        model.addAttribute("autores", autorServicio.findAll());
-        model.addAttribute("editoriales", editorialServicio.findAll());
+        carga(model);
         return "libro/libro-form";
     }
 
@@ -70,16 +69,14 @@ public class LibroController {
                                                                                // no no funciona
         try {
             if (bindingResult.hasErrors()) {
-                model.addAttribute("autores", autorServicio.findAll());
-                model.addAttribute("editoriales", editorialServicio.findAll());
+                carga(model);
                 return "libro/libro-form";
             }
 
             if (libro.getEjemplares() < libro.getEjemplaresPrestados()) {
                 bindingResult.rejectValue("ejemplares", "error.libro",
                         "El numero de ejemplares no puede ser menor al numero de ejemplares prestados");
-                model.addAttribute("autores", autorServicio.findAll());
-                model.addAttribute("editoriales", editorialServicio.findAll());
+                carga(model);
                 return "libro/libro-form";
             }
 
@@ -88,9 +85,8 @@ public class LibroController {
                     "El libro ''" + libro.getTitulo() + "'' se ha guardado con exito");
             return "redirect:/libro/lista";
         } catch (ErrorServicio e) {
-            model.addAttribute("autores", autorServicio.findAll()); // vuelve a cargar select
-            model.addAttribute("editoriales", editorialServicio.findAll());
-            if (e.getMessage().equals("La editorial no puede estar vacia")) {
+            carga(model);
+            if (e.getMessage().equals("La Editorial no puede estar vacia")) {
                 modelo.put("editorialError", e.getMessage());
             } else {
                 modelo.put("autorError", e.getMessage());
@@ -146,6 +142,11 @@ public class LibroController {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
         return "redirect:/libro/lista";
+    }
+
+    public void carga(Model model) {
+        model.addAttribute("autores", autorServicio.findAll()); // vuelve a cargar select
+        model.addAttribute("editoriales", editorialServicio.findAll());
     }
 
 }

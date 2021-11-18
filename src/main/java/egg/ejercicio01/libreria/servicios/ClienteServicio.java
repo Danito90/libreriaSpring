@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import egg.ejercicio01.libreria.entidades.Cliente;
+import egg.ejercicio01.libreria.entidades.Prestamo;
 import egg.ejercicio01.libreria.errores.ErrorServicio;
 import egg.ejercicio01.libreria.repositorios.ClienteRepositorio;
 
@@ -17,6 +18,9 @@ public class ClienteServicio {
 
     @Autowired
     private ClienteRepositorio clienteRepositorio;
+
+    @Autowired
+    private PrestamoServicio prestamoServicio;
 
     @Transactional
     public Cliente save(Cliente cliente) throws ErrorServicio {
@@ -45,13 +49,30 @@ public class ClienteServicio {
 
     @Transactional
     public void delete(Cliente cliente) throws ErrorServicio {
-        Optional<Cliente> respuesta = clienteRepositorio.findById(cliente.getId());
-        if (respuesta.isPresent()) {
-            cliente = respuesta.get();
-            clienteRepositorio.delete(cliente);
-        } else {
-            throw new ErrorServicio("No existe el cliente con id= " + cliente.getId());
+
+        String prestamosAsociados = "";
+        int count = 0;
+        for (Prestamo p : prestamoServicio.findAll()) {
+            if (p.getCliente().getId().equals(cliente.getId())) {
+                count += 1;
+                prestamosAsociados += p.getLibro().getTitulo() + ", ";
+            }
         }
+
+        if (count > 0) {
+            prestamosAsociados = prestamosAsociados.substring(0, prestamosAsociados.length() - 2) + ".";
+            throw new ErrorServicio(
+                    "No se puede eliminar el cliente, porque posee prestamos de los siguientes libros: " + prestamosAsociados);
+        } else {
+            Optional<Cliente> respuesta = clienteRepositorio.findById(cliente.getId());
+            if (respuesta.isPresent()) {
+                cliente = respuesta.get();
+                clienteRepositorio.delete(cliente);
+            } else {
+                throw new ErrorServicio("No existe el cliente con id= " + cliente.getId());
+            }
+        }
+
     }
 
     public void validate(Cliente cliente) throws ErrorServicio {

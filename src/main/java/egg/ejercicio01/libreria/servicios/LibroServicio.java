@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import egg.ejercicio01.libreria.entidades.Libro;
+import egg.ejercicio01.libreria.entidades.Prestamo;
 import egg.ejercicio01.libreria.errores.ErrorServicio;
 import egg.ejercicio01.libreria.repositorios.LibroRepositorio;
 
@@ -23,6 +24,9 @@ public class LibroServicio {
 
     @Autowired
     private EditorialServicio editorialServicio;
+
+    @Autowired
+    private PrestamoServicio prestamoServicio;
 
     @Transactional
     public List<Libro> findAll() {
@@ -125,13 +129,13 @@ public class LibroServicio {
 
     @Transactional
     public void prestar(Libro libro) throws ErrorServicio {
-            if (libro.getEjemplaresRestantes() == 0) {
-                throw new ErrorServicio("No hay ejemplares del libro disponibles");
-            } else {
-                libro.setEjemplaresPrestados(libro.getEjemplaresPrestados() + 1);
-                libro.setEjemplaresRestantes(libro.getEjemplares() - libro.getEjemplaresPrestados());
-                libroRepositorio.save(libro);
-            }
+        if (libro.getEjemplaresRestantes() == 0) {
+            throw new ErrorServicio("No hay ejemplares del libro disponibles");
+        } else {
+            libro.setEjemplaresPrestados(libro.getEjemplaresPrestados() + 1);
+            libro.setEjemplaresRestantes(libro.getEjemplares() - libro.getEjemplaresPrestados());
+            libroRepositorio.save(libro);
+        }
     }
 
     @Transactional
@@ -143,11 +147,27 @@ public class LibroServicio {
 
     @Transactional
     public void deleteLibro(String id) throws ErrorServicio {
-        Optional<Libro> respuesta = libroRepositorio.findById(id);
-        if (respuesta.isPresent()) {
-            libroRepositorio.deleteById(id);
+        String prestamosAsociados = "";
+        int count = 0;
+        for (Prestamo p : prestamoServicio.findAll()) {
+            if (p.getLibro().getId().equals(id)) {
+                count += 1;
+                prestamosAsociados += p.getCliente().getNombre() + " " + p.getCliente().getApellido() + ", ";
+            }
+        }
+
+        if (count > 0) {
+            prestamosAsociados = prestamosAsociados.substring(0, prestamosAsociados.length() - 2) + ".";
+            throw new ErrorServicio("No se puede eliminar el libro, porque posee prestamos a los siguientes clientes: "
+                    + prestamosAsociados);
         } else {
-            throw new ErrorServicio("No existe el libro con id: " + id);
+
+            Optional<Libro> respuesta = libroRepositorio.findById(id);
+            if (respuesta.isPresent()) {
+                libroRepositorio.deleteById(id);
+            } else {
+                throw new ErrorServicio("No existe el libro con id: " + id);
+            }
         }
     }
 
@@ -207,16 +227,17 @@ public class LibroServicio {
         // if (libro.getAlta() == null) {
         // throw new ErrorServicio("El alta no puede estar vacio");
         // }
-        if (libro.getAutor().getId() == null || libro.getAutor().getId().isEmpty()) {
-            throw new ErrorServicio("El Autor no puede estar vacio");
-        } else {
-            libro.setAutor(autorServicio.findById(libro.getAutor()));
-        }
         if (libro.getEditorial().getId() == null || libro.getEditorial().getId().isEmpty()) {
             throw new ErrorServicio("La Editorial no puede estar vacia");
         } else {
             libro.setEditorial(editorialServicio.findById(libro.getEditorial()));
         }
+        if (libro.getAutor().getId() == null || libro.getAutor().getId().isEmpty()) {
+            throw new ErrorServicio("El Autor no puede estar vacio");
+        } else {
+            libro.setAutor(autorServicio.findById(libro.getAutor()));
+        }
+
     }
 
 }

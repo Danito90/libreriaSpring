@@ -30,8 +30,8 @@
             <tr th:each=" p,iterator: ${prestamo}">
                 <td th:text="${iterator.index+1}"> 1</td>
                 <!-- no es el id real el que muestra, es un un indicador de posicion -->
-                <td th:text="${p.fechaPrestamo}"></td>
-                <td th:text="${p.fechaDevolucion}"></td>
+                <td th:text="${#dates.format(p.fechaPrestamo, 'dd-MM-yyyy')}"></td>
+                <td th:text="${#dates.format(p.fechaDevolucion, 'dd-MM-yyyy')}"></td>
                 <td>
                     <a th:href="@{/prestamo/enable}+ '?id=' + ${p.id}">
                         <i th:if="${p.alta}" class="fa fa-circle verde"></i>
