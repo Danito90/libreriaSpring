@@ -12,26 +12,42 @@
     <div class="exito desaparecer" th:if="${exito}" th:text="${exito}"></div>
     <div class="error desaparecerLento" th:if="${error}" th:text="${error}"></div>
 
-    <table>
+    <table id="mydatatable">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>ISBN</th>
-                <th>Titulo</th>
-                <th>Año</th>
-                <th>Ejemplares</th>
-                <th>Ejemplares Prestados</th>
-                <th>Ejemplares Disponibles</th>
-                <th>Autor</th>
-                <th>Editorial</th>
-                <th>Alta</th>
-                <th>Modificar</th>
-                <Th>Eliminar</Th>
+                <th scope="col">ID</th>
+                <th scope="col">ISBN</th>
+                <th scope="col">Titulo</th>
+                <th scope="col">Año</th>
+                <th scope="col">Ejemplares</th>
+                <th scope="col">Ejemplares Prestados</th>
+                <th scope="col">Ejemplares Disponibles</th>
+                <th scope="col">Autor</th>
+                <th scope="col">Editorial</th>
+                <th scope="col">Alta</th>
+                <th scope="col">Modificar</th>
+                <th scope="col">Eliminar</th>
             </tr>
         </thead>
-        <tbody>
+        <tfoot>
+            <tr>
+                <th>Filter..</th>
+                <th>Filter..</th>
+                <th>Filter..</th>
+                <th>Filter..</th>
+                <th>Filter..</th>
+                <th>Filter..</th>
+                <th>Filter..</th>
+                <th>Filter..</th>
+                <th>Filter..</th>
+                <th>Filter..</th>
+                <th>Filter..</th>
+                <th>Filter..</th>
+            </tr>
+        </tfoot>
+        <tbody id="mytable">
             <!-- <tr th:each=" l,iterator: ${libros}" th:if="${l.alta}==true"></tr>   Para ver solo los activos-->
-            <tr th:each=" l,iterator: ${libros}">
+            <tr scope="row" th:each=" l,iterator: ${libros}">
                 <td th:text="${iterator.index+1}"> 1</td>
                 <!-- no es el id real el que muestra, es un un indicador de posicion -->
                 <td th:text="${l.isbn}"></td>
@@ -60,6 +76,7 @@
     </table>
 
     <footer th:replace="layout/footer"></footer>
+
 </body>
 
 </html>

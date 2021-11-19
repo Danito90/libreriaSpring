@@ -1,5 +1,6 @@
 package egg.ejercicio01.libreria.servicios;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +28,7 @@ public class PrestamoServicio {
     @Transactional
     public Prestamo save(Prestamo prestamo) throws ErrorServicio {
         validate(prestamo);
+        prestamo.setFechaPrestamo(new Date());
         libroServicio.prestar(prestamo.getLibro());
         return prestamoRepositorio.save(prestamo);
     }
@@ -47,7 +49,6 @@ public class PrestamoServicio {
             throw new ErrorServicio("No existe el cliente");
         }
     }
-
 
     public void validate(Prestamo prestamo) throws ErrorServicio {
 
@@ -99,10 +100,12 @@ public class PrestamoServicio {
         Optional<Prestamo> respuesta = prestamoRepositorio.findById(id);
         if (respuesta.isPresent()) {
             if (respuesta.get().getAlta() == true) {
-                libroServicio.prestar(respuesta.get().getLibro());
+                respuesta.get().setFechaDevolucion(new Date());
+                libroServicio.devolver(respuesta.get().getLibro());
                 respuesta.get().setAlta(false);
             } else {
-                libroServicio.devolver(respuesta.get().getLibro());
+                respuesta.get().setFechaDevolucion(null);
+                libroServicio.prestar(respuesta.get().getLibro());
                 respuesta.get().setAlta(true);
             }
             prestamoRepositorio.save(respuesta.get());

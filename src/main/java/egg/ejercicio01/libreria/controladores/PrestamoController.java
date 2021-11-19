@@ -1,5 +1,6 @@
 package egg.ejercicio01.libreria.controladores;
 
+
 import java.util.Date;
 import java.util.Optional;
 
@@ -122,6 +123,6 @@ public class PrestamoController {
     public void carga(Model model){
         model.addAttribute("libros", libroServicio.findAll());
         model.addAttribute("clientes", clienteServicio.findAll());
-        model.addAttribute("actual", new Date());
+        model.addAttribute("actual",new Date());
     }
 }

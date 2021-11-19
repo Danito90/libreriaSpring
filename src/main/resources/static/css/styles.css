@@ -6,7 +6,8 @@ html {
 body {
   padding: 0;
   margin: 0;
-  background: radial-gradient(circle, #a9ccab, #6e73b6, #47298f); /* fondo */
+  background: radial-gradient(circle, #a9ccab, #6e73b6, #47298f); 
+  margin-bottom: 200px; /* para que el footer quede al fondo */
 }
 
 .imgini {
@@ -21,15 +22,16 @@ body {
 }
 
 header {
-  position: sticky;
-  position: -webkit-sticky;
-  top: 0px;
-  width: 100%;
-  background-color: #000;
-  display: inline-block;
-  margin: auto;
-  color: rgb(19, 160, 6);
-  text-align: center;
+  position: sticky !important;
+  position: -webkit-sticky !important;
+  top: 0px !important;
+  width: 100% !important;
+  background-color: rgba(0, 0, 0) !important;
+  display: inline-block !important;
+  margin: auto !important;
+  color: rgb(19, 160, 6) !important;
+  text-align: center !important;
+  z-index: 1 !important;
 }
 
 ul,
@@ -41,7 +43,7 @@ ol {
 
 .nav li a {
   color: #fff;
-  background-color: #000;
+  background-color: rgba(0, 0, 0);
   text-decoration: none;
   padding: 15px 30px;
   display: block;
@@ -72,7 +74,7 @@ ol {
 
 .nav li ul li {
   position: relative;
-  width: 140px;
+  width: 150px;
 }
 
 .nav li ul li ul {
@@ -166,9 +168,13 @@ table {
 
 tr,
 td {
+  color: rgb(0, 0, 0);
   padding: 10px 15px;
   border: 2px solid #000;
   text-align: center;
+}
+tfoot tr th {
+  width: 20%;
 }
 
 th {
@@ -176,7 +182,7 @@ th {
   border: 2px solid #000;
   text-align: center;
   color: rgb(255, 255, 255);
-  background-color: rgb(0, 0, 0);
+  background-color: rgba(41, 38, 38, 0.712);
 }
 
 table td a:link {
@@ -194,7 +200,7 @@ table td a:visited {
 /* ============ Formularios ============ */
 
 /* form{
-  min-height: calc(100vh - 100px);
+  max-height: calc(100vh - 100px);
 } */
 
 fieldset {
@@ -239,7 +245,7 @@ input.submit {
 }
 
 div.exito {
-  margin: auto;
+  margin: 20px auto;
   background-color: #81c984;
   border: 2px solid rgb(4, 49, 0);
   color: rgb(0, 68, 9);
@@ -250,7 +256,7 @@ div.exito {
 }
 
 div.error {
-  margin: auto;
+  margin: 20px auto;
   background-color: #e29090;
   border: 2px solid rgb(59, 0, 0);
   color: rgb(165, 0, 0);
@@ -315,26 +321,39 @@ td i.rojo {
 }
 
 /* =============== footer ==================== */
-div.footer {
-  position:absolute;
-  bottom:-15vh;
+/* para que quede pegado al fondo, en conjunto con html y body */
+footer { 
+  position: absolute;
   width: 100%;
-  color: rgb(255, 255, 255);
-  background-color: rgb(0, 0, 0);
-  text-align: center;
-  padding: 30px;
-  margin-top: 105px;
+  bottom: 0;
 }
 
-div.footer i {
-  border: 2px solid rgb(255, 255, 255);
+div.footer {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
   color: rgb(255, 255, 255);
+  background-color: rgb(0, 0, 0);
+  padding: 30px;
+}
+
+div.footer div.cuadro {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgb(255, 255, 255);
   border-radius: 10px;
-  padding: 15px;
+  height: 50px;
+  width: 50px;
   margin: 20px;
-  width: 26px;
+
+  text-align: center;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
+}
+
+div.footer div.cuadro i {
+  color: #fff;
 }

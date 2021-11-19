@@ -1,51 +1,45 @@
 <header th:fragment="header">
-    <div class="container">
-        <!-- <div class="header"> -->
-        <!-- <h1><code>Bienvenido</code></h1> -->
-        <!-- </div> -->
-        <div class="main">
-            <div class="header">
-                <ul class="nav">
-                    <li><a href="/">Inicio</a></li>
+    <div class="header">
+        <ul class="nav">
+            <li><a href="/">Inicio</a></li>
 
-                    <li><a href="#">Libro</a>
-                        <ul>
-                            <li><a th:href="@{/libro/lista}">Listar</a></li>
-                            <li><a th:href="@{/libro/form}">Agregar</a></li>
-                            <li><a th:href="@{/libro/lista}">Modificaciones</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Autor</a>
-                        <ul>
-                            <li><a th:href="@{/autor/lista}">Listar</a></li>
-                            <li><a th:href="@{/autor/form}">Agregar</a></li>
-                            <li><a th:href="@{/autor/lista}">Modificaciones</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Editorial</a>
-                        <ul>
-                            <li><a th:href="@{/editorial/lista}">Listar</a></li>
-                            <li><a th:href="@{/editorial/form}">Agregar</a></li>
-                            <li><a th:href="@{/editorial/lista}">Modificaciones</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Cliente</a>
-                        <ul>
-                            <li><a th:href="@{/cliente/lista}">Listar</a></li>
-                            <li><a th:href="@{/cliente/form}">Agregar</a></li>
-                            <li><a th:href="@{/cliente/lista}">Modificaciones</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Prestamo</a>
-                        <ul>
-                            <li><a th:href="@{/prestamo/lista}">Listar</a></li>
-                            <li><a th:href="@{/prestamo/form}">Agregar</a></li>
-                            <li><a th:href="@{/prestamo/lista}">Modificaciones</a></li>
-                        </ul>
-                    </li>
-
-                    <li><a th:href="@{/registro}">Registro</a></li>
+            <li><a href="#">Libro</a>
+                <ul>
+                    <li><a th:href="@{/libro/lista}">Listar</a></li>
+                    <li><a th:href="@{/libro/form}">Agregar</a></li>
+                    <li><a th:href="@{/libro/lista}">Modificaciones</a></li>
                 </ul>
-            </div>
+            </li>
+            <li><a href="#">Autor</a>
+                <ul>
+                    <li><a th:href="@{/autor/lista}">Listar</a></li>
+                    <li><a th:href="@{/autor/form}">Agregar</a></li>
+                    <li><a th:href="@{/autor/lista}">Modificaciones</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Editorial</a>
+                <ul>
+                    <li><a th:href="@{/editorial/lista}">Listar</a></li>
+                    <li><a th:href="@{/editorial/form}">Agregar</a></li>
+                    <li><a th:href="@{/editorial/lista}">Modificaciones</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Cliente</a>
+                <ul>
+                    <li><a th:href="@{/cliente/lista}">Listar</a></li>
+                    <li><a th:href="@{/cliente/form}">Agregar</a></li>
+                    <li><a th:href="@{/cliente/lista}">Modificaciones</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Prestamo</a>
+                <ul>
+                    <li><a th:href="@{/prestamo/lista}">Listar</a></li>
+                    <li><a th:href="@{/prestamo/form}">Agregar</a></li>
+                    <li><a th:href="@{/prestamo/lista}">Modificaciones</a></li>
+                </ul>
+            </li>
 
+            <li><a th:href="@{/registro}">Registro</a></li>
+        </ul>
+    </div>
 </header>
