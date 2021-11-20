@@ -31,4 +31,14 @@ public class inicioControlador {
     public String registro() {
         return "registro.html";
     }
+
+    @GetMapping("/prestamo") // responde a una peticion get
+    public String prestamo() {
+        return "prestamo.html";
+    }
+
+    @GetMapping("/cliente") // responde a una peticion get
+    public String cliente() {
+        return "cliente.html";
+    }
 }

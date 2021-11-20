@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es-AR" xmlns:th="https://www.thymeleaf.org">
-<title>Agregar Libro</title>
+<title>Agregar Editorial</title>
 
 <head th:replace="layout/head"></head>
 <link rel="stylesheet" href="/src/main/resources/static/css/styles.css">
@@ -8,7 +8,7 @@
 <body>
     <header th:replace="layout/barra"></header>
 
-    <form method="post" th:object="${editorial}" th:action="@{/editorial/save}">
+    <form method="post" th:object="${editorial}" th:action="@{/editorial/save}" autocomplete="off">
         <!-- th:object="${libro}" para actualizar, traer los datos-->
         <fieldset>
             <legend>Agregar Editorial</legend>
@@ -26,23 +26,32 @@
 
             <div class="casillero">
                 <label for="nombre">Nombre:</label>
-                <input type="text" name="nombre" id="nombre" th:field="*{nombre}">
+                <input type="text" name="nombre" id="nombre" th:field="*{nombre}" maxlength="60">
             </div>
             <div class="errores" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error Nombre</div>
 
             <div class="casillero">
                 <label for="alta">Estado: </label>
                 <!-- name debe ser igual para selecciona solo una opcion, value es el valor q se envia -->
-                <div>
-                    <input type="radio" id="alta" name="alta" value="true" checked="checked">
-                    <label for="alta">Alta</label>
-                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                    <input type="radio" id="baja" name="alta" value="false" >
-                    <label for="baja">Baja</label>
+                <div th:switch="${editorial.id}">
+                    <div th:case="null">
+                        <input type="radio" id="alta" name="alta" value="true" checked>
+                        <label for="alta">Alta</label>
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                        <input type="radio" id="baja" name="alta" value="false">
+                        <label for="baja">Baja</label>
+                    </div>
+                    <div th:case="*">
+                        <input type="radio" id="alta" name="alta" value="true" th:checked="${editorial.alta}==true">
+                        <label for="alta">Alta</label>
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                        <input type="radio" id="baja" name="alta" value="false" th:checked="${editorial.alta}==false">
+                        <label for="baja">Baja</label>
+                    </div>
                 </div>
             </div>
             <div class="errores" th:if="${#fields.hasErrors('alta')}" th:errors="*{alta}">Error alta</div>
-           
+
             <div class="casillero">
                 <input type="submit" value="Guardar" class="submit">
             </div>

@@ -16,7 +16,6 @@ import egg.ejercicio01.libreria.entidades.Editorial;
 import egg.ejercicio01.libreria.errores.ErrorServicio;
 import egg.ejercicio01.libreria.servicios.EditorialServicio;
 
-
 @Controller
 @RequestMapping("/editorial")
 public class EditorialController {
@@ -46,22 +45,33 @@ public class EditorialController {
     }
 
     @PostMapping("/save")
-    public String guardar(Model model, @ModelAttribute @Valid Editorial editorial, BindingResult bindingResult, ModelMap modelo,
-            RedirectAttributes redirectAttributes) {
+    public String guardar(Model model, @ModelAttribute @Valid Editorial editorial, BindingResult bindingResult,
+            ModelMap modelo, RedirectAttributes redirectAttributes) {
         try {
             if (bindingResult.hasErrors()) {
                 return "editorial/editorial-form";
             }
             editorialServicio.save(editorial);
-            redirectAttributes.addFlashAttribute("exitoEditorial",
+            redirectAttributes.addFlashAttribute("exito",
                     "La editorial ''" + editorial.getNombre() + "'' se ha guardado con exito");
             return "redirect:/editorial/lista";
         } catch (ErrorServicio e) {
             modelo.addAttribute("errorServicio", e.getMessage());
-            redirectAttributes.addFlashAttribute("errorEditorial",
+            redirectAttributes.addFlashAttribute("error",
                     "Error al guardar el editorial ''" + editorial.getNombre() + "''");
             return "editorial/editorial-form";
         }
+    }
+
+    @GetMapping("/enable")
+    public String activar(@RequestParam String id, RedirectAttributes redirectAttributes) throws ErrorServicio {
+        Editorial editorial = editorialServicio.disableEnable(id);
+        if (editorial.getAlta()) {
+            redirectAttributes.addFlashAttribute("exito", "Se dio de alta a la editorial ''" + editorial.getNombre() + "''");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Se dio de baja a la editorial ''" + editorial.getNombre() + "''");
+        }
+        return "redirect:/editorial/lista";
     }
 
     @GetMapping("/delete")
@@ -69,15 +79,14 @@ public class EditorialController {
 
         try {
             Optional<Editorial> resultado = editorialServicio.findById(id);
-            Editorial editorial = new Editorial();
             if (resultado.isPresent()) {
-                editorial = resultado.get();
+                editorialServicio.deleteEditorial(id);
+                redirectAttributes.addFlashAttribute("exito",
+                        "La editorial ''" + resultado.get().getNombre() + "'' se ha eliminado con exito");
             }
-            editorialServicio.deleteEditorial(id);
-            redirectAttributes.addFlashAttribute("exitoEditorial",
-                    "La editorial ''" + editorial.getNombre() + "'' se ha eliminado con exito");
+
         } catch (ErrorServicio e) {
-            redirectAttributes.addFlashAttribute("errorEditorial", e.getMessage());
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
         return "redirect:/editorial/lista";
 

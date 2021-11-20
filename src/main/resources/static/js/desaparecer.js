@@ -7,3 +7,13 @@ $(document).ready(function () {
     $(".aparecer").fadeIn(1500);
   }, 6000);
 });
+
+$(document).ready(function () {
+  setTimeout(function () {
+    $(".desaparecerLento").fadeOut(1500);
+  }, 6000);
+
+  setTimeout(function () {
+    $(".aparecerLento").fadeIn(1500);
+  }, 6000);
+});

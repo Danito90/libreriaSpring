@@ -10,7 +10,7 @@
 <body>
     <header th:replace="layout/barra"></header>
 
-    <form method="post" th:object="${libro}" th:action="@{/libro/save}">
+    <form method="post" th:object="${libro}" th:action="@{/libro/save}" autocomplete="off">
         <!-- th:object="${libro}" para actualizar, traer los datos-->
         <fieldset>
             <legend>Agregar Libro</legend>
@@ -21,7 +21,6 @@
                     <li th:each="err : ${#fields.allErrors()}" th:text="${err}" />
                 </ul>
             </div> -->
-
 
             <div class="casillero">
                 <!-- <label for="id">Id</label> -->
@@ -62,6 +61,7 @@
             <div class="errores" th:if="${#fields.hasErrors('ejemplaresPrestados')}" th:errors="*{ejemplaresPrestados}">
             </div>
 
+            <!-- 
             <div class="casillero">
                 <label for="ejemplaresRestantes">Ejemplares Restantes:</label>
                 <input type="number" id="ejemplaresRestantes" name="ejemplaresRestantes"
@@ -69,46 +69,59 @@
 
             </div>
             <div class="errores" th:if="${#fields.hasErrors('ejemplaresRestantes')}" th:errors="*{ejemplaresRestantes}">
-            </div>
+            </div> -->
 
             <div class="casillero">
                 <label for="alta">Estado: </label>
                 <!-- name debe ser igual para selecciona solo una opcion, value es el valor q se envia -->
-                <div>
-                    <input type="radio" id="alta" name="alta" value="true" checked="checked">
-                    <label for="alta">Alta</label>
-                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                    <input type="radio" id="baja" name="alta" value="false" >
-                    <label for="baja">Baja</label>
+                <div th:switch="${libro.id}">
+                    <div th:case="null">
+                        <input type="radio" id="alta" name="alta" value="true" checked>
+                        <label for="alta">Alta</label>
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                        <input type="radio" id="baja" name="alta" value="false">
+                        <label for="baja">Baja</label>
+                    </div>
+                    <div th:case="*">
+                        <input type="radio" id="alta" name="alta" value="true" th:checked="${libro.alta}==true">
+                        <label for="alta">Alta</label>
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                        <input type="radio" id="baja" name="alta" value="false" th:checked="${libro.alta}==false">
+                        <label for="baja">Baja</label>
+                    </div>
                 </div>
             </div>
+            <div class="errores" th:if="${#fields.hasErrors('alta')}" th:errors="*{alta}">Error alta</div>
 
             <div class="casillero">
-                <label for="editorial"><a th:href="@{/editorial/form}"><i class="fa fa-plus-square fa-lg"></i></a> Editorial:</label>
-                <select th:field="*{editorial.id}" id="editorial" name="editorial" >
+                <label for="editorial"><a th:href="@{/editorial/form}"><i class="fa fa-plus-square fa-lg"></i></a>
+                    Editorial:</label>
+                <select th:field="*{editorial.id}" id="editorial" name="editorial">
                     <option value="" selected>Elegir editorial</option>
-                    <option th:each="e : ${editoriales}" th:text="${e.nombre}" th:value="${e.id}"></option>
+                    <option th:each="e : ${editoriales}" th:if="${e.alta}==true" th:text="${e.nombre}"
+                        th:value="${e.id}"></option>
                 </select>
             </div>
-            <div class="errores"th:text="${editorialError}"></div> <!-- para autor y editorial -->
-            
+            <div class="errores" th:text="${editorialError}"></div> <!-- para autor y editorial -->
+
 
             <div class="casillero">
-                <label for="autor"><a th:href="@{/autor/form}"><i class="fa fa-plus-square fa-lg"></i></a> Autor:</label>
-                <select th:field="*{autor.id}" id="autor" name="autor" >
+                <label for="autor"><a th:href="@{/autor/form}"><i class="fa fa-plus-square fa-lg"></i></a>
+                    Autor:</label>
+                <select th:field="*{autor.id}" id="autor" name="autor">
                     <option value="" selected>Elegir autor</option>
-                    <option th:each="a : ${autores}" th:text="${a.nombre}" th:value="${a.id}"></option>
+                    <option th:each="a : ${autores}" th:if="${a.alta}==true" th:text="${a.nombre}" th:value="${a.id}">
+                    </option>
                 </select>
             </div>
             <div class="errores" th:text="${autorError}"></div>
-            
+
             <div class="casillero">
                 <input type="submit" value="Guardar" class="submit">
             </div>
 
         </fieldset>
     </form>
-
 
     <footer th:replace="layout/footer"></footer>
 </body>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es-AR" xmlns:th="https://www.thymeleaf.org">
 
-<title>Libro</title>
+<title>Libros</title>
 
 <head th:replace="layout/head"></head>
 
@@ -10,26 +10,44 @@
     <header th:replace="layout/barra"></header>
     <h1>Listado de libros</h1>
     <div class="exito desaparecer" th:if="${exito}" th:text="${exito}"></div>
-    <div class="error desaparecer" th:if="${error}" th:text="${error}"></div>
+    <div class="error desaparecerLento" th:if="${error}" th:text="${error}"></div>
 
-    <table>
+    <table id="mydatatable">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>ISBN</th>
-                <th>Titulo</th>
-                <th>Año</th>
-                <th>Ejemplares</th>
-                <th>Ejemplares Prestados</th>
-                <th>Ejemplares Disponibles</th>
-                <th>Autor</th>
-                <th>Editorial</th>
-                <th>Modificar</th>
-                <Th>Eliminar</Th>
+                <th scope="col">ID</th>
+                <th scope="col">ISBN</th>
+                <th scope="col">Titulo</th>
+                <th scope="col">Año</th>
+                <th scope="col">Ejemplares</th>
+                <th scope="col">Ejemplares Prestados</th>
+                <th scope="col">Ejemplares Disponibles</th>
+                <th scope="col">Autor</th>
+                <th scope="col">Editorial</th>
+                <th scope="col">Alta</th>
+                <th scope="col">Modificar</th>
+                <th scope="col">Eliminar</th>
             </tr>
         </thead>
-        <tbody>
-            <tr th:each=" l,iterator: ${libros}">
+        <tfoot>
+            <tr>
+                <th>Filter..</th>
+                <th>Filter..</th>
+                <th>Filter..</th>
+                <th>Filter..</th>
+                <th>Filter..</th>
+                <th>Filter..</th>
+                <th>Filter..</th>
+                <th>Filter..</th>
+                <th>Filter..</th>
+                <th>Filter..</th>
+                <th>Filter..</th>
+                <th>Filter..</th>
+            </tr>
+        </tfoot>
+        <tbody id="mytable">
+            <!-- <tr th:each=" l,iterator: ${libros}" th:if="${l.alta}==true"></tr>   Para ver solo los activos-->
+            <tr scope="row" th:each=" l,iterator: ${libros}">
                 <td th:text="${iterator.index+1}"> 1</td>
                 <!-- no es el id real el que muestra, es un un indicador de posicion -->
                 <td th:text="${l.isbn}"></td>
@@ -41,18 +59,24 @@
                 <td th:text="${l.autor.nombre}"></td>
                 <td th:text="${l.editorial.nombre}"></td>
                 <td>
-                    <a th:href="@{/libro/form}+'?id='+${l.id}">Modificar</a>
+                    <a th:href="@{/libro/enable}+ '?id=' + ${l.id}">
+                        <i th:if="${l.alta}" class="fa fa-circle verde"></i>
+                        <i th:unless="${l.alta}" class="fa fa-circle rojo"></i>
+                    </a>
                 </td>
                 <td>
-                    <a th:href="@{/libro/delete}+'?id='+${l.id}">Eliminar</a>
+                    <a th:href="@{/libro/form}+'?id='+${l.id}"><i class="fas fa-pencil-alt"></i></a>
+                </td>
+                <td>
+                    <a th:href="@{/libro/delete}+'?id='+${l.id}"><i class="fas fa-trash-alt"></i></a>
                 </td>
             </tr>
         </tbody>
 
     </table>
 
-
     <footer th:replace="layout/footer"></footer>
+
 </body>
 
 </html>

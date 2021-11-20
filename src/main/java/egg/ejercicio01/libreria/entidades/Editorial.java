@@ -1,6 +1,12 @@
 package egg.ejercicio01.libreria.entidades;
 
+import java.util.List;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -11,11 +17,17 @@ public class Editorial {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
+    @Size(min = 1, max = 60, message = "Debe tener de 1 a 60 caracteres")
+    @NotEmpty(message = "Debes especificar el nombre")
     @Column(nullable = false)
     private String nombre;
 
+    @NotNull(message = "Debes especificar el estado")
     @Column(nullable = false)
     private Boolean alta;
+
+    @OneToMany(mappedBy = "editorial") // un autor puede tener muchos libros
+    private List<Libro> libro;
 
     public Editorial() {
     }
@@ -42,6 +54,14 @@ public class Editorial {
 
     public void setAlta(Boolean alta) {
         this.alta = alta;
+    }
+
+    public List<Libro> getLibro() {
+        return libro;
+    }
+
+    public void setLibro(List<Libro> libro) {
+        this.libro = libro;
     }
 
     @Override

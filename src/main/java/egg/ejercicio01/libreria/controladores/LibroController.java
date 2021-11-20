@@ -57,19 +57,26 @@ public class LibroController {
         } else {
             model.addAttribute("libro", new Libro());
         }
-        model.addAttribute("autores", autorServicio.findAll());
-        model.addAttribute("editoriales", editorialServicio.findAll());
+        carga(model);
         return "libro/libro-form";
     }
 
     @PostMapping("/save") // valida cada item
     public String guardar(Model model, ModelMap modelo, RedirectAttributes redirectAttributes,
-            @ModelAttribute @Valid Libro libro, BindingResult bindingResult) { //Es indispensable que BindingResult bindingResult se pase
-                                                                               // justo despues de la Entidad(clase) si no no funciona
+            @ModelAttribute @Valid Libro libro, BindingResult bindingResult) { // Es indispensable que BindingResult
+                                                                               // bindingResult se pase
+                                                                               // justo despues de la Entidad(clase) si
+                                                                               // no no funciona
         try {
             if (bindingResult.hasErrors()) {
-                model.addAttribute("autores", autorServicio.findAll());
-                model.addAttribute("editoriales", editorialServicio.findAll());
+                carga(model);
+                return "libro/libro-form";
+            }
+
+            if (libro.getEjemplares() < libro.getEjemplaresPrestados()) {
+                bindingResult.rejectValue("ejemplares", "error.libro",
+                        "El numero de ejemplares no puede ser menor al numero de ejemplares prestados");
+                carga(model);
                 return "libro/libro-form";
             }
 
@@ -78,9 +85,8 @@ public class LibroController {
                     "El libro ''" + libro.getTitulo() + "'' se ha guardado con exito");
             return "redirect:/libro/lista";
         } catch (ErrorServicio e) {
-            model.addAttribute("autores", autorServicio.findAll()); // vuelve a cargar select
-            model.addAttribute("editoriales", editorialServicio.findAll());
-            if (e.getMessage().equals("La editorial no puede estar vacia")) {
+            carga(model);
+            if (e.getMessage().equals("La Editorial no puede estar vacia")) {
                 modelo.put("editorialError", e.getMessage());
             } else {
                 modelo.put("autorError", e.getMessage());
@@ -91,6 +97,17 @@ public class LibroController {
             return "libro/libro-form";
         }
 
+    }
+
+    @GetMapping("/enable")
+    public String activar(@RequestParam String id, RedirectAttributes redirectAttributes) throws ErrorServicio {
+        Libro libro = libroServicio.disableEnable(id);
+        if (libro.getAlta()) {
+            redirectAttributes.addFlashAttribute("exito", "Se dio de alta al libro ''" + libro.getTitulo() + "''");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Se dio de baja al libro ''" + libro.getTitulo() + "''");
+        }
+        return "redirect:/libro/lista";
     }
 
     // @PostMapping("/save") //solucionar no valida (copiado de tinder mascotas)
@@ -115,17 +132,21 @@ public class LibroController {
 
         try {
             Optional<Libro> resultado = libroServicio.findById(id);
-            Libro libro = new Libro();
             if (resultado.isPresent()) {
-                libro = resultado.get();
+                libroServicio.deleteLibro(id);
+                redirectAttributes.addFlashAttribute("exito",
+                        "El Libro ''" + resultado.get().getTitulo() + "'' ha sido eliminado con exito");
             }
-            libroServicio.deleteLibro(id);
-            redirectAttributes.addFlashAttribute("exito",
-                    "El Libro ''" + libro.getTitulo() + "'' ha sido eliminado con exito");
+
         } catch (ErrorServicio e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
         return "redirect:/libro/lista";
+    }
+
+    public void carga(Model model) {
+        model.addAttribute("autores", autorServicio.findAll()); // vuelve a cargar select
+        model.addAttribute("editoriales", editorialServicio.findAll());
     }
 
 }
