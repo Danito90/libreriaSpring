@@ -2,10 +2,11 @@ package egg.ejercicio01.libreria.servicios;
 
 import java.util.Optional;
 
-import javax.transaction.Transactional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import egg.ejercicio01.libreria.entidades.Imagen;
@@ -34,6 +35,7 @@ public class ImagenServicio {
         return null;
     }
 
+    @Transactional
     public Imagen update(String id, MultipartFile archivo) throws ErrorServicio {
         if (archivo != null) {
             try {
@@ -68,7 +70,7 @@ public class ImagenServicio {
         }
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Imagen findById(Imagen imagen) {
         Optional<Imagen> optional = imagenRepositorio.findById(imagen.getId());
         if (optional.isPresent()) {

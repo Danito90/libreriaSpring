@@ -3,10 +3,10 @@ package egg.ejercicio01.libreria.servicios;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import egg.ejercicio01.libreria.entidades.Cliente;
 import egg.ejercicio01.libreria.entidades.Prestamo;
@@ -28,7 +28,7 @@ public class ClienteServicio {
         return clienteRepositorio.save(cliente);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Cliente findById(Cliente cliente) {
         Optional<Cliente> respuesta = clienteRepositorio.findById(cliente.getId());
         if (respuesta.isPresent()) {
@@ -37,12 +37,12 @@ public class ClienteServicio {
         return cliente;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Optional<Cliente> findById(String id) throws ErrorServicio {
         return clienteRepositorio.findById(id);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Cliente> findAll() {
         return clienteRepositorio.findAll();
     }

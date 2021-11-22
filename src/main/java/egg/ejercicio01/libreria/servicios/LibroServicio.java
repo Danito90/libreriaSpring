@@ -3,10 +3,11 @@ package egg.ejercicio01.libreria.servicios;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import egg.ejercicio01.libreria.entidades.Libro;
 import egg.ejercicio01.libreria.entidades.Prestamo;
@@ -28,17 +29,17 @@ public class LibroServicio {
     @Autowired
     private PrestamoServicio prestamoServicio;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Libro> findAll() {
         return libroRepositorio.findAll();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Optional<Libro> findById(String id) {
         return libroRepositorio.findById(id);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Libro findById(Libro libro) {
         Optional<Libro> respuesta = libroRepositorio.findById(libro.getId());
         if (respuesta.isPresent()) {

@@ -39,7 +39,16 @@
                 </ul>
             </li>
 
-            <li><a th:href="@{/registro}">Registro</a></li>
+            <li><a th:href="@{/usuario}">Usuario</a>
+                <ul>
+                    <li><a th:href="@{/usuario/lista}">Listar</a></li>
+                    <li><a th:href="@{/usuario/form}">Agregar</a></li>
+                    <li><a th:href="@{/usuario/lista}">Modificaciones</a></li>
+                </ul>
+            </li>
         </ul>
+        <form method="POST" th:action="@{/logout}">
+            <a href="#" onclick="this.parentNode.submit();">Logout</a>
+        </form>
     </div>
 </header>

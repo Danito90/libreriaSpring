@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es-AR" xmlns:th="https://www.thymeleaf.org">
+
+<head th:replace="layout/head.html"></head>
+
+<title>Usuarios</title>
+
+
+<body>
+    <header th:replace="layout/barra"></header>
+    <h1>Listado de usuarios</h1>
+    <div class="desaparecer exito" th:if="${exito}" th:text="${exito}"></div>
+    <div class="desaparecerLento error" th:if="${error}" th:text="${error}"></div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Usuario</th>
+                <th>Email</th>
+                <th>Rol</th>
+                <th>Imagen</th>
+                <th>Alta</th>
+                <th>Modificar</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="u,iterator: ${usuario}">
+                <td th:text="${iterator.index+1}"> 1</td>
+                <td th:text="${u.usuario}"></td>
+                <td th:text="${u.mail}"></td>
+                <td th:text="${u.rol}"></td>
+                <td th:text="${u.imagenPerfil}"></td>
+                <td>
+                    <a th:href="@{/usuario/enable}+ '?id=' + ${u.id}">
+                        <i th:if="${u.alta}" class="fa fa-circle verde"></i>
+                        <i th:unless="${u.alta}" class="fa fa-circle rojo"></i>
+                    </a>
+                </td>
+                <td><a th:href="@{/usuario/form}+ '?id=' + ${u.id}"><i class="fas fa-pencil-alt"></a></td>
+                <td><a th:href="@{/usuario/delete} + '?id=' + ${u.id}"><i class="fas fa-trash-alt"></a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <footer th:replace="layout/footer"></footer>
+</body>
+
+</html>

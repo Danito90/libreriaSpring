@@ -4,10 +4,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import egg.ejercicio01.libreria.entidades.Prestamo;
 import egg.ejercicio01.libreria.errores.ErrorServicio;
@@ -75,12 +76,12 @@ public class PrestamoServicio {
         }
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Prestamo> findAll() {
         return prestamoRepositorio.findAll();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Prestamo findById(Prestamo prestamo) throws ErrorServicio {
         Optional<Prestamo> respuesta = prestamoRepositorio.findById(prestamo.getId());
         if (respuesta.isPresent()) {
@@ -90,7 +91,7 @@ public class PrestamoServicio {
         }
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Optional<Prestamo> findById(String id) throws ErrorServicio {
         return prestamoRepositorio.findById(id);
     }
