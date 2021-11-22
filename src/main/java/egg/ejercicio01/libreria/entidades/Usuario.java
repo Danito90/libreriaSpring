@@ -25,7 +25,7 @@ public class Usuario {
 
     @Size(min = 1, max = 20, message = "Debe tener de 1 a 20 caracteres")
     @NotEmpty(message = "Debes especificar el usuario")
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false,unique = true)
     private String usuario;
 
     @Size(min = 8, message = "Debe tener un minimo de 8 caracteres")
@@ -33,8 +33,9 @@ public class Usuario {
     @Column(nullable = false)
     private String password;
 
-    @Email(message = "Debes especificar el mail")
-    @Column(nullable = false, unique = true)
+    @NotEmpty(message = "Debes especificar el mail")
+    @Email(message = "Debes especificar un mail valido")
+    @Column(nullable = false,unique = true)
     private String mail;
 
     @NotNull(message = "Debes especificar el estado")

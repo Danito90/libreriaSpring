@@ -25,14 +25,11 @@
             </div>
 
             <div class="casillero">
-                <span th:text="${errorUsuario}"></span>
-            </div>
-
-            <div class="casillero">
                 <label for="usuarioname">Usuario:</label>
                 <input type="text" name="usuarioname" id="usuarioname" th:field="*{usuario}" maxlength="20">
             </div>
             <div class="errores" th:if="${#fields.hasErrors('usuario')}" th:errors="*{usuario}">Error Usuario</div>
+            <div class="errores" th:text="${errorUsuario}"></div>
 
             <div class="casillero">
                 <label for="pass">Contraseña:</label>
@@ -42,9 +39,10 @@
 
             <div class="casillero">
                 <label for="mail">Mail:</label>
-                <input type="email" name="mail" id="mail" th:field="*{mail}" maxlength="60">
+                <input type="text" name="mail" id="mail" th:field="*{mail}" maxlength="60">
             </div>
             <div class="errores" th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}">Error mail</div>
+            <div class="errores" th:text="${errorMail}"></div>
 
             <div class="casillero">
                 <label for="imagen">Emagen de perfil:</label>

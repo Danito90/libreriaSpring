@@ -10,10 +10,12 @@ import egg.ejercicio01.libreria.entidades.Usuario;
 @Controller
 public interface UsuarioRepositorio extends JpaRepository<Usuario, String> {
 
-    // Usuario findByUsuario(String usuario);  si solo buscara el usuario..
+    // Usuario findByUsuario(String usuario); si solo buscara el usuario..
     // la clausula findBy funciona como un where
 
     @Query("SELECT a from Usuario a WHERE a.usuario LIKE :usuario AND a.alta = true")
-	public Usuario findByUsuario(@Param("usuario") String usuario);
+    public Usuario findByUser(@Param("usuario") String usuario);
 
+    Usuario findByMail(String mail);
+    Usuario findByUsuario(String usuario);
 }

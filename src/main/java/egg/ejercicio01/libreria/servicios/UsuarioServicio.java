@@ -37,7 +37,7 @@ public class UsuarioServicio implements UserDetailsService {
 
     @Transactional
     public Usuario save(Usuario usuario, MultipartFile archivo) throws ErrorServicio {
-        // validate2(usuario);
+        validate2(usuario);
         String encriptada = new BCryptPasswordEncoder().encode(usuario.getPassword());
         usuario.setPassword(encriptada);
 
@@ -68,14 +68,17 @@ public class UsuarioServicio implements UserDetailsService {
         return respuesta.get();
     }
 
-    // private void validate2(Usuario usuario) throws ErrorServicio {
-    // if (usuario.getImagenPerfil().getId() == null ||
-    // usuario.getImagenPerfil().getId().isEmpty()) {
-    // throw new ErrorServicio("La imagen debe ser cargada");
-    // } else {
-    // usuario.setImagenPerfil(imagenServicio.findById(usuario.getImagenPerfil()));
-    // }
-    // }
+    public void validate2(Usuario usuario) throws ErrorServicio {
+        if (usuario.getId() == null || usuario.getId().isEmpty()) {
+        
+        if (usuarioRepositorio.findByUsuario(usuario.getUsuario()) != null) {
+            throw new ErrorServicio("Ya existe el usuario " + usuario.getUsuario());
+        }
+        if (usuarioRepositorio.findByMail(usuario.getMail()) != null) {
+            throw new ErrorServicio("El mail " + usuario.getMail() + " ya está en uso");
+        }
+    }
+    }
 
     @Transactional(readOnly = true)
     public List<Usuario> findAll() {
@@ -98,7 +101,7 @@ public class UsuarioServicio implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String usuario) throws UsernameNotFoundException {
-        Usuario user = usuarioRepositorio.findByUsuario(usuario);
+        Usuario user = usuarioRepositorio.findByUser(usuario);
 
         if (usuario != null) {
 

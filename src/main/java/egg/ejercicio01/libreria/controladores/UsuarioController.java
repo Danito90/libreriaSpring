@@ -60,7 +60,12 @@ public class UsuarioController {
                     "El usuario ''" + usuario.getUsuario() + "'' se ha guardado con exito");
             return "redirect:/usuario/lista";
         } catch (ErrorServicio e) {
-            modelo.addAttribute("errorServicio", e.getMessage());
+            if (e.getMessage().equals("Ya existe el usuario " + usuario.getUsuario())) {
+                modelo.put("errorUsuario", e.getMessage());
+            } else {
+                modelo.put("errorMail", e.getMessage());
+            }
+            
             redirectAttributes.addFlashAttribute("error", "Error al guardar el usuario ''" + usuario.getUsuario() + "''");
             return "usuario/usuario-form";
         }
