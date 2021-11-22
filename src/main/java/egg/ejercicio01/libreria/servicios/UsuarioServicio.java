@@ -41,7 +41,11 @@ public class UsuarioServicio implements UserDetailsService {
         String encriptada = new BCryptPasswordEncoder().encode(usuario.getPassword());
         usuario.setPassword(encriptada);
 
-        usuario.setRol(Rol.USUARIO);
+        if (usuario.getId()==null || usuario.getId().isEmpty()) {
+            usuario.setRol(Rol.USUARIO);
+        }else{
+            usuario.setRol(usuario.getRol());
+        }
 
         Imagen foto = imagenServicio.save(archivo);
         usuario.setImagenPerfil(foto);
