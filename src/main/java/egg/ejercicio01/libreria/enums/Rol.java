@@ -1,17 +1,12 @@
 package egg.ejercicio01.libreria.enums;
 
 public enum Rol {
-    ADMIN(1,"ADMIN"), USUARIO(2,"USUARIO");
-    private Integer codigo;
-    private String valor;
+    ADMIN("ADMIN"), USUARIO("USUARIO");
 
-    private Rol(Integer codigo, String valor) {
-        this.codigo = codigo;
+    private final String valor;
+
+    private Rol(String valor) {
         this.valor = valor;
-    }
-    
-    public Integer getCodigo() {
-        return codigo;
     }
 
     public String getValor() {

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="es-AR" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="es-AR" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <title>Usuario</title>
 
 <head th:replace="layout/head"></head>
@@ -8,7 +9,7 @@
 <body>
     <header th:replace="layout/barra"></header>
 
-    <form method="post" th:object="${usuario}" th:action="@{/usuario/save}" autocomplete="off" >
+    <form method="post" th:object="${usuario}" th:action="@{/usuario/save}" autocomplete="off">
         <!-- th:object="${libro}" para actualizar, traer los datos-->
         <fieldset>
             <legend>Agregar Usuario</legend>
@@ -49,7 +50,8 @@
                 <label for="imagen">Emagen de perfil:</label>
                 <input type="file" name="imagen" id="imagen" th:field="*{imagenPerfil}" maxlength="60">
             </div>
-            <div class="errores" th:if="${#fields.hasErrors('imagenPerfil')}" th:errors="*{imagenPerfil}">Error mail</div>
+            <div class="errores" th:if="${#fields.hasErrors('imagenPerfil')}" th:errors="*{imagenPerfil}">Error mail
+            </div>
 
             <div class="casillero">
                 <label for="alta">Estado: </label>

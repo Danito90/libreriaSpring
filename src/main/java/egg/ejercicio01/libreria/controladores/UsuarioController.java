@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import egg.ejercicio01.libreria.entidades.Usuario;
+import egg.ejercicio01.libreria.enums.Rol;
 import egg.ejercicio01.libreria.errores.ErrorServicio;
 import egg.ejercicio01.libreria.servicios.UsuarioServicio;
 
@@ -78,6 +79,17 @@ public class UsuarioController {
             redirectAttributes.addFlashAttribute("exito", "Se dio de alta al usuario ''" + usuario.getUsuario() + "''");
         } else {
             redirectAttributes.addFlashAttribute("error", "Se dio de baja al usuario ''" + usuario.getUsuario() + "''");
+        }
+        return "redirect:/usuario/lista";
+    }
+
+    @GetMapping("/cambioRol")
+    public String cambioRol(@RequestParam String id, RedirectAttributes redirectAttributes) throws ErrorServicio {
+        Usuario usuario = usuarioServicio.cambiarRol(id);
+        if (usuario.getRol().equals(Rol.USUARIO)) {
+            redirectAttributes.addFlashAttribute("error", "Se cambio el usuario ''" + usuario.getUsuario() + "'' al rol de USUARIO");
+        } else {
+            redirectAttributes.addFlashAttribute("exito", "Se cambio el usuario ''" + usuario.getUsuario() + "'' al rol de ADMIN");
         }
         return "redirect:/usuario/lista";
     }

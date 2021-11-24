@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="es-AR" xmlns:th="https://www.thymeleaf.org">
+<html lang="es-AR" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="layout/head.html"></head>
 
@@ -30,7 +31,15 @@
                 <td th:text="${iterator.index+1}"> 1</td>
                 <td th:text="${u.usuario}"></td>
                 <td th:text="${u.mail}"></td>
-                <td th:text="${u.rol}"></td>
+                <td>
+                    <div>
+                        <span th:text="${u.rol}"></span>
+                        <a th:if="${u.usuario != 'root'}" th:href="@{/usuario/cambioRol}+ '?id=' + ${u.id}">
+                            <i th:if="${#strings.toString(u.rol) eq 'ADMIN'}" class="fa fa-user-tie verde"></i>
+                            <i th:unless="${#strings.toString(u.rol) eq 'ADMIN'}" class="fa fa-user-tie azul"></i>
+                        </a>
+                    </div>
+                </td>
                 <td th:text="${u.imagenPerfil}"></td>
                 <td>
                     <a th:href="@{/usuario/enable}+ '?id=' + ${u.id}">

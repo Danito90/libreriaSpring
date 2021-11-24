@@ -47,9 +47,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      @Override
      protected void configure(HttpSecurity http) throws Exception{ //autorizacion
          http.headers().frameOptions().sameOrigin().and() 
-            .authorizeRequests()                          //
-                .antMatchers("/css/*","/js/*","/img/*")  // estos recursos son accesibles por todos si necesidad de estar logeados
-                .permitAll()                                //
+            .authorizeRequests()     //
+                .antMatchers("/css/*","/js/*","/img/*").permitAll()  // estos recursos son accesibles por todos si necesidad de estar logeados
+                .antMatchers("/libro/**","/autor/**","/editorial/**","/prestamo/**").hasAnyRole("ADMIN","USUARIO") // bloqueando para solo usuarios registrados
+                .antMatchers("/usuario/**").hasRole("ADMIN") // solo permitido para administrador
             .and().formLogin()
                 .loginPage("/login")  // Url donde se encuentra el formulario login
                 .loginProcessingUrl("/logincheck") // es la url que se usa en el formulario login para hacer el login

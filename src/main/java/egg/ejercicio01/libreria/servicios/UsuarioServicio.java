@@ -73,15 +73,13 @@ public class UsuarioServicio implements UserDetailsService {
     }
 
     public void validate2(Usuario usuario) throws ErrorServicio {
-        if (usuario.getId() == null || usuario.getId().isEmpty()) {
-        
-        if (usuarioRepositorio.findByUsuario(usuario.getUsuario()) != null) {
+        if (usuarioRepositorio.findByUsuario(usuario.getUsuario()) != null && !usuarioRepositorio.findByUsuario(usuario.getUsuario()).getId().equals(usuario.getId()) ) {
             throw new ErrorServicio("Ya existe el usuario " + usuario.getUsuario());
         }
-        if (usuarioRepositorio.findByMail(usuario.getMail()) != null) {
+        if (usuarioRepositorio.findByMail(usuario.getMail()) != null && !usuarioRepositorio.findByMail(usuario.getMail()).getId().equals(usuario.getId())) {
             throw new ErrorServicio("El mail " + usuario.getMail() + " ya está en uso");
         }
-    }
+    
     }
 
     @Transactional(readOnly = true)
@@ -103,6 +101,26 @@ public class UsuarioServicio implements UserDetailsService {
         return usuario;
     }
 
+    @Transactional
+    public Usuario cambiarRol(String id) throws ErrorServicio{
+    
+    	Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
+    	Usuario usuario=null;
+    	if(respuesta.isPresent()) {
+    		
+    		usuario = respuesta.get();
+    		
+    		if(usuario.getRol().equals(Rol.USUARIO)) {
+    			
+    		usuario.setRol(Rol.ADMIN);
+    		
+    		}else if(usuario.getRol().equals(Rol.ADMIN)) {
+    			usuario.setRol(Rol.USUARIO);
+    		}
+    	}
+        return usuario;
+    }
+
     @Override
     public UserDetails loadUserByUsername(String usuario) throws UsernameNotFoundException {
         Usuario user = usuarioRepositorio.findByUser(usuario);
@@ -119,7 +137,7 @@ public class UsuarioServicio implements UserDetailsService {
             ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
             HttpSession session = attr.getRequest().getSession(true);
 
-            session.setAttribute("usuariosession", usuario); // llave + valor
+            session.setAttribute("usuariosession", user); // llave + valor
 
             User uuser = new User(user.getUsuario(), user.getPassword(), permisos);
             return uuser;

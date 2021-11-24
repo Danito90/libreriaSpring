@@ -35,15 +35,16 @@ public class LibroController {
     @Autowired
     EditorialServicio editorialServicio;
 
-    // Post solicita creacion o modificacio nde un nuevo registro, toca la base de
-    // datos. Trae valores de un formulario y los pasa a un objeto Libro.
+
+    // @PreAuthorize("hasAnyRole('ROLE_ADMIN')") //solo para este rol autorizado, podemos hacerlo desde security config
     @GetMapping("/lista") // get se utiliza solo para consultar informacion o mostrar, no envia datos, al
                           // server. Renderiza vistas
     public String listar(Model model) {
         model.addAttribute("libros", libroServicio.findAll());
         return "libro/libro"; // Siempre string para devolver la url de la vista
     }
-
+    
+    // @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("/form")
     public String nuevo(Model model, @RequestParam(required = false) String id) { // RequestParam obligatorio,
                                                                                   // required= false opcional
@@ -61,6 +62,9 @@ public class LibroController {
         return "libro/libro-form";
     }
 
+    // Post solicita creacion o modificacio nde un nuevo registro, toca la base de
+    // datos. Trae valores de un formulario y los pasa a un objeto Libro.
+    // @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("/save") // valida cada item
     public String guardar(Model model, ModelMap modelo, RedirectAttributes redirectAttributes,
             @ModelAttribute @Valid Libro libro, BindingResult bindingResult) { // Es indispensable que BindingResult

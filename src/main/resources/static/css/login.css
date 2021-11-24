@@ -53,3 +53,25 @@ body{
     background-color:#490121;
     font-weight: bold;
 }
+
+div.exito {
+    margin: 20px auto;
+    background-color: #81c984;
+    border: 2px solid rgb(4, 49, 0);
+    color: rgb(0, 68, 9);
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    width: 90%;
+  }
+  
+  div.error {
+    margin: 20px auto;
+    background-color: #e29090;
+    border: 2px solid rgb(59, 0, 0);
+    color: rgb(165, 0, 0);
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    width: 90%;
+  }

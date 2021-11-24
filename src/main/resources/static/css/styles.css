@@ -21,17 +21,27 @@ body {
   max-height: 300px;
 }
 
-header {
+.barra {
   position: sticky !important;
   position: -webkit-sticky !important;
   top: 0px !important;
   width: 100% !important;
   background-color: rgba(0, 0, 0) !important;
-  display: inline-block !important;
+  /* display: inline-block !important; */
   margin: auto !important;
   color: rgb(19, 160, 6) !important;
   text-align: center !important;
   z-index: 1 !important;
+  display:flex;
+  justify-content: space-between;
+  flex-flow: row wrap;
+}
+
+.elemento{
+}
+
+.logout{
+  padding: 4px 30px 2px;
 }
 
 ul,
@@ -315,6 +325,10 @@ div.casillero label a i:hover {
 
 td i.verde {
   color: rgb(1, 80, 12);
+}
+
+td i.azul {
+  color: rgb(0, 5, 78);
 }
 
 td i.rojo {
