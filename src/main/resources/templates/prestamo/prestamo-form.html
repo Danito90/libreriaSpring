@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="es-AR" xmlns:th="https://www.thymeleaf.org">
+<html lang="es-AR" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <title>Agregar Prestamo</title>
 
 <head th:replace="layout/head"></head>
@@ -20,28 +21,28 @@
                 <input hidden th:field="*{id}">
             </div>
 
-            
+
             <div class="casillero" hidden>
                 <!-- <label for="fechapr">Fecha de prestamo:</label> -->
                 <input type="date" th:if="${prestamo.id}!=null or ${prestamo.id}==''" name="fechapr" id="fechapr"
-                    th:field="*{fechaPrestamo}"  hidden>
+                    th:field="*{fechaPrestamo}" hidden>
                 <!-- <input type="date" th:unless="${prestamo.id}!=null or ${prestamo.id}==''" name="fechapr" id="fechapr"
                     th:value="${#dates.format(actual, 'yyyy-MM-dd')}"> -->
-            <!-- th:value="${#dates.format(actual, 'yyyy-MM-dd')}" para traer la fecha actual -->
-            <!-- con tl th:field es donde vinculamos el input al controller -->
+                <!-- th:value="${#dates.format(actual, 'yyyy-MM-dd')}" para traer la fecha actual -->
+                <!-- con tl th:field es donde vinculamos el input al controller -->
 
-            <!-- <div class="derecha errores" th:if="${#fields.hasErrors('fechaPrestamo')}" th:errors="*{fechaPrestamo}">
+                <!-- <div class="derecha errores" th:if="${#fields.hasErrors('fechaPrestamo')}" th:errors="*{fechaPrestamo}">
                 Error
                 Nombre
             </div>
             </div> -->
             </div>
-             <div class="casillero">
+            <div class="casillero">
                 <!-- <label for="prestamoDev">Fecha Devolucion:</label> -->
-                <input type="date" name="prestamoDev" id="prestamoDev" th:field="*{fechaDevolucion}"  hidden>
+                <input type="date" name="prestamoDev" id="prestamoDev" th:field="*{fechaDevolucion}" hidden>
             </div>
             <div class="errores" th:if="${#fields.hasErrors('fechaDevolucion')}" th:errors="*{fechaDevolucion}">Error
-                Nombre</div> 
+                Nombre</div>
 
             <!-- 
             <div class="casillero">
@@ -55,31 +56,33 @@
         -->
 
             <!-- <div class="casillero"> -->
-                <label for="alta"></label>
-                <!-- name debe ser igual para selecciona solo una opcion, value es el valor q se envia -->
-                <div th:switch="${prestamo.id}">
-                    <div th:case="null" hidden>
-                        <input type="radio" id="alta" name="alta" value="true" checked>
-                        <label for="alta">Alta</label>
-                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                        <input type="radio" id="baja" name="alta" value="false">
-                        <label for="baja">Baja</label>
-                    </div>
-                    <div th:case="*" hidden>
-                        <input type="radio" id="alta" name="alta" value="true" th:checked="${prestamo.alta}==true">
-                        <label for="alta">Alta</label>
-                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                        <input type="radio" id="baja" name="alta" value="false" th:checked="${prestamo.alta}==false">
-                        <label for="baja">Baja</label>
-                    </div>
+            <label for="alta"></label>
+            <!-- name debe ser igual para selecciona solo una opcion, value es el valor q se envia -->
+            <div th:switch="${prestamo.id}">
+                <div th:case="null" hidden>
+                    <input type="radio" id="alta" name="alta" value="true" checked>
+                    <label for="alta">Alta</label>
+                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                    <input type="radio" id="baja" name="alta" value="false">
+                    <label for="baja">Baja</label>
                 </div>
+                <div th:case="*" hidden>
+                    <input type="radio" id="alta" name="alta" value="true" th:checked="${prestamo.alta}==true">
+                    <label for="alta">Alta</label>
+                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                    <input type="radio" id="baja" name="alta" value="false" th:checked="${prestamo.alta}==false">
+                    <label for="baja">Baja</label>
+                </div>
+            </div>
             <!-- </div> -->
             <!-- <div class="errores" th:if="${#fields.hasErrors('alta')}" th:errors="*{alta}">Error alta</div> -->
 
-            <div class="casillero" >
-                <label for="libro" th:attr="hidden=${prestamo.id==null or prestamo.id==''}? 'false':'true' "><a th:href="@{/libro/form}"><i class="fa fa-plus-square fa-lg"></i></a>
+            <div class="casillero">
+                <label for="libro" th:attr="hidden=${prestamo.id==null or prestamo.id==''}? 'false':'true' "><a
+                        th:href="@{/libro/form}"><i class="fa fa-plus-square fa-lg"></i></a>
                     Libro:</label>
-                <select th:field="*{libro.id}" id="libro" name="libro" th:attr="hidden=${prestamo.id==null or prestamo.id==''}? 'false':'true' ">
+                <select th:field="*{libro.id}" id="libro" name="libro"
+                    th:attr="hidden=${prestamo.id==null or prestamo.id==''}? 'false':'true' ">
                     <option value="" selected>Elegir libro</option>
                     <option th:each="l : ${libros}" th:if="${l.alta}==true" th:text="${l.titulo}" th:value="${l.id}">
                     </option>

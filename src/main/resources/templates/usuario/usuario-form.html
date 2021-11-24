@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es-AR" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
     xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<title>Autor</title>
+<title>Usuario</title>
 
 <head th:replace="layout/head"></head>
 <link rel="stylesheet" href="/src/main/resources/static/css/styles.css">
@@ -9,10 +9,10 @@
 <body>
     <header th:replace="layout/barra"></header>
 
-    <form method="post" th:object="${autor}" th:action="@{/autor/save}" autocomplete="off">
+    <form method="post" th:object="${usuario}" th:action="@{/usuario/save}" autocomplete="off">
         <!-- th:object="${libro}" para actualizar, traer los datos-->
         <fieldset>
-            <legend>Agregar Autor</legend>
+            <legend>Agregar Usuario</legend>
 
             <!-- <div th:if="${#fields.hasAnyErrors()}">
                 <ul>
@@ -23,18 +23,40 @@
             <div class="casillero">
                 <!-- <label for="id">Id</label> -->
                 <input hidden th:field="*{id}">
+                <input hidden th:field="*{rol}">
             </div>
 
             <div class="casillero">
-                <label for="nombre">Nombre:</label>
-                <input type="text" name="nombre" id="nombre" th:field="*{nombre}" maxlength="60">
+                <label for="usuarioname">Usuario:</label>
+                <input type="text" name="usuarioname" id="usuarioname" th:field="*{usuario}" maxlength="20">
             </div>
-            <div class="errores" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error Nombre</div>
+            <div class="errores" th:if="${#fields.hasErrors('usuario')}" th:errors="*{usuario}">Error Usuario</div>
+            <div class="errores" th:text="${errorUsuario}"></div>
+
+            <div class="casillero">
+                <label for="pass">Contraseña:</label>
+                <input type="password" name="pass" id="pass" th:field="*{password}" maxlength="8">
+            </div>
+            <div class="errores" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error password</div>
+
+            <div class="casillero">
+                <label for="mail">Mail:</label>
+                <input type="text" name="mail" id="mail" th:field="*{mail}" maxlength="60">
+            </div>
+            <div class="errores" th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}">Error mail</div>
+            <div class="errores" th:text="${errorMail}"></div>
+
+            <div class="casillero">
+                <label for="imagen">Emagen de perfil:</label>
+                <input type="file" name="imagen" id="imagen" th:field="*{imagenPerfil}" maxlength="60">
+            </div>
+            <div class="errores" th:if="${#fields.hasErrors('imagenPerfil')}" th:errors="*{imagenPerfil}">Error mail
+            </div>
 
             <div class="casillero">
                 <label for="alta">Estado: </label>
                 <!-- name debe ser igual para selecciona solo una opcion, value es el valor q se envia -->
-                <div th:switch="${autor.id}">
+                <div th:switch="${usuario.id}">
                     <div th:case="null">
                         <input type="radio" id="alta" name="alta" value="true" checked>
                         <label for="alta">Alta</label>
@@ -43,10 +65,10 @@
                         <label for="baja">Baja</label>
                     </div>
                     <div th:case="*">
-                        <input type="radio" id="alta" name="alta" value="true" th:checked="${autor.alta}==true">
+                        <input type="radio" id="alta" name="alta" value="true" th:checked="${usuario.alta}==true">
                         <label for="alta">Alta</label>
                         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                        <input type="radio" id="baja" name="alta" value="false" th:checked="${autor.alta}==false">
+                        <input type="radio" id="baja" name="alta" value="false" th:checked="${usuario.alta}==false">
                         <label for="baja">Baja</label>
                     </div>
                 </div>

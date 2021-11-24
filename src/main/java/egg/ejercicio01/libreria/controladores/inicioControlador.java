@@ -1,11 +1,23 @@
 package egg.ejercicio01.libreria.controladores;
 
 import org.springframework.stereotype.*;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/") // escucha cada ves que pongan una barra, desde que se pone la barra
 public class inicioControlador {
+
+    @GetMapping("/login")
+    public String login(@RequestParam(required = false) String error, @RequestParam(required = false) String logout, ModelMap model) {
+        if (error != null) {
+            model.put("error", "Usuario o clave incorrectos");
+        }
+        if (logout != null) {
+            model.put("logout", "Ha salido correctamente.");
+        }
+        return "login.html";
+    }
 
     @GetMapping("/") // responde a una peticion get
     public String inicio() {
@@ -27,9 +39,9 @@ public class inicioControlador {
         return "editorial.html";
     }
 
-    @GetMapping("/registro") // responde a una peticion get
+    @GetMapping("/usuario") // responde a una peticion get
     public String registro() {
-        return "registro.html";
+        return "usuario.html";
     }
 
     @GetMapping("/prestamo") // responde a una peticion get

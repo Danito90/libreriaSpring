@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/login.css">
+    <title>Login</title>
+</head>
+
+<body>
+    <div class="contenedor">
+        <h2>Login</h2>
+        <form th:action="@{/logincheck}" id="forma" name="forma" method="POST" autocomplete="off">
+            <div class="exito desaparecer" th:if="${logout}" th:text="${logout}"></div>
+            <div class="error desaparecerLento" th:if="${error}" th:text="${error}"></div>
+
+            <div class="elemento">
+                <label for="usuario">Usuario:</label>
+                <input class="caja" type="text" id="usuario" name="username">
+            </div>
+            <div class="elemento">
+                <label for="usuario">Password:</label>
+                <input class="caja" type="password" id="pass" name="password">
+            </div>
+            <div class="elemento">
+                <input type="submit" id="submit" value="enviar" />
+            </div>
+
+        </form>
+
+    </div>
+
+
+
+</body>
+
+</html>

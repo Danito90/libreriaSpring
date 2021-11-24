@@ -3,10 +3,9 @@ package egg.ejercicio01.libreria.servicios;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import egg.ejercicio01.libreria.entidades.Autor;
 import egg.ejercicio01.libreria.entidades.Libro;
@@ -114,17 +113,17 @@ public class AutorServicio {
         }
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Autor> findAll() {
         return autorRepositorio.findAll();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Optional<Autor> findById(String id) {
         return autorRepositorio.findById(id);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Autor findById(Autor autor) {
         Optional<Autor> optional = autorRepositorio.findById(autor.getId());
         if (optional.isPresent()) {
