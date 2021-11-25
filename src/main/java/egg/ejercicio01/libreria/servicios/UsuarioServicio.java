@@ -32,11 +32,9 @@ public class UsuarioServicio implements UserDetailsService {
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
 
-    @Autowired
-    private ImagenServicio imagenServicio;
 
     @Transactional
-    public Usuario save(Usuario usuario, MultipartFile archivo) throws ErrorServicio {
+    public Usuario save(Usuario usuario, Imagen archivo) throws ErrorServicio {
         validate2(usuario);
         String encriptada = new BCryptPasswordEncoder().encode(usuario.getPassword());
         usuario.setPassword(encriptada);
@@ -47,8 +45,8 @@ public class UsuarioServicio implements UserDetailsService {
             usuario.setRol(usuario.getRol());
         }
 
-        Imagen foto = imagenServicio.save(archivo);
-        usuario.setImagenPerfil(foto);
+        
+        usuario.setImagenPerfil(archivo);
 
         return usuarioRepositorio.save(usuario);
     }

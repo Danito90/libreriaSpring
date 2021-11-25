@@ -21,10 +21,13 @@ body {
   max-height: 300px;
 }
 
-.barra {
+.barraPosition{
   position: sticky !important;
   position: -webkit-sticky !important;
   top: 0px !important;
+}
+
+.barra {
   width: 100% !important;
   background-color: rgba(0, 0, 0) !important;
   /* display: inline-block !important; */

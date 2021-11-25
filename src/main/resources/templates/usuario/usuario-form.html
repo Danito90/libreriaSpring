@@ -9,7 +9,7 @@
 <body>
     <header th:replace="layout/barra"></header>
 
-    <form method="post" th:object="${usuario}" th:action="@{/usuario/save}" autocomplete="off">
+    <form method="post" th:object="${usuario}" th:action="@{/usuario/save}" autocomplete="off" enctype="multipart/form-data">
         <!-- th:object="${libro}" para actualizar, traer los datos-->
         <fieldset>
             <legend>Agregar Usuario</legend>
@@ -48,10 +48,9 @@
 
             <div class="casillero">
                 <label for="imagen">Emagen de perfil:</label>
-                <input type="file" name="imagen" id="imagen" th:field="*{imagenPerfil}" maxlength="60">
+                <input type="file" name="imagen" id="imagen" multiple="multiple" accept="image/x-png,image/jpeg,image/jpg">
             </div>
-            <div class="errores" th:if="${#fields.hasErrors('imagenPerfil')}" th:errors="*{imagenPerfil}">Error mail
-            </div>
+            <div class="errores" th:text="${errorImagen}"></div>
 
             <div class="casillero">
                 <label for="alta">Estado: </label>

@@ -40,7 +40,12 @@
                         </a>
                     </div>
                 </td>
-                <td th:text="${u.imagenPerfil}"></td>
+                <td> 
+                    <img th:if="${u.imagenPerfil != null}" class="img-fluid rounded-circle" th:src="${'/foto/usuario/' + u.id }" alt="">
+                                                                
+                    <img th:if="${u.imagenPerfil == null}" class="img-fluid rounded-circle" src="/image/perfil.jpg" alt="" width="70px">
+                    <!-- <a ><i class="fas fa-trash-alt"></a> -->
+                </td>
                 <td>
                     <a th:href="@{/usuario/enable}+ '?id=' + ${u.id}">
                         <i th:if="${u.alta}" class="fa fa-circle verde"></i>

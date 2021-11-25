@@ -21,7 +21,7 @@ public class inicioControlador {
 
     @GetMapping("/") // responde a una peticion get
     public String inicio() {
-        return "index.html";
+        return "index";
     }
 
     @GetMapping("/libro") // responde a una peticion get

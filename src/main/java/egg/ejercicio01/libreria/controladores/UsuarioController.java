@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import egg.ejercicio01.libreria.entidades.Usuario;
 import egg.ejercicio01.libreria.enums.Rol;
 import egg.ejercicio01.libreria.errores.ErrorServicio;
+import egg.ejercicio01.libreria.servicios.ImagenServicio;
 import egg.ejercicio01.libreria.servicios.UsuarioServicio;
 
 @Controller
@@ -27,6 +29,9 @@ import egg.ejercicio01.libreria.servicios.UsuarioServicio;
 public class UsuarioController {
     @Autowired
     private UsuarioServicio usuarioServicio;
+
+    @Autowired
+    private ImagenServicio imagenServicio;
 
     @GetMapping("/lista")
     public String lista(Model model) {
@@ -50,20 +55,23 @@ public class UsuarioController {
     }
 
     @PostMapping("/save")
-    public String guardar(Model model, @ModelAttribute @Valid Usuario usuario, BindingResult bindingResult,@RequestParam(required= false) MultipartFile imagen, ModelMap modelo,
+    public String guardar(Model model, @ModelAttribute("usuario") @Valid Usuario usuario, BindingResult bindingResult,@RequestParam(value = "imagen") MultipartFile imagen, ModelMap modelo,
             RedirectAttributes redirectAttributes) {
         try {
             if (bindingResult.hasErrors()) {
                 return "usuario/usuario-form";
             }
-            usuarioServicio.save(usuario,imagen);
+
+            usuarioServicio.save(usuario, imagenServicio.save(imagen));
             redirectAttributes.addFlashAttribute("exito",
                     "El usuario ''" + usuario.getUsuario() + "'' se ha guardado con exito");
             return "redirect:/usuario/lista";
         } catch (ErrorServicio e) {
             if (e.getMessage().equals("Ya existe el usuario " + usuario.getUsuario())) {
                 modelo.put("errorUsuario", e.getMessage());
-            } else {
+            } else if (e.getMessage().equals("Error al leer el archivo")) {
+                modelo.put("errorImagen", e.getMessage());
+            }else{
                 modelo.put("errorMail", e.getMessage());
             }
             
