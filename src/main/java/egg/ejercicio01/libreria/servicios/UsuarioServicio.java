@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.multipart.MultipartFile;
 
 import egg.ejercicio01.libreria.entidades.Imagen;
 import egg.ejercicio01.libreria.entidades.Usuario;
@@ -32,11 +31,9 @@ public class UsuarioServicio implements UserDetailsService {
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
 
-    @Autowired
-    private ImagenServicio imagenServicio;
 
     @Transactional
-    public Usuario save(Usuario usuario, MultipartFile archivo) throws ErrorServicio {
+    public Usuario save(Usuario usuario, Imagen archivo) throws ErrorServicio {
         validate2(usuario);
         String encriptada = new BCryptPasswordEncoder().encode(usuario.getPassword());
         usuario.setPassword(encriptada);
@@ -47,8 +44,8 @@ public class UsuarioServicio implements UserDetailsService {
             usuario.setRol(usuario.getRol());
         }
 
-        Imagen foto = imagenServicio.save(archivo);
-        usuario.setImagenPerfil(foto);
+        
+        usuario.setImagenPerfil(archivo);
 
         return usuarioRepositorio.save(usuario);
     }

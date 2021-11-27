@@ -49,7 +49,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
          http.headers().frameOptions().sameOrigin().and() 
             .authorizeRequests()     //
                 .antMatchers("/css/*","/js/*","/img/*").permitAll()  // estos recursos son accesibles por todos si necesidad de estar logeados
-                .antMatchers("/libro/**","/autor/**","/editorial/**","/prestamo/**").hasAnyRole("ADMIN","USUARIO") // bloqueando para solo usuarios registrados
+                .antMatchers("/libro/**","/autor/**","/editorial/**","/prestamo/**","/","/foto/**").hasAnyRole("ADMIN","USUARIO") // bloqueando para solo usuarios registrados
+                //debo agregar el path "/" para q cuand oinicio sin registrarme me lleve al login
                 .antMatchers("/usuario/**").hasRole("ADMIN") // solo permitido para administrador
             .and().formLogin()
                 .loginPage("/login")  // Url donde se encuentra el formulario login

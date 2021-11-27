@@ -21,27 +21,52 @@ body {
   max-height: 300px;
 }
 
-.barra {
+.barraPosition{
   position: sticky !important;
   position: -webkit-sticky !important;
   top: 0px !important;
+  z-index: 1 !important;
+}
+
+.barra {
   width: 100% !important;
   background-color: rgba(0, 0, 0) !important;
   /* display: inline-block !important; */
   margin: auto !important;
   color: rgb(19, 160, 6) !important;
   text-align: center !important;
-  z-index: 1 !important;
   display:flex;
   justify-content: space-between;
   flex-flow: row wrap;
 }
 
 .elemento{
-}
+} ;
 
 .logout{
   padding: 4px 30px 2px;
+}
+
+.barra section.elemento img{
+  height: 50px;
+  width: 50px;
+  border: 2px solid rgb(16, 49, 0);
+}
+
+.datoUser{
+  padding: 0px 10px;
+}
+
+.datoUserCard{
+  display: flex;
+  flex-flow:row wrap;
+}
+
+
+.datoUserText{
+  display: flex;
+  flex-flow: column wrap;
+  padding: 0px 10px
 }
 
 ul,
@@ -91,6 +116,8 @@ ol {
   left: 100%;
   top: 0;
 }
+
+
 
 /* ============= Comienzan las tarjetas =============*/
 
@@ -205,6 +232,11 @@ table td a:hover {
 
 table td a:visited {
   color: rgb(3, 13, 160);
+}
+
+table tr td img{
+  max-height: 90px;
+  width: auto;
 }
 
 /* ============ Formularios ============ */
