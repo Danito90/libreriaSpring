@@ -19,12 +19,13 @@ public class ImagenServicio {
     @Autowired
     private ImagenRepositorio imagenRepositorio;
 
-    public Imagen save(MultipartFile archivo) throws ErrorServicio {
+    @Transactional
+    public Imagen save(MultipartFile archivo,String usuario) throws ErrorServicio {
         if (archivo != null) {
             try {
                 Imagen foto = new Imagen();
                 foto.setMime(archivo.getContentType());
-                foto.setNombre(archivo.getName());
+                foto.setNombre(usuario);
                 foto.setContenido(archivo.getBytes()); // la lectura del archivo puede lanzar la excepcion
 
                 return imagenRepositorio.save(foto);

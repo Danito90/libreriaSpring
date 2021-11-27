@@ -55,11 +55,22 @@
             </ul>
         </section>
         <section class="elemento logout">
-            <div th:text="'Bienvenid@ ' + ${#strings.toUpperCase(session.usuariosession.usuario)}"></div>
-            <!-- <div sec:authentication="name"></div>  tambien asi para el usuario-->
-            <div sec:authentication="principal.authorities"></div>
-            <!-- <div th:text="'Bienvenid@ ' + ${#strings.toUpperCase(session.usuariosession.rol)}"></div> para roles -->
-            <!-- traigo todos los datos del usuario en sesion -->
+
+            <div class="datoUserCard">
+                <div class="datoUser">
+                    <img th:src="${'/foto/usuario/' + #strings.toString(session.usuariosession.id)}"
+                        class="img-fluid rounded-circle" alt="">
+                </div>
+                <div class="datoUserText">
+                    <span th:text="'Bienvenid@ ' + ${#strings.toUpperCase(session.usuariosession.usuario)}"></span>
+                    <!-- <div sec:authentication="name"></div>  tambien asi para el usuario-->
+                    <!-- <div sec:authentication="principal.authorities"></div> -->
+                    <span class="datoUser"
+                        th:text="'ROL_' + ${#strings.toUpperCase(session.usuariosession.rol)}"></span>
+                    <!-- para roles -->
+                    <!-- traigo todos los datos del usuario en sesion -->
+                </div>
+            </div>
         </section>
     </div>
 </header>

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -55,14 +54,20 @@ public class UsuarioController {
     }
 
     @PostMapping("/save")
-    public String guardar(Model model, @ModelAttribute("usuario") @Valid Usuario usuario, BindingResult bindingResult,@RequestParam(value = "imagen") MultipartFile imagen, ModelMap modelo,
-            RedirectAttributes redirectAttributes) {
+    public String guardar(Model model, @ModelAttribute("usuario") @Valid Usuario usuario, BindingResult bindingResult,
+                          @RequestParam(value = "imagen") MultipartFile imagen, ModelMap modelo,
+                          RedirectAttributes redirectAttributes) {
         try {
             if (bindingResult.hasErrors()) {
                 return "usuario/usuario-form";
             }
 
-            usuarioServicio.save(usuario, imagenServicio.save(imagen));
+            if (!imagen.isEmpty()) {
+                usuarioServicio.save(usuario, imagenServicio.save(imagen,usuario.getUsuario()));
+            }else{
+                usuarioServicio.save(usuario, null);
+            }
+
             redirectAttributes.addFlashAttribute("exito",
                     "El usuario ''" + usuario.getUsuario() + "'' se ha guardado con exito");
             return "redirect:/usuario/lista";
