@@ -7,15 +7,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/login.css">
+    
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+
     <title>Login</title>
 </head>
 
 <body>
     <div class="contenedor">
-        <h2>Login</h2>
+        <h2>Acceso</h2>
+        
+        <div class="desaparecer exito" th:if="${logout}" th:text="${logout}"></div>
+        <div class="desaparecerLento error" th:if="${error}" th:text="${error}"></div>
+
         <form th:action="@{/logincheck}" id="forma" name="forma" method="POST" autocomplete="off">
-            <div class="exito desaparecer" th:if="${logout}" th:text="${logout}"></div>
-            <div class="error desaparecerLento" th:if="${error}" th:text="${error}"></div>
 
             <div class="elemento">
                 <label for="usuario">Usuario:</label>
@@ -26,15 +32,15 @@
                 <input class="caja" type="password" id="pass" name="password">
             </div>
             <div class="elemento">
-                <input type="submit" id="submit" value="enviar" />
+                <input type="submit" id="submit" value="Login" />
             </div>
 
         </form>
 
     </div>
 
-
-
+    <!-- Javascript desaparecer -->
+    <script type="text/javascript" src="/js/desaparecer.js"></script>
 </body>
 
 </html>

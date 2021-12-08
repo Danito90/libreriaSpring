@@ -6,7 +6,7 @@ html {
 body {
   padding: 0;
   margin: 0;
-  background: radial-gradient(circle, #a9ccab, #6e73b6, #47298f); 
+  background: radial-gradient(circle, #a9ccca, #6eb6b6, #118a8a); 
   margin-bottom: 200px; /* para que el footer quede al fondo */
 }
 
@@ -50,6 +50,12 @@ body {
 .barra section.elemento img{
   height: 50px;
   width: 50px;
+  border: 2px solid rgb(16, 49, 0);
+}
+
+.barra section.elemento img:hover{
+  height: 70px;
+  width: 70px;
   border: 2px solid rgb(16, 49, 0);
 }
 

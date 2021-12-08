@@ -14,7 +14,7 @@ public class inicioControlador {
             model.put("error", "Usuario o clave incorrectos");
         }
         if (logout != null) {
-            model.put("logout", "Ha salido correctamente.");
+            model.put("logout", "Ha salido correctamente");
         }
         return "login.html";
     }
